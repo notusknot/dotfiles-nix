@@ -7,8 +7,9 @@
 # Read about it here: nixos.wiki/wiki/Home_Manager
 
 let 
-  # Import vim settings
+  # Import extra files
   vimsettings = import ./nvim/vim.nix;
+  zshsettings = import ./zsh/zsh.nix;
 
   # Import Ibhagwan Picom fork with rounded corners and borders
   newPicom = pkgs.picom.overrideAttrs (old: {
@@ -25,6 +26,10 @@ in
 { 
   programs.home-manager.enable = true;
   xsession.enable = true;
+
+  # Source extra files that are too big for this one 
+  programs.neovim = vimsettings pkgs;
+  programs.zsh = zshsettings pkgs;
 
   # Settings for bspwm
   xsession.windowManager.bspwm = {
@@ -84,7 +89,7 @@ in
     '';
   };
 
-  # Settings for Xresources (URxvt, in my case)
+    # Settings for Xresources (URxvt, in my case)
   xresources = {
     extraConfig = ''
       URxvt*scrollBar: false
@@ -132,8 +137,6 @@ in
     backend = "glx";
   };
 
-  # Make neovim use external configuration
-  programs.neovim = vimsettings pkgs;
 
   # Settings for tmux
   programs.tmux = {
@@ -158,6 +161,13 @@ in
     templates = "$HOME/stuff/other/";
   };
 
+  # Settings for git
+  programs.git = {
+    enable = true;
+    userName = "notusknot";
+    userEmail = "notusknot@gmail.com";
+  };
+  
   # Do not touch
   home.stateVersion = "21.03";
 }

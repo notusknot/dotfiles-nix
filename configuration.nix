@@ -22,6 +22,16 @@
   system.autoUpgrade.enable = true;
   system.autoUpgrade.allowReboot = true;
 
+  # Auto cleanup
+  nix = {
+    autoOptimiseStore = true;
+    gc = {
+      automatic = true;
+      dates = "weekly";
+      options = "--delete-older-than 8d";
+    };
+  };
+
   # Import and set up home-manager
   home-manager.users.notus = { imports = [ /etc/nixos/home.nix ]; };
   home-manager = {
@@ -73,6 +83,7 @@
     firefox rxvt-unicode pavucontrol firefox pcmanfm lxappearance gimp 
     bspwm sxhkd dmenu feh polybar nordic lua libGL gcc ruby dunst libnotify sct fzf postgresql 
     nodePackages.pyright nodePackages.typescript-language-server ripgrep
+    nodePackages.live-server
     # Install spotifyd with more features
     (spotifyd.override {
       withPulseAudio = true;
