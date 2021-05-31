@@ -10,6 +10,9 @@ pkgs:
     export EDITOR="nvim"
     export TERMINAL="urxvt"
     export BROWSER="firefox"
+    export XDG_DATA_HOME="$HOME/.local/share"
+    export GNUPGHOME="$HOME/.gnupg"
+    export PASSWORD_STORE_DIR="$XDG_DATA_HOME/password-store"
 
     autoload -U colors && colors
     eval "$(dircolors -b)"
@@ -31,10 +34,12 @@ pkgs:
   shellAliases = {
     v = "nvim";
     c = "clear";
-    ls = "ls --color=auto -a";
+    ls = "ls --color=auto -A";
     unziptar = "tar -xvzf";
     mkdir = "mkdir -p";
+    search = "f() { rg $1 $HOME/stuff/packages.txt };f";
     
+    z = "sudo nvim /etc/nixos/zsh/zsh.nix";
     home = "sudo nvim /etc/nixos/home.nix";
     config = "sudo nvim /etc/nixos/configuration.nix";
     vimconf = "sudo nvim /etc/nixos/nvim/vim.nix";

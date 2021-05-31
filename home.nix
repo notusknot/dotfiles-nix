@@ -59,6 +59,8 @@ in
           urxvt
       super + r
           dmenu_run
+      super + e
+          passmenu
       super + d
           firefox
       super + c 
@@ -145,6 +147,13 @@ in
       unbind C-b
       set -g prefix C-Space
       set -ga terminal-overrides ",rxvt-unicode-256color:RGB"
+
+      set-option -g status-position top
+      set -g status-bg black
+      set -g status-fg white
+
+      set -g mouse on
+      bind -n WheelUpPane if-shell -F -t = "#{mouse_any_flag}" "send-keys -M" "if -Ft= '#{pane_in_mode}' 'send-keys -M' 'copy-mode -e; send-keys -M'"
     '';
   };
 
@@ -170,7 +179,17 @@ in
       init = { defaultBranch = "main"; };
     };
   };
-  
+
+  # Settings for gpg
+  programs.gpg = {
+    enable = true;
+  };
+
+  services.gpg-agent = {
+    enable = true;
+    pinentryFlavor = "qt";
+  };
+
   # Do not touch
   home.stateVersion = "21.03";
 }

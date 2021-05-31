@@ -79,11 +79,11 @@
 
   # Install packages
     environment.systemPackages = with pkgs; [
-    wget alacritty neovim-nightly nodejs zsh pfetch htop playerctl python3 unzip youtube-dl git cargo rustc cmus spotify-tui slop ffmpeg tmux
+    wget neovim-nightly nodejs zsh pfetch htop playerctl python3 unzip youtube-dl git cargo rustc cmus spotify-tui slop ffmpeg tmux
     firefox rxvt-unicode pavucontrol firefox pcmanfm lxappearance gimp 
-    bspwm sxhkd dmenu feh polybar nordic lua libGL gcc ruby dunst libnotify sct fzf postgresql 
+    bspwm sxhkd dmenu feh polybar nordic lua gcc dunst libnotify sct fzf postgresql 
     nodePackages.pyright nodePackages.typescript-language-server ripgrep
-    nodePackages.live-server
+    nodePackages.live-server pass gnupg pinentry-qt
     # Install spotifyd with more features
     (spotifyd.override {
       withPulseAudio = true;
