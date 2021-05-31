@@ -25,7 +25,7 @@ pkgs:
   history = {
     save = 1000;
     size = 1000;
-    path = ".cache/zsh_history";
+    path = "$HOME/.cache/zsh_history";
   };
 
   shellAliases = {
