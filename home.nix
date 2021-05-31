@@ -166,6 +166,9 @@ in
     enable = true;
     userName = "notusknot";
     userEmail = "notusknot@gmail.com";
+    extraConfig = {
+      init = { defaultBranch = "main"; };
+    };
   };
   
   # Do not touch
