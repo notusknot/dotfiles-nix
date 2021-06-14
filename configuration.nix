@@ -83,7 +83,7 @@
     bspwm sxhkd dmenu feh polybar nordic lua gcc dunst libnotify sct fzf postgresql 
     nodePackages.pyright nodePackages.typescript-language-server ripgrep
     nodePackages.live-server pass gnupg pinentry-qt jdk8 appimage-run
-    nodePackages_latest.vue-cli tree cordless
+    tree cordless
   
     # Install spotifyd with more features
     (spotifyd.override {

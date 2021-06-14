@@ -1,0 +1,7 @@
+#!/usr/bin/env sh
+
+if [ `date +%H` -ge 22 ]; then
+    sct 3000
+fi
+
+notify-send "Get up, get water, stretch and look at something 20 feet away"

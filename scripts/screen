@@ -1,0 +1,25 @@
+#!/usr/bin/env bash
+
+declare -a options=(
+"Record desktop"
+"Screenshot"
+"Stop screen recording"
+)
+
+choice=$(printf '%s\n' "${options[@]}" | dmenu -i -p 'Choose script:')
+
+if [ "$choice" = "Screenshot" ]; then 
+    slop=$(slop -f "%x %y %w %h %g %i") || exit 1
+    read -r X Y W H G ID < <(echo $slop)
+    rm -rf $HOME/screen.png
+    ffmpeg -f x11grab -s "$W"x"$H" -i :0.0+$X,$Y -vframes 1 $HOME/screen.png
+elif [ "$choice" = "Record desktop" ]; then
+    slop=$(slop -f "%x %y %w %h %g %i") || exit 1
+    read -r X Y W H G ID < <(echo $slop)
+    rm -rf $HOME/screen.mp4
+    ffmpeg -f x11grab -s "$W"x"$H" -i :0.0+$X,$Y $HOME/screen.mp4
+elif [ "$choice" = "Stop screen recording" ]; then
+    pkill ffmpeg
+else 
+    exit 1
+fi

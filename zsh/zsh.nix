@@ -5,6 +5,8 @@ pkgs:
   initExtra = ''
     source /etc/nixos/zsh/p10k.zsh
 
+    export PATH=/etc/nixos/scripts/:$PATH
+
     export CARGO_HOME="$XDG_DATA_HOME/cargo"
     export XAUTHORITY="$HOME/.Xauthority"
     export EDITOR="nvim"
