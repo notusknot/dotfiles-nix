@@ -27,8 +27,7 @@
     autoOptimiseStore = true;
     gc = {
       automatic = true;
-      dates = "weekly";
-      options = "--delete-older-than 8d";
+      dates = "daily";
     };
   };
 
@@ -83,7 +82,9 @@
     firefox rxvt-unicode pavucontrol firefox pcmanfm lxappearance gimp 
     bspwm sxhkd dmenu feh polybar nordic lua gcc dunst libnotify sct fzf postgresql 
     nodePackages.pyright nodePackages.typescript-language-server ripgrep
-    nodePackages.live-server pass gnupg pinentry-qt
+    nodePackages.live-server pass gnupg pinentry-qt jdk8 appimage-run
+    nodePackages_latest.vue-cli tree cordless
+  
     # Install spotifyd with more features
     (spotifyd.override {
       withPulseAudio = true;
@@ -91,12 +92,7 @@
       withKeyring = true;
     })
   ];
-
-  services.postgresql.enable = true; # Enable postgresql
-
-  nixpkgs.config.permittedInsecurePackages = [ 
-         "ffmpeg-2.8.17" # Allow ffmpeg to be installed
-  ];
+  nixpkgs.config.allowUnfree = true;
 
   # Install JetBrainsMono NerdFont
   fonts.fonts = with pkgs; [

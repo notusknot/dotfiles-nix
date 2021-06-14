@@ -44,8 +44,8 @@ in
       bspc monitor -d 1 2 3 4 5
       bspc config border_width         4
       bspc config window_gap           20
+      bspc config top_padding          24
       bspc config split_ratio          0.618
-      bspc config top_padding          40
       bspc config focused_border_color "#9699b7"
       bspc config normal_border_color "#2e303e"
    '';
@@ -131,7 +131,7 @@ in
     shadowOpacity = "0.35";
     extraOptions = ''
       shadow-radius = 20;
-      corner-radius = 12;
+      corner-radius = 16;
       round-borders = 1;
    '';
     fade = true;
