@@ -1,6 +1,6 @@
 # NixOS dotfiles
 
-*My configuration files for NixOS. Feel free to look atound and copy!* 
+*My configuration files for NixOS. Feel free to look around and copy!* 
 
 ## Table of contents
 
