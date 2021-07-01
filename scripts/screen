@@ -1,5 +1,8 @@
 #!/usr/bin/env bash
 
+# This scripts helps me to take screenshots and record my desktop.
+# Dependencies: dmenu, slop, ffmpeg
+
 declare -a options=(
 "Record desktop"
 "Screenshot"
@@ -11,15 +14,18 @@ choice=$(printf '%s\n' "${options[@]}" | dmenu -i -p 'Choose script:')
 if [ "$choice" = "Screenshot" ]; then 
     slop=$(slop -f "%x %y %w %h %g %i") || exit 1
     read -r X Y W H G ID < <(echo $slop)
-    rm -rf $HOME/screen.png
-    ffmpeg -f x11grab -s "$W"x"$H" -i :0.0+$X,$Y -vframes 1 $HOME/screen.png
+    rm -rf $HOME/stuff/screen.png
+    ffmpeg -f x11grab -s "$W"x"$H" -i :0.0+$X,$Y -vframes 1 $HOME/stuff/screen.png
+    libnotify "Screenshot taken!"
 elif [ "$choice" = "Record desktop" ]; then
     slop=$(slop -f "%x %y %w %h %g %i") || exit 1
     read -r X Y W H G ID < <(echo $slop)
-    rm -rf $HOME/screen.mp4
-    ffmpeg -f x11grab -s "$W"x"$H" -i :0.0+$X,$Y $HOME/screen.mp4
+    rm -rf $HOME/stuff/screen.mp4
+    ffmpeg -f x11grab -s "$W"x"$H" -i :0.0+$X,$Y $HOME/stuff/screen.mp4
+    libnotify "Screen recording started"
 elif [ "$choice" = "Stop screen recording" ]; then
     pkill ffmpeg
+    libnotify "Screen recording finished"
 else 
     exit 1
 fi

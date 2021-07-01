@@ -1,5 +1,8 @@
 #!/usr/bin/env sh
 
+# This script automatically changes my screen temperature if its after 10pm and sends a notification for me to get up
+# Dependencies: libnotify, sct
+
 if [ `date +%H` -ge 22 ]; then
     sct 3000
 fi

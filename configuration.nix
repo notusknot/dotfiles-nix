@@ -7,15 +7,28 @@
 
 { config, pkgs, ... }:
 
+let 
+  localPkgs = import ./packages/default.nix { pkgs = pkgs; };
+in
 {
-  # Import the hardware-configuration and home-manager as a module
-  imports = [ ./hardware-configuration.nix <home-manager/nixos> ];
+  # Import the necessary modules and files
+  imports = [ ./hardware-configuration.nix ./packages/packages.nix <home-manager/nixos> ];
 
   # Import neovim nightly to get more features
   nixpkgs.overlays = [
     (import (builtins.fetchTarball {
       url = https://github.com/nix-community/neovim-nightly-overlay/archive/master.tar.gz;
-    }))
+   }))
+    (final: prev: {
+      dwm = prev.dwm.overrideAttrs (old: { 
+        src = pkgs.fetchFromGitHub { 
+          owner="notusknot"; 
+          repo="dwm"; 
+          rev="603beed93d299b5a00a3f2cbd950c0c19668d1fd";
+          sha256="1n0rv2w76jqbimzlswdb4ql8jmwdcdpb5hq9f6vl0slwfs3g9cfm";
+        };
+      });
+    })
   ];
 
   # Auto upgrades
@@ -32,10 +45,10 @@
   };
 
   # Import and set up home-manager
-  home-manager.users.notus = { imports = [ /etc/nixos/home.nix ]; };
   home-manager = {
     useGlobalPkgs = true;
     useUserPackages = true;
+    users.notus = { imports = [ ./home.nix ]; };
   };
 
   # Set up bootloader and clean /tmp/ on boot
@@ -44,25 +57,36 @@
   boot.cleanTmpDir = true;
 
   # Set up networking
-  networking.hostName = "nixos";
-  networking.useDHCP = false;
-  networking.interfaces.enp9s0.useDHCP = true;
-  networking.interfaces.wlp8s0.useDHCP = true;
+  networking = {
+    hostName = "nixos";
+    useDHCP = false;
+    wireless = {
+      enable = true;
+      userControlled.enable = true;
+    };
+    interfaces = {
+      enp9s0.useDHCP = true;
+      wlp8s0.useDHCP = true;
+    };
+  };
 
   # Set up locales (timezone and keyboard layout)
   time.timeZone = "America/Los_Angeles";
   i18n.defaultLocale = "en_US.UTF-8";
-  services.xserver.layout = "us";
   console = {
     font = "Lat2-Terminus16";
     keyMap = "us";
   };
 
   # X settings (bspwm, lightdm, etc)
-  services.xserver.enable = true;
-  services.xserver.displayManager.lightdm.enable = true;
-  services.xserver.windowManager = {
-    bspwm.enable = true;
+  services = {
+    xserver = {
+      layout = "us";
+      enable = true;
+      libinput.enable = true;
+      displayManager.lightdm.enable = true;
+      windowManager.dwm.enable = true;
+    };
   };
 
   # Enable audio
@@ -77,25 +101,17 @@
   };
 
   # Install packages
-    environment.systemPackages = with pkgs; [
-    wget neovim-nightly nodejs zsh pfetch htop playerctl python3 unzip youtube-dl git cargo rustc cmus spotify-tui slop ffmpeg tmux
-    firefox rxvt-unicode pavucontrol firefox pcmanfm lxappearance gimp 
-    bspwm sxhkd dmenu feh polybar nordic lua gcc dunst libnotify sct fzf postgresql 
-    nodePackages.pyright nodePackages.typescript-language-server ripgrep
-    nodePackages.live-server pass gnupg pinentry-qt jdk8 appimage-run
-    tree cordless
-  
-    # Install spotifyd with more features
+  environment.systemPackages = with pkgs; [
     (spotifyd.override {
       withPulseAudio = true;
       withMpris = true;
       withKeyring = true;
     })
   ];
-  nixpkgs.config.allowUnfree = true;
 
   # Install JetBrainsMono NerdFont
   fonts.fonts = with pkgs; [
+    jetbrains-mono powerline-fonts
     (nerdfonts.override { fonts = [ "JetBrainsMono" ]; })
   ];
 

@@ -14,7 +14,8 @@ local gl = require("galaxyline")
         green = "#29d398",
         orange = "#efb993",
         red = "#e95678",
-        lightbg = "#393b4d",
+        lightbg = "#2e303e",
+        lightbasdfg = "#393b4d",
         nord = "#9699b7",
         greenYel = "#efb993"
     }
@@ -22,7 +23,7 @@ local gl = require("galaxyline")
     gls.left[1] = {
         leftRounded = {
             provider = function()
-                return ""
+                return " "
             end,
             highlight = {colors.nord, colors.bg}
         }
@@ -33,7 +34,7 @@ local gl = require("galaxyline")
             provider = function()
                 return "  "
             end,
-            highlight = {colors.bg, colors.nord},
+            highlight = {colors.fg, colors.bg},
             separator = " ",
             separator_highlight = {colors.lightbg, colors.lightbg}
         }
@@ -58,7 +59,7 @@ local gl = require("galaxyline")
     gls.left[5] = {
         teech = {
             provider = function()
-                return ""
+                return " "
             end,
             separator = " ",
             highlight = {colors.lightbg, colors.bg}
@@ -96,7 +97,7 @@ local gl = require("galaxyline")
             provider = "DiffRemove",
             condition = checkwidth,
             icon = " ",
-            highlight = {colors.red, colors.line_bg}
+            highlight = {colors.lightbg, colors.line_bg}
         }
     }
 
@@ -157,11 +158,11 @@ local gl = require("galaxyline")
     gls.right[3] = {
         right_LeftRounded = {
             provider = function()
-                return ""
+                return " " 
             end,
             separator = " ",
             separator_highlight = {colors.bg, colors.bg},
-            highlight = {colors.red, colors.bg}
+            highlight = {colors.lightbg, colors.bg}
         }
     }
 
@@ -179,7 +180,7 @@ local gl = require("galaxyline")
                 }
                 return alias[vim.fn.mode()]
             end,
-            highlight = {colors.bg, colors.red}
+            highlight = {colors.fg, colors.lightbg}
         }
     }
 
@@ -187,16 +188,16 @@ local gl = require("galaxyline")
         PerCent = {
             provider = "LinePercent",
             separator = " ",
-            separator_highlight = {colors.red, colors.red},
-            highlight = {colors.bg, colors.fg}
+            separator_highlight = {colors.lightbg, colors.lightbg},
+            highlight = {colors.fg, colors.lightbg}
         }
     }
 
     gls.right[6] = {
         rightRounded = {
             provider = function()
-                return ""
+                return " "
             end,
-            highlight = {colors.fg, colors.bg}
+            highlight = {colors.lightbg, colors.bg}
         }
     }

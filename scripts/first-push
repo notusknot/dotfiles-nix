@@ -1,3 +1,8 @@
+#!/usr/bin/env bash
+
+# This script is just for making my first push to a fresh Github repo
+# Depedencies: git
+
 git remote add origin https://github.com/$1/$2.git
 git branch -M main
 git push -u origin main

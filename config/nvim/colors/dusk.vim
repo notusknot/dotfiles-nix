@@ -5,6 +5,8 @@
 " to nvim/colors/file.vim and change the source line in vim.nix.
 " The file is also compadible with the nvim-treesitter plugin.
 
+set termguicolors
+
 augroup colorset
     autocmd!
     let s:white = { "gui": "#e3e6ee", "cterm": "145", "cterm16" : "7" }
@@ -14,7 +16,6 @@ set background=dark
 if exists('syntax_on')
   syntax reset
 endif
-let g:colors_name='dusk'
 
 hi Normal guifg=#e3e6ee ctermfg=254 guibg=#2e303e ctermbg=236 gui=NONE cterm=NONE
 hi Comment guifg=#9699b7 ctermfg=103 guibg=NONE ctermbg=NONE gui=italic cterm=italic
@@ -54,7 +55,7 @@ hi CursorLineNr guifg=#e3e6ee ctermfg=254 guibg=NONE ctermbg=NONE gui=bold cterm
 hi SignColumn guifg=NONE ctermfg=NONE guibg=#2e303e ctermbg=236 gui=NONE cterm=NONE
 hi Conceal guifg=#9699b7 ctermfg=103 guibg=NONE ctermbg=NONE gui=NONE cterm=NONE
 hi CursorColumn guifg=NONE ctermfg=NONE guibg=#9699b7 ctermbg=103 gui=NONE cterm=NONE
-hi CursorLine guifg=NONE ctermfg=NONE guibg=#9699b7 ctermbg=103 gui=NONE cterm=NONE
+hi CursorLine guifg=NONE ctermfg=NONE guibg=#393b4d ctermbg=103 gui=NONE cterm=NONE
 hi Directory guifg=#26bbd9 ctermfg=38 guibg=NONE ctermbg=NONE gui=NONE cterm=NONE
 hi DiffAdd guifg=#393b4d ctermfg=238 guibg=#29d398 ctermbg=42 gui=NONE cterm=NONE
 hi DiffChange guifg=#efb993 ctermfg=216 guibg=NONE ctermbg=NONE gui=underline cterm=underline
