@@ -3,9 +3,9 @@
 *My configuration files for NixOS. Feel free to look around and copy!* 
 
 # Special thanks to:
-    [Siduck76's NvChad](https://github.com/siduck76/nvchad/)
-    [NixOS Manual](https://nixos.org/manual/nixos/stable/)
-    [Epsyle's NixOS Dotfiles](https://github.com/epsyle/snowflake/)
+- [Siduck76's NvChad](https://github.com/siduck76/nvchad/)
+- [NixOS Manual](https://nixos.org/manual/nixos/stable/)
+- [Epsyle's NixOS Dotfiles](https://github.com/epsyle/snowflake/)
 
 ![Screenshot of my desktop](screenshot.png)
 
@@ -22,8 +22,11 @@
 
 The first thing when installing my configurations is to make sure you are using the right channels for nixpkgs. 
 The exact channels I use are: 
- ```home-manager https://github.com/nix-community/home-manager/archive/master.tar.gz
-nixos https://nixos.org/channels/nixos-unstable```
+```
+home-manager https://github.com/nix-community/home-manager/archive/master.tar.gz
+nixos https://nixos.org/channels/nixos-unstable
+```
+
 If you don't want to have any issues using my dotfiles, make sure you are also using the same channels.
 
 If you already have these channels set up, using my configs should be a breeze. Simply clone this repo and drop it into /etc/nixos. 
