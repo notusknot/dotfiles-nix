@@ -31,7 +31,7 @@ pkgs:
  	export GTK2_RC_FILES="$XDG_CONFIG_HOME"/gtk-2.0/gtkrc
 
     # Spaceship prompt
-    SPACESHIP_CHAR_SYMBOL="❯ "
+    SPACESHIP_CHAR_SYMBOL="λ "
     SPACESHIP_HG_SHOW=false
     SPACESHIP_PACKAGE_SHOW=false
     SPACESHIP_NODE_SHOW=false

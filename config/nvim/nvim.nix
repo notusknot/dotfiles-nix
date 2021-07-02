@@ -15,7 +15,7 @@ pkgs:
     luafile /etc/nixos/config/nvim/lua/settings.lua
     luafile /etc/nixos/config/nvim/lua/bufferline.lua
     luafile /etc/nixos/config/nvim/lua/statusline.lua
- 
+
     lua << EOF
     vim.defer_fn(function()
       vim.cmd [[
@@ -75,7 +75,7 @@ pkgs:
         # Misc
         neorg
         plenary-nvim
-
+        markdown-preview-nvim
   ];
 }
 

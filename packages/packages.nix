@@ -35,6 +35,7 @@ let
     rnix-lsp
     nodePackages.vls
     sumneko-lua-language-server
+    pandoc nodePackages.live-server
   ];
 in
 {

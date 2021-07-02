@@ -1,15 +1,15 @@
-
-
 # ❄️ NixOS dotfiles
 
 *My configuration files for NixOS. Feel free to look around and copy!* 
 
 # Special thanks to:
-    - [Siduck76's NvChad](https://github.com/siduck76/nvchad/)
-    - [NixOS Manual](https://nixos.org/manual/nixos/stable/)
-    - [Epsyle's NixOS Dotfiles](https://github.com/epsyle/snowflake/)
+    [Siduck76's NvChad](https://github.com/siduck76/nvchad/)
+    [NixOS Manual](https://nixos.org/manual/nixos/stable/)
+    [Epsyle's NixOS Dotfiles](https://github.com/epsyle/snowflake/)
 
 ![Screenshot of my desktop](screenshot.png)
+
+*My configuration files for NixOS. Feel free to look around and copy!* 
 
 ## Table of contents
 
@@ -20,11 +20,19 @@
 
 ## Installation
 
-If you already have NixOS installed, using my configs should be a breeze. Simply clone this repo and drop it into /etc/nixos/. Please be warned that it may not work perfectly out of the box. For best security, read over all the files to confirm there are no conflictions with your current system. 
+The first thing when installing my configurations is to make sure you are using the right channels for nixpkgs. 
+The exact channels I use are: 
+`home-manager https://github.com/nix-community/home-manager/archive/master.tar.gz
+nixos https://nixos.org/channels/nixos-unstable`
+If you don't want to have any issues using my dotfiles, make sure you are also using the same channels.
+
+If you already have these channels set up, using my configs should be a breeze. Simply clone this repo and drop it into /etc/nixos. 
+If you want, you can also set a seperate path for your NixOS configs with `export NIXOS_CONFIG=path/to/yourconfig`. 
+Please be warned that it may not work perfectly out of the box. For best security, read over all the files to confirm there are no conflictions with your current system. 
 
 ## What each file does
 | File name   | Description |
-| ----------------- | ----------- |
+| ---------------- | ----------- |
 | configurtion.nix | Configures the base system |
 | home.nix         | Configures some programs   |
 | nvim.nix         | Configures neovim          | 
@@ -37,15 +45,20 @@ If you already have NixOS installed, using my configs should be a breeze. Simply
 *It is likely you need to change a few things in this file to tailor the experience to what you use; I've included instructions in a comment at the top of the file.*
 
 This file is the meat and potatoes of a NixOS configuration. It does all the basics, like setting up a hostname, users, networking, etc. Most of the stuff in here is pretty boring. Some points of interest include: 
-- *The imports at top of the file*; this imports the hardware-configuration.nix file (which should not be touched) and the [home-manager module](https://nixos.wiki/wiki/Home_Manager).
+- *The imports at top of the file*; this imports the hardware-configuration.nix file (which should not be touched and will be different on your system) and the [home-manager module](https://nixos.wiki/wiki/Home_Manager).
 - *The neovim nightly overlay*; this essentially installs the latest and greatest neovim release, which I like since there are more features. 
 
 Otherwise, this file basically just serves to make sure my system runs fine. The real configuration comes in the [home.nix](#home.nix).
 ## 🏠 home.nix
 
-This file sets up and configures home-manager. Home-manager is an awesome tool for managing your user's configurations, which not only makes it much easier to manage them, but also declutters your home directory. It is possible to have all your configs in one file, but I split the zsh and nvim configs into seperate files just to keep it clean.
+*This section is about home-manager, if you want a better explanation on how it works and how to use it, check out the [home-manager documentation](https://github.com/nix-community/home-manager#usage)*
 
-Home-manager is used by making modules. These modules define what program you want to configure, and then a certain set of settings to apply to said program. What home-manager actually does is take in options from your `home.nix` file (or whatever other file you use to configure it) and translates it to the native syntax for the program. This means that;
+
+
+This file sets up and configures home-manager. Home-manager is an awesome tool for managing your user's configurations, which not only makes it much easier to manage them, but also declutters your home directory. It is possible to have all your configs in one file, but I split the zsh and nvim configs into seperate files just to keep it clean.
+I recommend that you make your own home-manager configuration, since mine will probably not suit how you want to use your system. The home-manager docs are great and I recommend checking them out.
+
+Home-manager is used by setting options. These options define what program you want to configure, and then a certain set of settings to apply to said program. What home-manager actually does is take in options from your `home.nix` file (or whatever other file you use to configure it) and translates it to the native syntax for the program. This means that;
 - All of your config files can have one syntax/file format
 - You can have your entire system configured in one file (or as many as you like)
 - The config is entirely reproduceable between any NixOS system
