@@ -22,8 +22,8 @@
 
 The first thing when installing my configurations is to make sure you are using the right channels for nixpkgs. 
 The exact channels I use are: 
-`home-manager https://github.com/nix-community/home-manager/archive/master.tar.gz
-nixos https://nixos.org/channels/nixos-unstable`
+ ```home-manager https://github.com/nix-community/home-manager/archive/master.tar.gz
+nixos https://nixos.org/channels/nixos-unstable```
 If you don't want to have any issues using my dotfiles, make sure you are also using the same channels.
 
 If you already have these channels set up, using my configs should be a breeze. Simply clone this repo and drop it into /etc/nixos. 
@@ -33,7 +33,7 @@ Please be warned that it may not work perfectly out of the box. For best securit
 ## What each file does
 | File name   | Description |
 | ---------------- | ----------- |
-| configurtion.nix | Configures the base system |
+| configuration.nix | Configures the base system |
 | home.nix         | Configures some programs   |
 | nvim.nix         | Configures neovim          | 
 | zsh.nix          | Configures zsh             |
