@@ -4,7 +4,6 @@ pkgs:
   dotDir =  ".config/zsh";
   initExtra = ''
 
-    export PATH=/etc/nixos/scripts/:$PATH
 
     # Variables
     export EDITOR="nvim"
@@ -13,6 +12,10 @@ pkgs:
 
     # Fix java gui
     export _JAVA_AWT_WM_NONREPARENTING=1
+
+    export NIXOS_CONFIG=$HOME/.config/nixos/configuration.nix
+    export NIXOS_CONFIG_DIR=$HOME/.config/nixos/
+    export PATH=$NIXOS_CONFIG_DIR/scripts/:$PATH
 
     # Clean up
     export XDG_DATA_HOME="$HOME/.local/share"
@@ -28,7 +31,7 @@ pkgs:
     export ERRFILE="$XDG_CACHE_HOME/X11/xsession-errors"
     export LESSHISTFILE=-
     export GTK_RC_FILES="$XDG_CONFIG_HOME"/gtk-1.0/gtkrc
- 	export GTK2_RC_FILES="$XDG_CONFIG_HOME"/gtk-2.0/gtkrc
+    export GTK2_RC_FILES="$XDG_CONFIG_HOME"/gtk-2.0/gtkrc
 
     # Spaceship prompt
     SPACESHIP_CHAR_SYMBOL="λ "
@@ -78,14 +81,11 @@ pkgs:
     ls = "ls --color=auto -A";
     unziptar = "tar -xvzf";
     mkdir = "mkdir -p";
-    yarn = "yarn --use-yarnrc '/home/notus/.config/yarn/config'";
-    search = "f() { rg $1 $HOME/stuff/packages.txt };f";
-    
-    zshrc = "sudo nvim /etc/nixos/config/zsh/zsh.nix";
-    home = "sudo nvim /etc/nixos/home.nix";
-    config = "sudo nvim /etc/nixos/configuration.nix";
-    nvimconf = "sudo nvim /etc/nixos/config/nvim/nvim.nix";
-    rebuild = "sudo nixos-rebuild switch --fast &>/dev/null";
+    zshrc = "nvim $NIXOS_CONDIF_DIR/config/zsh/zsh.nix";
+    home = "nvim $NIXOS_CONFIG_DIR/home.nix";
+    config = "nvim $NIXOS_CONFIG_DIR/configuration.nix";
+    nvimconf = "nvim $NIXOS_CONFIG_DIR/config/nvim/nvim.nix";
+    rebuild = "sudo nixos-rebuild switch -I nixos-config=$HOME/.config/nixos/configuration.nix";
   };
 
   # Source all plugins, nix-style

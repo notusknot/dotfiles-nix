@@ -3,79 +3,91 @@
 # but there are several vimscript and lua files imported as well.
 # If you want more help understanding or modifying these configurations, 
 # please submit an issue on Github or contact me on Discord 'notusknot#5622'
-
 pkgs: 
+let
+  pears-nvim = pkgs.vimUtils.buildVimPlugin {
+    name = "pears-nvim";
+    src = pkgs.fetchFromGitHub {
+      owner = "steelsojka";
+      repo = "pears.nvim";
+      rev = "14e6c47c74768b74190a529e41911ae838c45254";
+      sha256 = "04kg7g6v6k6jv2pmapaqvkvf6py1i211l822m3lsvf26jcyfs3ag";
+    };
+  };
+  dusk-vim = pkgs.vimUtils.buildVimPlugin {
+    name = "dusk-vim";
+    src = pkgs.fetchFromGitHub {
+      owner = "notusknot";
+      repo = "dusk-vim";
+      rev = "8eb71f092ebfa173a6568befbe522a56e8382756";
+      sha256 = "09l4hda5jnyigc2hhlirv1rc8hsnsc4zgcv4sa4br8fryi73nf4g";
+    };
+  };
 
+in
 {
-  enable = true;
-  vimAlias = true;
-  # A simple configuration for neovim, be sure to check out the sourced files.
-  extraConfig = ''
-    source /etc/nixos/config/nvim/colors/dusk.vim
-    luafile /etc/nixos/config/nvim/lua/settings.lua
-    luafile /etc/nixos/config/nvim/lua/bufferline.lua
-    luafile /etc/nixos/config/nvim/lua/statusline.lua
+    enable = true;
+    vimAlias = true;
+    # A simple configuration for neovim, be sure to check out the sourced files.
+    extraConfig = ''
 
-    lua << EOF
-    vim.defer_fn(function()
-      vim.cmd [[
-        luafile /etc/nixos/config/nvim/lua/lsp.lua
-        luafile /etc/nixos/config/nvim/lua/tree.lua
-        luafile /etc/nixos/config/nvim/lua/treesitter.lua
-        luafile /etc/nixos/config/nvim/lua/neorg.lua
-      ]]
-    end, 70)
-    EOF
+        luafile $NIXOS_CONFIG_DIR/config/nvim/lua/galaxyline.lua
+        luafile $NIXOS_CONFIG_DIR/config/nvim/lua/settings.lua
+        luafile $NIXOS_CONFIG_DIR/config/nvim/lua/nvim-tree.lua
+        luafile $NIXOS_CONFIG_DIR/config/nvim/lua/treesitter.lua
+        luafile $NIXOS_CONFIG_DIR/config/nvim/lua/bufferline.lua
 
-    let g:indentLine_color_term = 8
-    let g:indentLine_char_list = ['▏', '▏', '▏', '▏']
+        lua << EOF
 
-    map ; :
-
-    let g:python_host_skip_check=1
-    let g:loaded_python3_provider=1
-
-    hi! EndOfBuffer ctermbg=bg ctermfg=bg guibg=bg guifg=bg
-    nmap <C-p> :NvimTreeToggle <CR>
-
-    set nowrap
-    set nobackup
-    set nowritebackup
-    set noerrorbells
-    set noswapfile
-
+        vim.defer_fn(function()
+            require "pears".setup()
+            require 'colorizer'.setup()
+            vim.cmd [[
+                luafile $NIXOS_CONFIG_DIR/config/nvim/lua/nvim-toggleterm.lua
+                luafile $NIXOS_CONFIG_DIR/config/nvim/lua/lsp.lua
+                luafile $NIXOS_CONFIG_DIR/config/nvim/lua/neorg.lua
+           ]]
+        end, 70)
+        EOF
     '';
-
 
     # This installs all the plugins without an external plugin manager.
     plugins = with pkgs.vimPlugins; [
-
         # File tree
         nvim-web-devicons
         nvim-tree-lua
 
-        # Lsp and auto completion
+        # LSP
         nvim-lspconfig
         nvim-compe
 
-        # Eyecandy
-        galaxyline-nvim
-        nvim-treesitter
-        indentLine
-        nvim-bufferline-lua
-
         # Languages
-        vim-nix 
+        vim-nix
 
-        # Assorted web dev plugins
+        # Eyecandy 
+        nvim-treesitter
+        nvim-bufferline-lua
+        galaxyline-nvim
+        nvim-toggleterm-lua
         nvim-colorizer-lua
-        vim-closetag
+
+        dusk-vim
+
+        # Telescope
+        popup-nvim
+        plenary-nvim
+        telescope-nvim
+
+        # Indent lines
+        indentLine
+        indent-blankline-nvim
+
+        # Utility
         pears-nvim
 
-        # Misc
+        # Neorg
         neorg
-        plenary-nvim
-        markdown-preview-nvim
-  ];
+
+    ];
 }
 

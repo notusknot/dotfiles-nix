@@ -14,6 +14,13 @@ in
   # Import the necessary modules and files
   imports = [ ./hardware-configuration.nix ./packages/packages.nix <home-manager/nixos> ];
 
+  nixpkgs.config.allowUnfree = true;
+
+  environment.variables = {
+    NIXOS_CONFIG="$HOME/.config/nixos/configuration.nix";
+    NIXOS_CONFIG_DIR="$HOME/.config/nixos/";
+  };
+
   # Import neovim nightly to get more features
   nixpkgs.overlays = [
     (import (builtins.fetchTarball {

@@ -1,21 +1,9 @@
--- This is a lua config file for the nvim-treesitter plugin
--- All it does is enable the enhanced syntax highlighting
 require'nvim-treesitter.configs'.setup {
-    ensure_installed = {
-        "javascript",
-        "html",
-        "css",
-        "bash",
-        "lua",
-        "json",
-        "python",
-        "nix",
-        "c",
-    },
+    ensure_installed = "maintained", -- one of "all", "maintained" (parsers with maintainers), or a list of languages
     highlight = {
+        enable = true,              -- false will disable the whole extension
+    },
+    autotag = {
         enable = true,
-        use_languagetree = true
     },
 }
-
-require'colorizer'.setup()
