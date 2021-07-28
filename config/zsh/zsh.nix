@@ -103,10 +103,10 @@ pkgs:
     {
       name = "auto-ls";
       src = pkgs.fetchFromGitHub {
-        owner = "desyncr";
+        owner = "notusknot";
         repo = "auto-ls";
-        rev = "88704f2717fb176b91cdd4b7dbab05242bd02ddf";
-        sha256 = "0z2qkd4g3k44wr28hydklgdnvp155g3kvxwr4xplxbbpyn21drqv";
+        rev = "6f5a72b5f4dfea8479014af1310d359f6a3af509";
+        sha256 = "15m7awvds6ljcgamj2nbhqmaddz667gk99q2wpym5skjilf1vc4w";
       };
     }
     {
