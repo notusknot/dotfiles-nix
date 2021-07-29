@@ -3,7 +3,8 @@
 # but there are several vimscript and lua files imported as well.
 # If you want more help understanding or modifying these configurations, 
 # please submit an issue on Github or contact me on Discord 'notusknot#5622'
-pkgs: 
+{ pkgs, config, ... }:
+
 let
     pears-nvim = pkgs.vimUtils.buildVimPlugin {
         name = "pears-nvim";
@@ -26,66 +27,88 @@ let
 
 in
 {
-    enable = true;
-    vimAlias = true;
-    # A simple configuration for neovim, be sure to check out the sourced files.
-    extraConfig = ''
+    
+environment.systemPackages = with pkgs; [
+    (neovim.override {
+        configure = {
+            packages.myPlugins = with pkgs.vimPlugins; {
+                opt = [
+                # File tree
+                nvim-web-devicons
+                nvim-tree-lua
 
-        luafile $NIXOS_CONFIG_DIR/config/nvim/lua/galaxyline.lua
-        luafile $NIXOS_CONFIG_DIR/config/nvim/lua/settings.lua
-        luafile $NIXOS_CONFIG_DIR/config/nvim/lua/nvim-tree.lua
-        luafile $NIXOS_CONFIG_DIR/config/nvim/lua/treesitter.lua
-        luafile $NIXOS_CONFIG_DIR/config/nvim/lua/bufferline.lua
+                # LSP
+                nvim-lspconfig
+                nvim-compe
 
-        lua << EOF
+                # Languages
+                vim-nix
 
-        vim.defer_fn(function()
-            require "pears".setup()
-            require 'colorizer'.setup()
+                # Eyecandy 
+                nvim-treesitter
+                nvim-bufferline-lua
+                galaxyline-nvim
+                nvim-colorizer-lua
+
+                dusk-vim
+                pears-nvim
+
+                # Telescope
+                popup-nvim
+                plenary-nvim
+                telescope-nvim
+
+                # Indent lines
+                indent-blankline-nvim
+
+                neorg
+            ];
+        };
+        customRC = ''
+            lua << EOF
+
             vim.cmd [[
-                luafile $NIXOS_CONFIG_DIR/config/nvim/lua/nvim-toggleterm.lua
-                luafile $NIXOS_CONFIG_DIR/config/nvim/lua/lsp.lua
-                luafile $NIXOS_CONFIG_DIR/config/nvim/lua/neorg.lua
+                syntax off
+                filetype off
+                filetype plugin indent off
             ]]
-        end, 70)
-        EOF
-    '';
 
-    # This installs all the plugins without an external plugin manager.
-    plugins = with pkgs.vimPlugins; [
-        # File tree
-        nvim-web-devicons
-        nvim-tree-lua
+            vim.defer_fn(function()
 
-        # LSP
-        nvim-lspconfig
-        nvim-compe
+                vim.cmd [[
+                    syntax on
+                    filetype on
+                    filetype plugin indent on
+                    packadd nvim-treesitter
+                    packadd dusk-vim
+                    colorscheme dusk
+                    
+                    packadd nvim-web-devicons
+                    packadd nvim-tree-lua
+                    packadd nvim-lspconfig
+                    packadd nvim-compe
+                    packadd vim-nix
+                    packadd nvim-treesitter
+                    packadd nvim-bufferline-lua
+                    packadd galaxyline-nvim
+                    packadd nvim-colorizer-lua
+                    packadd popup-nvim
+                    packadd plenary-nvim
+                    packadd telescope-nvim
+                    packadd indent-blankline-nvim
+                    packadd pears-nvim
+                    packadd neorg
 
-        # Languages
-        vim-nix
+                    doautocmd BufRead
+                ]]
 
-        # Eyecandy 
-        nvim-treesitter
-        nvim-bufferline-lua
-        galaxyline-nvim
-        nvim-toggleterm-lua
-        nvim-colorizer-lua
-
-        dusk-vim
-
-        # Telescope
-        popup-nvim
-        plenary-nvim
-        telescope-nvim
-
-        # Indent lines
-        indent-blankline-nvim
-
-        # Utility
-        pears-nvim
-
-        neorg
-
-    ];
+                vim.defer_fn(function()
+                    dofile("/home/notus/.config/nixos/config/nvim/lua/settings.lua")
+                end, 15)
+            end, 0)
+            EOF
+        '';
+        };
+    }
+)];
 }
-

@@ -80,7 +80,10 @@ pkgs:
     c = "clear";
     ls = "ls --color=auto -A";
     unziptar = "tar -xvzf";
-    mkdir = "mkdir -p";
+    mkdir = "mkdir -vp";
+    rm = "rm -rifv";
+    mv = "mv -iv";
+    cp = "cp -riv";
     zshrc = "nvim $NIXOS_CONDIF_DIR/config/zsh/zsh.nix";
     home = "nvim $NIXOS_CONFIG_DIR/home.nix";
     config = "nvim $NIXOS_CONFIG_DIR/configuration.nix";

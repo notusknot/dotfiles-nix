@@ -18,7 +18,7 @@ in
   programs.home-manager.enable = true;
   # Source extra files that are too big for this one 
   programs.zsh = zshsettings pkgs;
-  programs.neovim = customNeovim pkgs;
+  # programs.neovim = customNeovim pkgs;
 
   services.spotifyd = {
       enable = true;
@@ -61,8 +61,9 @@ in
     ".local/share/dwm/autostart.sh" = {
       executable = true;
       text = "
-      /bin/sh
+      #!/bin/sh
       feh --no-fehbg --bg-tile $NIXOS_CONFIG_DIR/config/nix-tile.png
+      xrandr --rate 144
       while true; do
         xsetroot -name \"$(date)\"
         sleep 60

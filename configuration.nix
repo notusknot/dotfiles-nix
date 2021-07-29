@@ -9,7 +9,7 @@
 
 {
     # Import the necessary modules and files
-    imports = [ ./hardware-configuration.nix ./packages/packages.nix ];
+    imports = [ ./hardware-configuration.nix ./config/nvim/nvim.nix ./packages/packages.nix ];
 
     nixpkgs.config.allowUnfree = true;
 
@@ -17,7 +17,6 @@
         NIXOS_CONFIG="$HOME/.config/nixos/configuration.nix";
         NIXOS_CONFIG_DIR="$HOME/.config/nixos/";
     };
-
     # Import neovim nightly to get more features
     nixpkgs.overlays = [
         (final: prev: {
@@ -50,7 +49,7 @@
     boot.loader.efi.canTouchEfiVariables = true;
     boot.cleanTmpDir = true;
 
-  # Set up networking
+    # Set up networking
     networking = {
         hostName = "nixos";
         networkmanager.enable = true;
@@ -86,7 +85,7 @@
 
     # Install JetBrainsMono NerdFont
     fonts.fonts = with pkgs; [
-        jetbrains-mono powerline-fonts
+        jetbrains-mono 
         (nerdfonts.override { fonts = [ "JetBrainsMono" ]; })
     ];
 
