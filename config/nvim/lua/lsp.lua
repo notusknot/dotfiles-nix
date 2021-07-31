@@ -4,9 +4,6 @@
 -- Change these to whatever languages you use
 require'lspconfig'.rnix.setup{}
 require'lspconfig'.sumneko_lua.setup{}
-require'lspconfig'.pyright.setup{}
-require'lspconfig'.tsserver.setup{}
-require'lspconfig'.vuels.setup{}
 vim.o.completeopt = "menuone,noselect"
 
 -- Autocompletion setup
@@ -27,9 +24,8 @@ require'compe'.setup {
         path = true;
         buffer = true;
         nvim_lsp = true;
-        nvim_lua = true;
-        tags = true;
         treesitter = true;
+        neorg = true;
     };
 }
 

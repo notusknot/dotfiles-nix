@@ -9,9 +9,7 @@
 
 {
     # Import the necessary modules and files
-    imports = [ ./hardware-configuration.nix ./config/nvim/nvim.nix ./packages/packages.nix ];
-
-    nixpkgs.config.allowUnfree = true;
+    imports = [ ./hardware-configuration.nix ./config/nvim/nvim.nix ./config/packages.nix ];
 
     environment.variables = {
         NIXOS_CONFIG="$HOME/.config/nixos/configuration.nix";

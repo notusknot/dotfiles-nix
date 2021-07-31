@@ -25,7 +25,7 @@
           {
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
-            home-manager.users.notus = import ./home.nix;
+            home-manager.users.notus = import ./config/home.nix;
             nixpkgs.overlays = [
               neovim-nightly-overlay.overlay
             ];
