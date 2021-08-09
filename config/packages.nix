@@ -15,10 +15,9 @@
           };
         }))
 
-
         # Command-line tools
-        fzf ripgrep tree newsboat ffmpeg tldr
-        spotify-tui playerctl pass gnupg slop 
+        fzf ripgrep newsboat ffmpeg tealdeer exa duf 
+        spotify-tui playerctl pass gnupg slop bat
         libnotify sct update-nix-fetchgit hyperfine 
         
         # GUI applications

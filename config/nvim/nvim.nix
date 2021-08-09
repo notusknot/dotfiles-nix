@@ -41,7 +41,7 @@ environment.systemPackages = with pkgs; [
     (neovim.override {
         configure = {
             packages.myPlugins = with pkgs.vimPlugins; {
-                start = [ nvim-compe plenary-nvim ];
+                start = [ nvim-compe neorg-unstable plenary-nvim ];
                 opt = [
                 # File tree
                 nvim-web-devicons
@@ -69,7 +69,6 @@ environment.systemPackages = with pkgs; [
                 # Indent lines
                 indent-blankline-nvim
 
-                neorg-unstable
             ];
         };
         customRC = ''

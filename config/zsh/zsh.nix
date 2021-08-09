@@ -4,7 +4,6 @@ pkgs:
   dotDir =  ".config/zsh";
   initExtra = ''
 
-
     # Variables
     export EDITOR="nvim"
     export TERMINAL="urxvt"
@@ -78,17 +77,22 @@ pkgs:
   shellAliases = {
     v = "nvim";
     c = "clear";
-    ls = "ls --color=auto -A";
+    df = "duf";
     unziptar = "tar -xvzf";
     mkdir = "mkdir -vp";
     rm = "rm -rifv";
     mv = "mv -iv";
     cp = "cp -riv";
+    cat = "bat --paging=never";
+    fzf = "fzf --preview 'bat --color=always --style=numbers --line-range=:500 {}'";
+    ls = "exa -a --icons";
+    tree = "exa --tree --icons";
     zshrc = "nvim $NIXOS_CONDIF_DIR/config/zsh/zsh.nix";
     home = "nvim $NIXOS_CONFIG_DIR/home.nix";
     config = "nvim $NIXOS_CONFIG_DIR/configuration.nix";
     nvimconf = "nvim $NIXOS_CONFIG_DIR/config/nvim/nvim.nix";
     rebuild = "sudo nixos-rebuild switch -I nixos-config=$HOME/.config/nixos/configuration.nix";
+    nd = "nix develop -c $SHELL";
   };
 
   # Source all plugins, nix-style

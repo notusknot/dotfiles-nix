@@ -24,13 +24,15 @@ vim.cmd [[
     autocmd BufWinEnter NvimTree setlocal nonumber
     map ; :
     highlight IndentBlanklineChar guifg = #393b4d
+
 ]]
 
 local map = vim.api.nvim_set_keymap
 options = { noremap = true }
 map('n', '<C-p>', ':NvimTreeToggle <CR>', options)
 map('n', '<C-f>', ':Telescope find_files <CR>', options)
-map('n', '<C-n>', ':Telescope live_grep <CR>', options) 
+map('n', '<C-n>', ':Telescope live_grep <CR>', options)
+map('n', '<C-s>', ':!xclip -sel c -o | pygmentize -f html | xclip -sel c <CR> <CR>', options)
 
 g.mapleader = ' '
 
