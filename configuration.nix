@@ -11,6 +11,8 @@
     # Import the necessary modules and files
     imports = [ ./hardware-configuration.nix ./config/nvim/nvim.nix ./config/packages.nix ];
 
+    boot.kernelPackages = pkgs.linuxPackages_latest;
+
     environment.variables = {
         NIXOS_CONFIG="$HOME/.config/nixos/configuration.nix";
         NIXOS_CONFIG_DIR="$HOME/.config/nixos/";
@@ -86,6 +88,14 @@
         jetbrains-mono 
         (nerdfonts.override { fonts = [ "JetBrainsMono" ]; })
     ];
+
+    services.cron = {
+        enable = true;
+        systemCronJobs = [
+            "*/30 * * * * health"
+        ];
+    };
+
 
     # Fix Steam
     hardware.opengl.driSupport32Bit = true;
