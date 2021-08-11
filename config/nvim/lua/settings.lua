@@ -49,7 +49,6 @@ opt.termguicolors = true
 
 -- Undo files
 opt.undofile = true
-opt.undodir = "/home/notus/.cache/"
 
 -- Indentation
 opt.smartindent = true
@@ -67,6 +66,7 @@ opt.mouse = "a"
 -- Nicer UI settings
 opt.cursorline = true
 opt.relativenumber = true
+opt.number = true
 
 -- Get rid of annoying viminfo file
 opt.viminfo = ""

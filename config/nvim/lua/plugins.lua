@@ -28,23 +28,25 @@ require('neorg').setup {
     -- Tell Neorg what modules to load
     load = {
         ["core.defaults"] = {}, -- Load all the default modules
-        ["core.norg.concealer"] = {}, -- Allows for use of icons
-        ["core.highlights"] = {
+        ["core.highlights"] = {}, -- Allows for use of icons
+        ["core.keybinds"] = {
             config = {
-                heading = {
-                        enabled = true, -- Enable beautified headings
+                default_keybinds = true
+            }},
+        ["core.norg.concealer"] = {
+            config = {
+                icons = {
+                    heading = {
+                            enabled = true, -- Enable beautified headings
 
-                        -- Define icons for all the different heading levels
-                        level_3 = {
-                        enabled = true,
-                        icon = "",
+                            -- Define icons for all the different heading levels
+                            level_3 = {
+                            enabled = true,
+                            icon = "",
+                        },
                     },
-                },
+                }
             }
         },
     },
 }
-
-
-
-

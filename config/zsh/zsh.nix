@@ -83,7 +83,7 @@ pkgs:
     rm = "rm -rifv";
     mv = "mv -iv";
     cp = "cp -riv";
-    cat = "bat --paging=never";
+    cat = "bat --paging=never --style=plain";
     fzf = "fzf --preview 'bat --color=always --style=numbers --line-range=:500 {}'";
     ls = "exa -a --icons";
     tree = "exa --tree --icons";
@@ -96,15 +96,24 @@ pkgs:
   };
 
   # Source all plugins, nix-style
-  plugins = [
+    plugins = [
     {
       name = "spaceship-prompt";
       file = "spaceship.zsh";
       src = pkgs.fetchFromGitHub {
         owner = "spaceship-prompt";
         repo = "spaceship-prompt";
-        rev = "6e380e2d3a6d5f909ea59c089cfa47c63795a0fe";
-        sha256 = "1as7wxa1lz6syw82fa34vwsm8zcgcvbiv3gnwsq0pnzsqs3mm8dl";
+        rev = "7fd996383de095c9a43d8129628ae10c5cfa8de5";
+        sha256 = "0y5mqj84h21h73gw0bgs8a074qzzcsh76y603nng7v8lqiwfb76s";
+      };
+    }
+    {
+      name = "fast-syntax-highlighting";
+      src = pkgs.fetchFromGitHub {
+        owner = "zdharma";
+        repo = "fast-syntax-highlighting";
+        rev = "817916dfa907d179f0d46d8de355e883cf67bd97";
+        sha256 = "0m102makrfz1ibxq8rx77nngjyhdqrm8hsrr9342zzhq1nf4wxxc";
       };
     }
     {
@@ -112,17 +121,8 @@ pkgs:
       src = pkgs.fetchFromGitHub {
         owner = "notusknot";
         repo = "auto-ls";
-        rev = "6f5a72b5f4dfea8479014af1310d359f6a3af509";
-        sha256 = "15m7awvds6ljcgamj2nbhqmaddz667gk99q2wpym5skjilf1vc4w";
-      };
-    }
-    {
-      name = "zsh-syntax-highlighting";
-      src = pkgs.fetchFromGitHub {
-        owner = "zsh-users";
-        repo = "zsh-syntax-highlighting";
-        rev = "894127b221ab73847847bf7cf31eeb709bc16dc5";
-        sha256 = "1a3ischgiwqag2caapdh3zmdlsaz57x07zgnk0l3l80g9gxlinib";
+        rev = "62a176120b9deb81a8efec992d8d6ed99c2bd1a1";
+        sha256 = "08wgs3sj7hy30x03m8j6lxns8r2kpjahb9wr0s0zyzrmr4xwccj0";
       };
     }
     {
