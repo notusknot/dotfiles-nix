@@ -20,43 +20,33 @@
 
 ## Installation
 
-The first thing when installing my configurations is to make sure you are using the right channels for nixpkgs. 
-The exact channels I use are: 
-```
-home-manager https://github.com/nix-community/home-manager/archive/master.tar.gz
-nixos https://nixos.org/channels/nixos-unstable
-```
+**IMPORTANT: do NOT use my laptop.nix and/or desktop.nix! These files include settings that are specific to MY drives and they will mess up for you if you try to use them on your system. 
+If you want to use my dotfiles, copy your hardware-configuration.nix to either `config/desktop.nix` or `config/laptop.nix` and choose a hostname for it. 
+Flakes will produce a different output depending on if your system has the `notuslap` or `notusdesk` hostname. You can either set your own hostname to `notuslap` or `notusdesk` in the respective files, or change the `flake.nix` to reflect your own hostname.**
 
-If you don't want to have any issues using my dotfiles, make sure you are also using the same channels.
-
-If you already have these channels set up, using my configs should be a breeze. Simply clone this repo and drop it into /etc/nixos. 
+Since I use flakes now, using my configs should be a breeze. Simply clone this repo and drop it into /etc/nixos. 
 If you want, you can also set a seperate path for your NixOS configs with `export NIXOS_CONFIG=path/to/yourconfig`. 
 Please be warned that it may not work perfectly out of the box. For best security, read over all the files to confirm there are no conflictions with your current system. 
 
 ## What each file does
-| File name   | Description |
-| ---------------- | ----------- |
-| configuration.nix | Configures the base system |
-| home.nix         | Configures some programs   |
-| nvim.nix         | Configures neovim          | 
-| zsh.nix          | Configures zsh             |
-| packages.nix     | Installs packages          |
-| dwm.nix          | Imports my build of dwm    |
-| st.nix           | Imports my build of st     |
+| File name        | Description                   |
+| ---------------- | ------------------------------|
+| configuration.nix| Configures the base system    |
+| flake.nix        | Sets up pinned inputs/outputs |
+| home.nix         | Configures some programs      |
+| nvim.nix         | Configures neovim             | 
+| zsh.nix          | Configures zsh                |
+| packages.nix     | Installs packages             |
+| laptop.nix       | Laptop-specific settings      |
+| desktop.nix      | Desktop-specific settings     |
 
 ## ⚙️ configuration.nix
 *It is likely you need to change a few things in this file to tailor the experience to what you use; I've included instructions in a comment at the top of the file.*
+This file basically just serves to make sure my system runs fine. The real configuration comes in the [home.nix](#home.nix).
 
-This file is the meat and potatoes of a NixOS configuration. It does all the basics, like setting up a hostname, users, networking, etc. Most of the stuff in here is pretty boring. Some points of interest include: 
-- *The imports at top of the file*; this imports the hardware-configuration.nix file (which should not be touched and will be different on your system) and the [home-manager module](https://nixos.wiki/wiki/Home_Manager).
-- *The neovim nightly overlay*; this essentially installs the latest and greatest neovim release, which I like since there are more features. 
-
-Otherwise, this file basically just serves to make sure my system runs fine. The real configuration comes in the [home.nix](#home.nix).
 ## 🏠 home.nix
 
 *This section is about home-manager, if you want a better explanation on how it works and how to use it, check out the [home-manager documentation](https://github.com/nix-community/home-manager#usage)*
-
-
 
 This file sets up and configures home-manager. Home-manager is an awesome tool for managing your user's configurations, which not only makes it much easier to manage them, but also declutters your home directory. It is possible to have all your configs in one file, but I split the zsh and nvim configs into seperate files just to keep it clean.
 I recommend that you make your own home-manager configuration, since mine will probably not suit how you want to use your system. The home-manager docs are great and I recommend checking them out.
