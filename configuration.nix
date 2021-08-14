@@ -9,7 +9,7 @@
 
 {
     # Import the necessary modules and files
-    imports = [ ./hardware-configuration.nix ./config/nvim/nvim.nix ./config/packages.nix ];
+    imports = [ ./config/nvim/nvim.nix ./config/packages.nix ];
 
     boot.kernelPackages = pkgs.linuxPackages_latest;
 
@@ -51,7 +51,6 @@
 
     # Set up networking
     networking = {
-        hostName = "nixos";
         networkmanager.enable = true;
     };
 
