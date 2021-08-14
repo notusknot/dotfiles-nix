@@ -17,18 +17,6 @@
 
     outputs = { home-manager, nixpkgs, neovim-nightly-overlay, ... }: {
         nixosConfigurations = {
-             nixos = nixpkgs.lib.nixosSystem {
-                system = "x86_64-linux";
-                modules = [
-                    ./configuration.nix ./config/desktop.nix
-                    home-manager.nixosModules.home-manager {
-                        home-manager.useGlobalPkgs = true;
-                        home-manager.useUserPackages = true;
-                        home-manager.users.notus = import ./config/home.nix;
-                        nixpkgs.overlays = [ neovim-nightly-overlay.overlay ];
-                    }
-                ];
-            };
             notuslap = nixpkgs.lib.nixosSystem {
                 system = "x86_64-linux";
                 modules = [

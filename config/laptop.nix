@@ -6,6 +6,10 @@
 {
   networking.hostName = "notuslap";
 
+  environment.systemPackages = with pkgs; [
+    powertop acpi upower tlp
+  ];
+
   imports =
     [ (modulesPath + "/installer/scan/not-detected.nix")
     ];
@@ -20,7 +24,7 @@
       fsType = "ext4";
     };
     fileSystems."/boot" = {
-        device = "/dev/disk/by-uuid/A5AB-E355";
+        device = "/dev/disk/by-uuid/99CC-4342";
         fsType = "vfat";
     };
   swapDevices =
