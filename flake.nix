@@ -9,6 +9,11 @@
             inputs.nixpkgs.follows = "nixpkgs";
         };
 
+        nur = {
+            url = "github:nix-community/NUR";
+            inputs.nixpkgs.follows = "nixpkgs";
+        };
+
         neovim-nightly-overlay = {
             url = "github:nix-community/neovim-nightly-overlay";
             inputs.nixpkgs.follows = "nixpkgs";
@@ -25,7 +30,7 @@
                         home-manager.useGlobalPkgs = true;
                         home-manager.useUserPackages = true;
                         home-manager.users.notus = import ./config/home.nix;
-                        nixpkgs.overlays = [ neovim-nightly-overlay.overlay ];
+                        nixpkgs.overlays = [ nur.overlay neovim-nightly-overlay.overlay ];
                     }
                 ];
             };
@@ -37,7 +42,7 @@
                         home-manager.useGlobalPkgs = true;
                         home-manager.useUserPackages = true;
                         home-manager.users.notus = import ./config/home.nix;
-                        nixpkgs.overlays = [ neovim-nightly-overlay.overlay ];
+                        nixpkgs.overlays = [ nur.overlay neovim-nightly-overlay.overlay ];
                     }
                 ];
             };
@@ -49,7 +54,7 @@
                         home-manager.useGlobalPkgs = true;
                         home-manager.useUserPackages = true;
                         home-manager.users.notus = import ./config/home.nix;
-                        nixpkgs.overlays = [ neovim-nightly-overlay.overlay ];
+                        nixpkgs.overlays = [ nur.overlay neovim-nightly-overlay.overlay ];
                     }
                 ];
             };

@@ -63,7 +63,6 @@ environment.systemPackages = with pkgs; [
                 pears-nvim
 
                 # Telescope
-                telescope-nvim
 
                 # Indent lines
                 indent-blankline-nvim
@@ -98,7 +97,6 @@ environment.systemPackages = with pkgs; [
                     packadd nvim-bufferline-lua
                     packadd galaxyline-nvim
                     packadd nvim-colorizer-lua
-                    packadd telescope-nvim
                     packadd indent-blankline-nvim
                     packadd pears-nvim
                     packadd neorg

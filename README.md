@@ -7,7 +7,7 @@
 - [NixOS Manual](https://nixos.org/manual/nixos/stable/)
 - [Epsyle's NixOS Dotfiles](https://github.com/epsyle/snowflake/)
 
-![Screenshot of my desktop](screenshot.png)
+![Screenshot of my desktop](config/pics/screenshot.png)
 
 *My configuration files for NixOS. Feel free to look around and copy!* 
 

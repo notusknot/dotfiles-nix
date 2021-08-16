@@ -52,7 +52,7 @@ in
             executable = true;
             text = "
             #!/bin/sh
-            feh --no-fehbg --bg-tile $NIXOS_CONFIG_DIR/config/nix-tile.png
+            feh --no-fehbg --bg-tile $NIXOS_CONFIG_DIR/config/pics/nix-tile.png
             rm $HOME/.xsession-errors $HOME/.xsession-errors.old .bash_history
             xrandr --rate 144
             while true; do
