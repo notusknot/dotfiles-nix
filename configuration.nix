@@ -52,6 +52,7 @@
     # Set up networking
     networking = {
         networkmanager.enable = true;
+        nameservers = [ "1.1.1.1" "1.0.0.1" ];
     };
 
     # Set up locales (timezone and keyboard layout)
