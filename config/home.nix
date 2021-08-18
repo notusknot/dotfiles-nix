@@ -3,12 +3,16 @@
 let 
     # Import zsh config file
     zshsettings = import ./zsh/zsh.nix;
+    firefoxsettings = import ./firefox/firefox.nix;
 in 
 { 
     # Enable home-manager
     programs.home-manager.enable = true;
+
     # Source extra files that are too big for this one 
     programs.zsh = zshsettings pkgs;
+    programs.firefox = firefoxsettings pkgs;
+
     # Settings for spotifyd
     services.spotifyd = {
         enable = true;
@@ -52,12 +56,15 @@ in
             executable = true;
             text = "
             #!/bin/sh
+            status () { 
+                echo -n BAT: \"$(acpi | awk '{print $4}' | sed s/,//) | $(date '+%m %d %H:%M') }\" 
+            }
             feh --no-fehbg --bg-tile $NIXOS_CONFIG_DIR/config/pics/nix-tile.png
             rm $HOME/.xsession-errors $HOME/.xsession-errors.old .bash_history
             xrandr --rate 144
             while true; do
-                xsetroot -name \"$(date)\"
-                sleep 60
+                xsetroot -name \"$(status)\"
+                sleep 30
             done";
         };
     };

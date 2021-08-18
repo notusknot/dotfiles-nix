@@ -41,7 +41,7 @@ environment.systemPackages = with pkgs; [
     (neovim.override {
         configure = {
             packages.myPlugins = with pkgs.vimPlugins; {
-                start = [ nvim-compe neorg-unstable ];
+                start = [ popup-nvim plenary-nvim nvim-compe neorg-unstable ];
                 opt = [
                 # File tree
                 nvim-web-devicons 
@@ -63,6 +63,7 @@ environment.systemPackages = with pkgs; [
                 pears-nvim
 
                 # Telescope
+                telescope-nvim
 
                 # Indent lines
                 indent-blankline-nvim
@@ -88,6 +89,7 @@ environment.systemPackages = with pkgs; [
                     packadd dusk-vim
                     colorscheme dusk
                     
+                    packadd plenary-nvim
                     packadd nvim-web-devicons
                     packadd nvim-tree-lua
                     packadd nvim-lspconfig
@@ -97,6 +99,7 @@ environment.systemPackages = with pkgs; [
                     packadd nvim-bufferline-lua
                     packadd galaxyline-nvim
                     packadd nvim-colorizer-lua
+                    packadd telescope-nvim
                     packadd indent-blankline-nvim
                     packadd pears-nvim
                     packadd neorg

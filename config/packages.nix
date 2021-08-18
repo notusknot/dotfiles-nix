@@ -17,7 +17,7 @@
 
         # Command-line tools
         fzf ripgrep newsboat ffmpeg tealdeer exa duf 
-        spotify-tui playerctl pass gnupg slop bat
+        spotify-tui playerctl pass gnupg slop bat endlessh
         libnotify sct update-nix-fetchgit hyperfine 
        
         # GUI applications

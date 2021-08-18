@@ -20,7 +20,7 @@
         };
     };
 
-    outputs = { home-manager, nixpkgs, neovim-nightly-overlay, ... }: {
+    outputs = { home-manager, nixpkgs, nur, neovim-nightly-overlay, ... }: {
         nixosConfigurations = {
             notuslap = nixpkgs.lib.nixosSystem {
                 system = "x86_64-linux";

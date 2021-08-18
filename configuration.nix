@@ -49,12 +49,6 @@
     boot.loader.efi.canTouchEfiVariables = true;
     boot.cleanTmpDir = true;
 
-    # Set up networking
-    networking = {
-        networkmanager.enable = true;
-        nameservers = [ "1.1.1.1" "1.0.0.1" ];
-    };
-
     # Set up locales (timezone and keyboard layout)
     time.timeZone = "America/Los_Angeles";
     i18n.defaultLocale = "en_US.UTF-8";
@@ -89,16 +83,34 @@
         (nerdfonts.override { fonts = [ "JetBrainsMono" ]; })
     ];
 
+    # Set up networking and secure it
+    networking = {
+        networkmanager.enable = true;
+        nameservers = [ "1.1.1.1" "1.0.0.1" ];
+        firewall = {
+            enable = true;
+            allowedTCPPorts = [ 22 443 80 8183 ];
+            allowedUDPPorts = [ 22 443 80 8183 ];
+            allowPing = false;
+        };
+    };
+
+    services.openssh = {
+        enable = true;
+        extraConfig = "
+            AddressFamily inet
+        ";
+        ports = [ 8183 ];
+        permitRootLogin = "no";
+        passwordAuthentication = false;
+    };
+
     services.cron = {
         enable = true;
         systemCronJobs = [
-            "*/30 * * * * health"
+            "@reboot endlessh -p 22"
         ];
     };
-
-
-    # Fix Steam
-    hardware.opengl.driSupport32Bit = true;
 
     # Do not touch
     system.stateVersion = "20.09";
