@@ -6,6 +6,9 @@ let
     firefoxsettings = import ./firefox/firefox.nix;
 in 
 { 
+    # Nvim config
+    imports = [ ./config/nvim/nvim.nix ];
+
     # Enable home-manager
     programs.home-manager.enable = true;
 

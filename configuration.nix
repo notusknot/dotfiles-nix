@@ -1,37 +1,15 @@
-# This file goes in /etc/nixos/configuration.nix, and is the system-wide config file
-# If you want to use this config for yourself, you might want to change the username,
-# installed packages, and localizations. 
-
-# Also, make sure to use the unstable branch of NixOS in order to install all the packages! 
-# Read about it here: nixos.wiki/wiki/Nix_channels
-
 { config, pkgs, ... }:
 
 {
     # Import the necessary modules and files
-    imports = [ ./config/nvim/nvim.nix ./config/packages.nix ];
 
-    boot.kernelPackages = pkgs.linuxPackages_latest;
-
+    # Set environment variables
     environment.variables = {
         NIXOS_CONFIG="$HOME/.config/nixos/configuration.nix";
         NIXOS_CONFIG_DIR="$HOME/.config/nixos/";
     };
-    # Import neovim nightly to get more features
-    nixpkgs.overlays = [
-        (final: prev: {
-        dwm = prev.dwm.overrideAttrs (old: { 
-            src = pkgs.fetchFromGitHub { 
-            owner="notusknot"; 
-            repo="dwm"; 
-            rev="603beed93d299b5a00a3f2cbd950c0c19668d1fd";
-            sha256="1n0rv2w76jqbimzlswdb4ql8jmwdcdpb5hq9f6vl0slwfs3g9cfm";
-            };
-        });
-        })
-    ];
 
-        # Auto cleanup
+    # Nix settings, auto cleanup and enable flakes
     nix = {
         autoOptimiseStore = true;
         gc = {
@@ -44,10 +22,15 @@
         '';
     };
 
-    # Set up bootloader and clean /tmp/ on boot
-    boot.loader.systemd-boot.enable = true;
-    boot.loader.efi.canTouchEfiVariables = true;
-    boot.cleanTmpDir = true;
+    # Boot settings: clean /tmp/, latest kernel and enable bootloader
+    boot = {
+        cleanTmpDir = true;
+        kernelPackages = pkgs.linuxPackages_latest;
+        loader = {
+            systemd-boot.enable = true;
+            efi.canTouchEfiVariables = true;
+        }; 
+    };
 
     # Set up locales (timezone and keyboard layout)
     time.timeZone = "America/Los_Angeles";
@@ -57,13 +40,20 @@
         keyMap = "us";
     };
 
-    # X settings (bspwm, lightdm, etc)
+    # X server settings
     services.xserver = {
         layout = "us";
         enable = true;
-        libinput.enable = true;
+
+        # Display manager and window manager
         displayManager.lightdm.enable = true;
         windowManager.dwm.enable = true;
+
+        # Touchpad scrolling
+        libinput = {
+            enable = true;
+            naturalScrolling = true;
+        };
     };
 
     # Enable audio
@@ -77,7 +67,7 @@
         shell = pkgs.zsh;
     };
 
-    # Install JetBrainsMono NerdFont
+    # Install fonts
     fonts.fonts = with pkgs; [
         jetbrains-mono 
         roboto
@@ -96,6 +86,7 @@
         };
     };
 
+    # Openssh settings for security
     services.openssh = {
         enable = true;
         extraConfig = "
@@ -106,6 +97,7 @@
         passwordAuthentication = false;
     };
 
+    # Cron jobs
     services.cron = {
         enable = true;
         systemCronJobs = [

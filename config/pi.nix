@@ -3,6 +3,7 @@
 {
     networking.hostName = "notuspi";
 
+    # Nginx settings for website
     services.nginx = {
         enable = true;
 

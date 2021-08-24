@@ -1,6 +1,7 @@
 {
     description = "NixOS configuration";
 
+    # All inputs for the system
     inputs = {
         nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
 
@@ -20,12 +21,15 @@
         };
     };
 
+    # All outputs for the system (configs)
     outputs = { home-manager, nixpkgs, nur, neovim-nightly-overlay, ... }: {
         nixosConfigurations = {
+
+            # Laptop config
             notuslap = nixpkgs.lib.nixosSystem {
                 system = "x86_64-linux";
                 modules = [
-                    ./configuration.nix ./config/laptop.nix
+                    ./configuration.nix ./config/laptop.nix ./config/packages.nix 
                     home-manager.nixosModules.home-manager {
                         home-manager.useGlobalPkgs = true;
                         home-manager.useUserPackages = true;
@@ -34,10 +38,12 @@
                     }
                 ];
             };
+
+            # Desktop config
             notusdesk = nixpkgs.lib.nixosSystem {
                 system = "x86_64-linux";
                 modules = [
-                    ./configuration.nix ./config/desktop.nix
+                    ./configuration.nix ./config/desktop.nix ./config/packages.nix 
                     home-manager.nixosModules.home-manager {
                         home-manager.useGlobalPkgs = true;
                         home-manager.useUserPackages = true;
@@ -46,16 +52,12 @@
                     }
                 ];
             };
+
+            # Raspberry Pi config
             notuspi = nixpkgs.lib.nixosSystem {
                 system = "x86_64-linux";
                 modules = [
                     ./configuration.nix ./config/pi.nix
-                    home-manager.nixosModules.home-manager {
-                        home-manager.useGlobalPkgs = true;
-                        home-manager.useUserPackages = true;
-                        home-manager.users.notus = import ./config/home.nix;
-                        nixpkgs.overlays = [ nur.overlay neovim-nightly-overlay.overlay ];
-                    }
                 ];
             };
         };

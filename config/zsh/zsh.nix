@@ -9,11 +9,6 @@ pkgs:
     export TERMINAL="urxvt"
     export BROWSER="firefox"
 
-    # Fix java gui
-    export _JAVA_AWT_WM_NONREPARENTING=1
-
-    export NIXOS_CONFIG=$HOME/.config/nixos/configuration.nix
-    export NIXOS_CONFIG_DIR=$HOME/.config/nixos/
     export PATH=$NIXOS_CONFIG_DIR/scripts/:$PATH
 
     # Clean up
@@ -66,73 +61,72 @@ pkgs:
     bindkey '^ ' autosuggest-accept
     '';
 
-  # Tweak settings for history
-  history = {
-    save = 1000;
-    size = 1000;
-    path = "$HOME/.cache/zsh_history";
-  };
+    # Tweak settings for history
+    history = {
+        save = 1000;
+        size = 1000;
+        path = "$HOME/.cache/zsh_history";
+    };
 
-  # Set some aliases
-  shellAliases = {
-    v = "nvim";
-    c = "clear";
-    df = "duf";
-    unziptar = "tar -xvzf";
-    mkdir = "mkdir -vp";
-    rm = "rm -rifv";
-    mv = "mv -iv";
-    cp = "cp -riv";
-    cat = "bat --paging=never --style=plain";
-    fzf = "fzf --preview 'bat --color=always --style=numbers --line-range=:500 {}'";
-    ls = "exa -a --icons";
-    tree = "exa --tree --icons";
-    zshrc = "nvim $NIXOS_CONDIF_DIR/config/zsh/zsh.nix";
-    home = "nvim $NIXOS_CONFIG_DIR/home.nix";
-    config = "nvim $NIXOS_CONFIG_DIR/configuration.nix";
-    nvimconf = "nvim $NIXOS_CONFIG_DIR/config/nvim/nvim.nix";
-    rebuild = "sudo nixos-rebuild switch -I nixos-config=$HOME/.config/nixos/configuration.nix";
-    nd = "nix develop -c $SHELL";
-  };
+    # Set some aliases
+    shellAliases = {
+        v = "nvim";
+        c = "clear";
+        df = "duf";
+        unziptar = "tar -xvzf";
+        mkdir = "mkdir -vp";
+        rm = "rm -rifv";
+        mv = "mv -iv";
+        cp = "cp -riv";
+        cat = "bat --paging=never --style=plain";
+        fzf = "fzf --preview 'bat --color=always --style=numbers --line-range=:500 {}'";
+        ls = "exa -a --icons";
+        tree = "exa --tree --icons";
+        zshrc = "nvim $NIXOS_CONDIF_DIR/config/zsh/zsh.nix";
+        home = "nvim $NIXOS_CONFIG_DIR/home.nix";
+        config = "nvim $NIXOS_CONFIG_DIR/configuration.nix";
+        nvimconf = "nvim $NIXOS_CONFIG_DIR/config/nvim/nvim.nix";
+        rebuild = "sudo nixos-rebuild switch -I nixos-config=$HOME/.config/nixos/configuration.nix";
+        nd = "nix develop -c $SHELL";
+    };
 
-  # Source all plugins, nix-style
+    # Source all plugins, nix-style
     plugins = [
     {
-      name = "spaceship-prompt";
-      file = "spaceship.zsh";
-      src = pkgs.fetchFromGitHub {
-        owner = "spaceship-prompt";
-        repo = "spaceship-prompt";
-        rev = "7fd996383de095c9a43d8129628ae10c5cfa8de5";
-        sha256 = "0y5mqj84h21h73gw0bgs8a074qzzcsh76y603nng7v8lqiwfb76s";
-      };
+        name = "spaceship-prompt";
+        file = "spaceship.zsh";
+        src = pkgs.fetchFromGitHub {
+            owner = "spaceship-prompt";
+            repo = "spaceship-prompt";
+            rev = "7fd996383de095c9a43d8129628ae10c5cfa8de5";
+            sha256 = "0y5mqj84h21h73gw0bgs8a074qzzcsh76y603nng7v8lqiwfb76s";
+        };
     }
     {
-      name = "fast-syntax-highlighting";
-      src = pkgs.fetchFromGitHub {
-        owner = "zdharma";
-        repo = "fast-syntax-highlighting";
-        rev = "817916dfa907d179f0d46d8de355e883cf67bd97";
-        sha256 = "0m102makrfz1ibxq8rx77nngjyhdqrm8hsrr9342zzhq1nf4wxxc";
-      };
+        name = "fast-syntax-highlighting";
+        src = pkgs.fetchFromGitHub {
+            owner = "zdharma";
+            repo = "fast-syntax-highlighting";
+            rev = "817916dfa907d179f0d46d8de355e883cf67bd97";
+            sha256 = "0m102makrfz1ibxq8rx77nngjyhdqrm8hsrr9342zzhq1nf4wxxc";
+        };
     }
     {
-      name = "auto-ls";
-      src = pkgs.fetchFromGitHub {
-        owner = "notusknot";
-        repo = "auto-ls";
-        rev = "62a176120b9deb81a8efec992d8d6ed99c2bd1a1";
-        sha256 = "08wgs3sj7hy30x03m8j6lxns8r2kpjahb9wr0s0zyzrmr4xwccj0";
-      };
+        name = "auto-ls";
+        src = pkgs.fetchFromGitHub {
+            owner = "notusknot";
+            repo = "auto-ls";
+            rev = "62a176120b9deb81a8efec992d8d6ed99c2bd1a1";
+            sha256 = "08wgs3sj7hy30x03m8j6lxns8r2kpjahb9wr0s0zyzrmr4xwccj0";
+        };
     }
     {
-      name = "zsh-autosuggestions";
-      src = pkgs.fetchFromGitHub {
-          owner = "zsh-users";
-          repo = "zsh-autosuggestions";
-          rev = "a411ef3e0992d4839f0732ebeb9823024afaaaa8";
-          sha256 = "1g3pij5qn2j7v7jjac2a63lxd97mcsgw6xq6k5p7835q9fjiid98";
-      };
-    }
-  ];
+        name = "zsh-autosuggestions";
+        src = pkgs.fetchFromGitHub {
+            owner = "zsh-users";
+            repo = "zsh-autosuggestions";
+            rev = "a411ef3e0992d4839f0732ebeb9823024afaaaa8";
+            sha256 = "1g3pij5qn2j7v7jjac2a63lxd97mcsgw6xq6k5p7835q9fjiid98";
+        };
+    }];
 }
