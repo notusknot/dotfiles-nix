@@ -9,8 +9,6 @@ pkgs:
         darkreader
         h264ify
         df-youtube
-        privacy-redirect
-        tree-style-tab
     ];
     profiles.notus = {
         settings = {
@@ -47,16 +45,25 @@ pkgs:
             "toolkit.legacyUserProfileCustomizations.stylesheets" = true;
             "browser.toolbars.bookmarks.visibility" = "never";
             "browser.search.suggest.enabled" = false;
-            "browser.urlbar.placeholderName" = "DuckDuckGo";
+            "browser.urlbar.shortcuts.bookmarks" = false;
+            "browser.urlbar.shortcuts.history" = false;
+            "browser.urlbar.shortcuts.tabs" = false;
+            "browser.urlbar.suggest.bookmark" = false;
+            "browser.urlbar.suggest.engines" = false;
+            "browser.urlbar.suggest.history" = false;
+            "browser.urlbar.suggest.openpage" = false;
+            "browser.urlbar.suggest.topsites" = false;
+            "browser.uidensity" = 1;
+            "media.autoplay.enabled" = false;
+            "extensions.pocket.enabled" = false;
+            "identity.fxaccounts.enabled" = false;
+            "toolkit.zoomManager.zoomValues" = ".8,.95,1,1.1,1.2";
         };
         userChrome = "
             * { 
                 box-shadow: none !important;
                 border: 0px solid !important;
             }
-
-            #titlebar { display: none; }
-
         ";
     };
 }

@@ -56,6 +56,7 @@ opt.tabstop = 4
 opt.shiftwidth = 4
 opt.shiftround = true
 opt.expandtab = true
+opt.scrolloff = 3
 
 -- Set clipboard to use system clipboard
 opt.clipboard = "unnamedplus"

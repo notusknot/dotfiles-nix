@@ -57,7 +57,7 @@ in
             text = "
             #!/bin/sh
             status () { 
-                echo -n BAT: \"$(acpi | awk '{print $4}' | sed s/,//) | $(date '+%m %d %H:%M') }\" 
+                echo -n BAT: \"$(acpi | awk '{print $4}' | sed s/,//) | $(date '+%m/%d %H:%M') \" 
             }
             feh --no-fehbg --bg-tile $NIXOS_CONFIG_DIR/config/pics/nix-tile.png
             rm $HOME/.xsession-errors $HOME/.xsession-errors.old .bash_history

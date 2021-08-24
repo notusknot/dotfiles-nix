@@ -80,6 +80,7 @@
     # Install JetBrainsMono NerdFont
     fonts.fonts = with pkgs; [
         jetbrains-mono 
+        roboto
         (nerdfonts.override { fonts = [ "JetBrainsMono" ]; })
     ];
 
