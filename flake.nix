@@ -15,6 +15,18 @@
             inputs.nixpkgs.follows = "nixpkgs";
         };
 
+        dwm = {
+            url = "github:notusknot/dwm";
+            inputs.nixpkgs.follows = "nixpkgs";
+            flake = false;
+        };
+
+        st = {
+            url = "github:notusknot/st";
+            inputs.nixpkgs.follows = "nixpkgs";
+            flake = false;
+        };
+
         neovim-nightly-overlay = {
             url = "github:nix-community/neovim-nightly-overlay";
             inputs.nixpkgs.follows = "nixpkgs";
@@ -22,7 +34,7 @@
     };
 
     # All outputs for the system (configs)
-    outputs = { home-manager, nixpkgs, nur, neovim-nightly-overlay, ... }: {
+    outputs = { home-manager, nixpkgs, nur, neovim-nightly-overlay, st, dwm, ... }: {
         nixosConfigurations = {
 
             # Laptop config
@@ -34,7 +46,19 @@
                         home-manager.useGlobalPkgs = true;
                         home-manager.useUserPackages = true;
                         home-manager.users.notus = import ./config/home.nix;
-                        nixpkgs.overlays = [ nur.overlay neovim-nightly-overlay.overlay ];
+                        nixpkgs.overlays = [ 
+                            (final: prev: {
+                                st = prev.st.overrideAttrs (o: {
+                                    src = st;
+                                });
+                            })
+                            (final: prev: {
+                                dwm = prev.dwm.overrideAttrs (o: {
+                                    src = dwm;
+                                });
+                            })
+                            nur.overlay neovim-nightly-overlay.overlay 
+                        ];
                     }
                 ];
             };
@@ -48,7 +72,19 @@
                         home-manager.useGlobalPkgs = true;
                         home-manager.useUserPackages = true;
                         home-manager.users.notus = import ./config/home.nix;
-                        nixpkgs.overlays = [ nur.overlay neovim-nightly-overlay.overlay ];
+                        nixpkgs.overlays = [ 
+                            (final: prev: {
+                                st = prev.st.overrideAttrs (o: {
+                                    src = st;
+                                });
+                            })
+                            (final: prev: {
+                                dwm = prev.dwm.overrideAttrs (o: {
+                                    src = dwm;
+                                });
+                            })
+                            nur.overlay neovim-nightly-overlay.overlay 
+                        ];
                     }
                 ];
             };

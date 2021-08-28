@@ -6,9 +6,6 @@ let
     firefoxsettings = import ./firefox/firefox.nix;
 in 
 { 
-    # Nvim config
-    imports = [ ./config/nvim/nvim.nix ];
-
     # Enable home-manager
     programs.home-manager.enable = true;
 
@@ -62,7 +59,7 @@ in
             status () { 
                 echo -n BAT: \"$(acpi | awk '{print $4}' | sed s/,//) | $(date '+%m/%d %H:%M') \" 
             }
-            feh --no-fehbg --bg-tile $NIXOS_CONFIG_DIR/config/pics/nix-tile.png
+            feh --no-fehbg --bg-fill $NIXOS_CONFIG_DIR/config/pics/wallpaper.png
             rm $HOME/.xsession-errors $HOME/.xsession-errors.old .bash_history
             xrandr --rate 144
             while true; do

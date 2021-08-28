@@ -32,8 +32,9 @@ options = { noremap = true }
 map('n', '<C-p>', ':NvimTreeToggle <CR>', options)
 map('n', '<C-f>', ':Telescope find_files <CR>', options)
 map('n', '<C-n>', ':Telescope live_grep <CR>', options)
+map('n', '<C-l>', ':noh <CR>', options)
 map('n', '<C-s>', ':!xclip -sel c -o | pygmentize -f html | xclip -sel c <CR> <CR>', options)
-
+vim.api.nvim_set_keymap('n', '0', "getline('.')[0 : col('.') - 2] =~# '^\\s\\+$' ? '0' : '^'", {silent = true, noremap = true, expr = true})
 g.mapleader = ' '
 
 -- Indent line
@@ -74,7 +75,7 @@ opt.viminfo = ""
 opt.viminfofile = "NONE"
 
 -- Miscellaneous quality of life
-opt.smartcase = true
+opt.ignorecase = true
 opt.ttimeoutlen = 5
 opt.compatible = false
 opt.hidden = true

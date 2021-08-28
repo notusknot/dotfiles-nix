@@ -6,24 +6,6 @@
 { pkgs, config, ... }:
 
 let
-    pears-nvim = pkgs.vimUtils.buildVimPlugin {
-        name = "pears-nvim";
-        src = pkgs.fetchFromGitHub {
-            owner = "steelsojka";
-            repo = "pears.nvim";
-            rev = "14e6c47c74768b74190a529e41911ae838c45254";
-            sha256 = "04kg7g6v6k6jv2pmapaqvkvf6py1i211l822m3lsvf26jcyfs3ag";
-        };
-    };
-    neorg-unstable = pkgs.vimUtils.buildVimPlugin {
-        name = "neorg";
-        src = pkgs.fetchFromGitHub {
-            owner = "vhyrro";
-            repo = "neorg";
-            rev = "bf1b812663b4a75221b4b8901edf578a49ba2f16";
-            sha256 = "5tA/yRYY+8HBAdHDz8uPx2TtzCbseEXGkj7e/NAjDe4=";
-        };
-    };
     dusk-vim = pkgs.vimUtils.buildVimPlugin {
         name = "dusk-vim";
         src = pkgs.fetchFromGitHub {
@@ -41,7 +23,7 @@ environment.systemPackages = with pkgs; [
     (neovim.override {
         configure = {
             packages.myPlugins = with pkgs.vimPlugins; {
-                start = [ popup-nvim plenary-nvim nvim-compe neorg-unstable ];
+                start = [ popup-nvim plenary-nvim nvim-compe neorg ];
                 opt = [
                 # File tree
                 nvim-web-devicons 
@@ -55,7 +37,7 @@ environment.systemPackages = with pkgs; [
 
                 # Eyecandy 
                 nvim-treesitter
-                nvim-bufferline-lua
+                bufferline-nvim
                 galaxyline-nvim
                 nvim-colorizer-lua
 
@@ -96,7 +78,7 @@ environment.systemPackages = with pkgs; [
                     packadd nvim-compe
                     packadd vim-nix
                     packadd nvim-treesitter
-                    packadd nvim-bufferline-lua
+                    packadd bufferline-nvim	
                     packadd galaxyline-nvim
                     packadd nvim-colorizer-lua
                     packadd telescope-nvim

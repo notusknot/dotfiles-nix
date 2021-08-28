@@ -1,7 +1,8 @@
 { config, pkgs, ... }:
 
 {
-    # Import the necessary modules and files
+    # Neovim configuration
+    imports = [ ./config/nvim/nvim.nix ];
 
     # Set environment variables
     environment.variables = {
@@ -52,7 +53,7 @@
         # Touchpad scrolling
         libinput = {
             enable = true;
-            naturalScrolling = true;
+            touchpad.naturalScrolling = true;
         };
     };
 

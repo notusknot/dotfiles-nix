@@ -4,6 +4,8 @@ pkgs:
   dotDir =  ".config/zsh";
   initExtra = ''
 
+    PROMPT='%F{blue}~%b %(?.%F{green}%Bλ%b.%F{red}?) %f'
+
     # Variables
     export EDITOR="nvim"
     export TERMINAL="urxvt"
@@ -26,23 +28,6 @@ pkgs:
     export LESSHISTFILE=-
     export GTK_RC_FILES="$XDG_CONFIG_HOME"/gtk-1.0/gtkrc
     export GTK2_RC_FILES="$XDG_CONFIG_HOME"/gtk-2.0/gtkrc
-
-    # Spaceship prompt
-    SPACESHIP_CHAR_SYMBOL="λ "
-    SPACESHIP_HG_SHOW=false
-    SPACESHIP_PACKAGE_SHOW=false
-    SPACESHIP_NODE_SHOW=false
-    SPACESHIP_RUBY_SHOW=false
-    SPACESHIP_ELM_SHOW=false
-    SPACESHIP_ELIXIR_SHOW=false
-    SPACESHIP_GOLANG_SHOW=false
-    SPACESHIP_SWIFT_SHOW=false
-    SPACESHIP_PHP_SHOW=false
-    SPACESHIP_JULIA_SHOW=false
-    SPACESHIP_RUST_SHOW=false
-    SPACESHIP_DOCKER_SHOW=false
-    SPACESHIP_VI_MODE_SHOW=false
-    SPACESHIP_EXIT_CODE_SHOW=true
 
     # I honestly don't know what this does
     autoload -U colors && colors
@@ -92,16 +77,6 @@ pkgs:
 
     # Source all plugins, nix-style
     plugins = [
-    {
-        name = "spaceship-prompt";
-        file = "spaceship.zsh";
-        src = pkgs.fetchFromGitHub {
-            owner = "spaceship-prompt";
-            repo = "spaceship-prompt";
-            rev = "7fd996383de095c9a43d8129628ae10c5cfa8de5";
-            sha256 = "0y5mqj84h21h73gw0bgs8a074qzzcsh76y603nng7v8lqiwfb76s";
-        };
-    }
     {
         name = "fast-syntax-highlighting";
         src = pkgs.fetchFromGitHub {
