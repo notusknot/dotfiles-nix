@@ -102,4 +102,4 @@ It is entirely possible to have your entire nvim config in the `home.nix`, but u
 My zsh config is also in it's own file, but much smaller than the neovim one. Home-manager has pretty good support for zsh configurations, which is very convenient. For plugin management, I use the fetchFromGitHub function in NixOS, but you can use oh-my-zsh, prezto, and a few others.
 
 ## Conclusion
-And thats about it for my configuration. The code is registered under the MIT license, meaning you are allowed to use or distribute the code as you please, and if you need any help or have any suggestions, you can reach me on Discord at `notusknot#5622` or email me at `notusknot@gmail.com`.
+And thats about it for my configuration. The code is registered under the MIT license, meaning you are allowed to use or distribute the code as you please, and if you need any help or have any suggestions, you can reach me on Discord at `notusknot#5622` or email me at `notusknot@pm.me`.

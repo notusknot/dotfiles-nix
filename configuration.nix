@@ -23,10 +23,21 @@
         '';
     };
 
+    nixpkgs.config.allowBroken = true;
+
     # Boot settings: clean /tmp/, latest kernel and enable bootloader
     boot = {
         cleanTmpDir = true;
-        kernelPackages = pkgs.linuxPackages_latest;
+        kernelPackages = pkgs.linuxPackagesFor (pkgs.linux_5_10.override {
+    argsOverride = rec {
+      src = pkgs.fetchurl {
+            url = "mirror://kernel/linux/kernel/v5.x/linux-${version}.tar.xz";
+            sha256 = "sha256-8rckm5kEnIQzjaCebIV9MZyXq3o5bQA1ysv7bnPhNQc=";
+      };
+      version = "5.10.45";
+      modDirVersion = "5.10.45";
+      };
+  });
         loader = {
             systemd-boot.enable = true;
             efi.canTouchEfiVariables = true;
