@@ -11,9 +11,10 @@
         fzf ripgrep newsboat ffmpeg tealdeer exa duf 
         spotify-tui playerctl pass gnupg slop bat endlessh
         libnotify sct update-nix-fetchgit hyperfine 
+        wireguard wireguard-tools
        
         # GUI applications
-        firefox mpv 
+        firefox mpv anki
 
         # Development
         git gcc gnumake python3 

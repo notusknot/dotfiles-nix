@@ -4,7 +4,7 @@ pkgs:
   dotDir =  ".config/zsh";
   initExtra = ''
 
-    PROMPT='%F{blue}~%b %(?.%F{green}%Bλ%b.%F{red}?) %f'
+    PROMPT="%F{blue}%m %~%b "$'\n'"%(?.%F{green}%Bλ%b.%F{red}?) %f"
 
     # Variables
     export EDITOR="nvim"

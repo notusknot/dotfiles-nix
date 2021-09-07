@@ -38,10 +38,10 @@
         nixosConfigurations = {
 
             # Laptop config
-            notuslap = nixpkgs.lib.nixosSystem {
+            laptop = nixpkgs.lib.nixosSystem {
                 system = "x86_64-linux";
                 modules = [
-                    ./configuration.nix ./config/laptop.nix ./config/packages.nix 
+                    ./configuration.nix ./config/hosts/laptop.nix ./config/packages.nix 
                     home-manager.nixosModules.home-manager {
                         home-manager.useGlobalPkgs = true;
                         home-manager.useUserPackages = true;
@@ -64,10 +64,10 @@
             };
 
             # Desktop config
-            notusdesk = nixpkgs.lib.nixosSystem {
+            desktop = nixpkgs.lib.nixosSystem {
                 system = "x86_64-linux";
                 modules = [
-                    ./configuration.nix ./config/desktop.nix ./config/packages.nix 
+                    ./configuration.nix ./config/hosts/desktop.nix ./config/packages.nix 
                     home-manager.nixosModules.home-manager {
                         home-manager.useGlobalPkgs = true;
                         home-manager.useUserPackages = true;
@@ -90,10 +90,10 @@
             };
 
             # Raspberry Pi config
-            notuspi = nixpkgs.lib.nixosSystem {
+            vps = nixpkgs.lib.nixosSystem {
                 system = "x86_64-linux";
                 modules = [
-                    ./configuration.nix ./config/pi.nix
+                    ./configuration.nix ./config/hosts/vps.nix
                 ];
             };
         };

@@ -42,7 +42,7 @@ g.indent_blankline_char = '▏'
 
 -- Performance
 opt.lazyredraw = true;
-opt.shell = "/bin/sh"
+opt.shell = "zsh"
 opt.shadafile = "NONE"
 
 -- Colors
