@@ -110,28 +110,6 @@
             "@reboot endlessh -p 22"
         ];
     };
-
-    # Wireguard client setup
-    networking.wireguard.interfaces = {
-        wg0 = {
-            ips = [ "10.100.0.2/24" ];
-            listenPort = 51820; # to match firewall allowedUDPPorts (without this wg uses random port numbers)
-
-            privateKeyFile = "/home/notus/keys/wg-private";
-
-            peers = [
-                {
-                publicKey = "ar0hDNb8rINHFOuuzngoUzLGNAvBlnxC2BvIP8VEXVs=";
-
-                allowedIPs = [ "0.0.0.0/0" ];
-
-
-                persistentKeepalive = 25;
-                }
-            ];
-        };
-    };
-
     # Do not touch
     system.stateVersion = "20.09";
     
