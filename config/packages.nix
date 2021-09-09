@@ -8,10 +8,9 @@
         dwm dmenu feh zsh dunst st
 
         # Command-line tools
-        fzf ripgrep newsboat ffmpeg tealdeer exa duf 
-        spotify-tui playerctl pass gnupg slop bat endlessh
-        libnotify sct update-nix-fetchgit hyperfine 
-        wireguard wireguard-tools
+        fzf ripgrep newsboat ffmpeg tealdeer exa 
+        pass gnupg slop bat 
+        libnotify sct update-nix-fetchgit 
        
         # GUI applications
         firefox mpv anki

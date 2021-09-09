@@ -57,7 +57,6 @@ pkgs:
     shellAliases = {
         v = "nvim";
         c = "clear";
-        df = "duf";
         unziptar = "tar -xvzf";
         mkdir = "mkdir -vp";
         rm = "rm -rifv";
