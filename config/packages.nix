@@ -9,7 +9,7 @@
 
         # Command-line tools
         fzf ripgrep newsboat ffmpeg tealdeer exa 
-        pass gnupg slop bat 
+        pass gnupg slop bat tmux
         libnotify sct update-nix-fetchgit 
        
         # GUI applications
