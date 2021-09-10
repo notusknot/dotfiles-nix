@@ -20,13 +20,14 @@
 
 ## Installation
 
-**IMPORTANT: do NOT use my laptop.nix and/or desktop.nix! These files include settings that are specific to MY drives and they will mess up for you if you try to use them on your system. 
-If you want to use my dotfiles, copy your hardware-configuration.nix to either `config/desktop.nix` or `config/laptop.nix` and choose a hostname for it. 
-Flakes will produce a different output depending on if your system has the `notuslap` or `notusdesk` hostname. You can either set your own hostname to `notuslap` or `notusdesk` in the respective files, or change the `flake.nix` to reflect your own hostname.**
+**IMPORTANT: do NOT use my laptop.nix and/or desktop.nix! These files include settings that are specific to MY drives and they will mess up for you if you try to use them on your system. **
 
-Since I use flakes now, using my configs should be a breeze. Simply clone this repo and drop it into /etc/nixos. 
-If you want, you can also set a seperate path for your NixOS configs with `export NIXOS_CONFIG=path/to/yourconfig`. 
-Please be warned that it may not work perfectly out of the box. For best security, read over all the files to confirm there are no conflictions with your current system. 
+Since I use flakes now, using my configs should be a breeze. Simply clone this repo and drop it wherever you want (I use .config/nixos). 
+To build my config for your system, run the following: ```sudo nixos-rebuild switch --flakes .#laptop```
+Replace `laptop` with desktop, vps, depending on what kind of computer you are using, or leave it as laptop if you want. 
+Remember to change the drives UIDs in their respective files!
+Please be warned that it may not work perfectly out of the box.
+For best security, read over all the files to confirm there are no conflictions with your current system. 
 
 ## What each file does
 | File name        | Description                   |
@@ -36,6 +37,7 @@ Please be warned that it may not work perfectly out of the box. For best securit
 | home.nix         | Configures some programs      |
 | nvim.nix         | Configures neovim             | 
 | zsh.nix          | Configures zsh                |
+| firefox.nix      | Configures firefox            |
 | packages.nix     | Installs packages             |
 | laptop.nix       | Laptop-specific settings      |
 | desktop.nix      | Desktop-specific settings     |
@@ -74,27 +76,16 @@ services.picom = {
   
   This general idea is how you configure home-manager, you can look at my `zsh.nix` file for a more in-depth config. 
 
-## 📦 /packages/packages.nix
+## 📦 config/packages.nix
 
 This file is what properly installs all of my packages/programs. It is not necessary to have this file, and most people will have this list in their configuration.nix. However, I like to seperate it into another file and source it in my configuration.nix, just to keep things neater. In the packages directory, it also imports a custom build of st and dwm. If you don't know or don't care about my builds or you want to use your own, you can remove the imports or change the custom package files.
 
-## /scripts/
+## scripts/
+
 This directory is exactly what it sounds like; a set of scripts that I use often to make my life a little bit easier. They are very simple. Feel free to poke around and use them for yourself.
 
 ## 📝 neovim 
-
-For my neovim configuration, since there are several lua files I also want to source, I decided to create an entire directory for it. To get the neovim nightly (latest version of neovim), add this at the top of `home.nix`: 
-```
-{ config, pkgs, ... }:
-{
-  nixpkgs.overlays = [
-    (import (builtins.fetchTarball {
-      url = https://github.com/nix-community/neovim-nightly-overlay/archive/master.tar.gz;
-    }))
-  ];
-  # The rest of your config...
-}
-```
+Neovim Nightly is imported in the `flake.nix`, and it is configured in it's own files (the main one being nix and the others being lua)
 It is entirely possible to have your entire nvim config in the `home.nix`, but unless it is pretty small, things will get very messy, very quickly. I manage my plugins with the nix package manager, which makes it simple to install and apply plugins. If your desired plugins are not available, its possible to use vim-plug ([or you can add it to the nixpkgs repo!](https://github.com/NixOS/nixpkgs/blob/master/doc/languages-frameworks/vim.section.md)). The rest of the config for neovim is pretty standard: the basic stuff goes in vim.nix and cofigs for specific plugins are sourced from their own seperate files.
 
 ## 🐚 zsh

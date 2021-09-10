@@ -105,6 +105,25 @@
         ];
     };
 
+    # Enable WireGuard
+    networking.wireguard.interfaces = {
+        wg0 = {
+            # Determines the IP address and subnet of the client's end of the tunnel interface.
+            ips = [ "73.170.139.156/32" ];
+            listenPort = 51820;
+
+            privateKeyFile = "/home/notus/keys/wg-private";
+
+            peers = [
+                {
+                    publicKey = "ar0hDNb8rINHFOuuzngoUzLGNAvBlnxC2BvIP8VEXVs=";
+                    allowedIPs = [ "0.0.0.0/0" ];
+                    endpoint = "150.230.34.68:51820"; # ToDo: route to endpoint not automatically configured https://wiki.archlinux.org/index.php/WireGuard#Loop_routing https://discourse.nixos.org/t/solved-minimal-firewall-setup-for-wireguard-client/7577
+                    persistentKeepalive = 25;
+                }
+            ];
+        };
+    };
 
     # Do not touch
     system.stateVersion = "20.09";
