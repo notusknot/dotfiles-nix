@@ -26,16 +26,17 @@
 
     imports = [ (modulesPath + "/installer/scan/not-detected.nix") ];
 
-    boot.loader.grub = {
-        efiSupport = true;
-        efiInstallAsRemovable = true;
-        device = "nodev";
-    };
+    boot.loader.grub.enable = false;
+    boot.loader.generic-extlinux-compatible.enable = true;
+    networking.useDHCP = false;
+    networking.interfaces.eth0.useDHCP = true;
 
     boot.initrd.availableKernelModules = [ "usbhid" ];
     fileSystems."/" = { device = "/dev/disk/by-uuid/44444444-4444-4444-8888-888888888888"; fsType = "ext4"; };
 
     swapDevies = [];
+
+    environment.systemPackages = with pkgs; [ neovim git tmux ];
 
     powerManagement.cpuFreqGovernor = lib.mkDefault "powersave";
 
