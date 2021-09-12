@@ -30,4 +30,7 @@
     };
 
     swapDevices = [ { device = "/dev/disk/by-uuid/e8eac985-dcd4-4f52-8681-751e13b37e28"; } ];
+
+    powerManagement.cpuFreqGovernor = lib.mkDefault "performance";
+
 }

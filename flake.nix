@@ -89,13 +89,22 @@
                 ];
             };
 
-            # Raspberry Pi config
+            # Oracle VPS config
             vps = nixpkgs.lib.nixosSystem {
                 system = "x86_64-linux";
                 modules = [
                     ./config/hosts/vps.nix
                 ];
             };
+            
+            # Raspberry Pi config
+            pi = nixpkgs.lib.nixosSystem {
+                system = "x86_64-linux";
+                modules = [
+                    ./config/hosts/pi.nix
+                ];
+            };
+
         };
     };
 }

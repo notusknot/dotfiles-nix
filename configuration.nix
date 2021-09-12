@@ -49,7 +49,7 @@
         enable = true;
 
         # Display manager and window manager
-        displayManager.lightdm.enable = true;
+        displayManager.ly.enable = true;
         windowManager.dwm.enable = true;
 
         # Touchpad scrolling
