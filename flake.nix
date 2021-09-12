@@ -99,7 +99,7 @@
             
             # Raspberry Pi config
             pi = nixpkgs.lib.nixosSystem {
-                system = "x86_64-linux";
+                system = "aarch64-linux";
                 modules = [
                     ./config/hosts/pi.nix
                 ];
