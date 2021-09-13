@@ -42,15 +42,6 @@
         permitRootLogin = "no";
         passwordAuthentication = false;
     };
-
-    # Cron jobs
-    /* services.cron = {
-        enable = true;
-        systemCronJobs = [
-            "@reboot endlessh -p 22"
-        ];
-    };
-
     # enable NAT
     networking.nat.enable = true;
     networking.nat.externalInterface = "eth0";

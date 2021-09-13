@@ -14,6 +14,22 @@
 
     boot.cleanTmpDir = true;
 
+    boot.loader.raspberryPi.firmwareConfig = "
+        dtoverlay=act-led
+
+        dtparam=act_led_trigger=none
+        dtparam=act_led_activelow=off
+
+        dtparam=pwr_led_trigger=none
+        dtparam=pwr_led_activelow=off
+
+        dtparam=eth_led0=4
+        dtparam=eth_led1=4
+
+        dtoverlay=pi3-disable-bt
+        dtovrelay=pi3-disable-wifi
+    ";
+
     # Set up user and enable sudo
     users.users.notus = {
         isNormalUser = true;
@@ -39,5 +55,10 @@
     environment.systemPackages = with pkgs; [ neovim git tmux ];
 
     powerManagement.cpuFreqGovernor = lib.mkDefault "powersave";
+    
+    services.tlp.enable = true;
+    powerManagement.powertop.enable = true;
+
+
 
 }

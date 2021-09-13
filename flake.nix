@@ -104,7 +104,6 @@
                     ./config/hosts/pi.nix
                 ];
             };
-
         };
     };
 }
