@@ -14,6 +14,7 @@
 
     boot.cleanTmpDir = true;
 
+    boot.loader.raspberryPi.enable = true;
     boot.loader.raspberryPi.firmwareConfig = "
         dtoverlay=act-led
 
@@ -52,7 +53,7 @@
 
     swapDevices = [];
 
-    environment.systemPackages = with pkgs; [ neovim git tmux ];
+    environment.systemPackages = with pkgs; [ raspberrypi-eeprom raspberrypifw neovim git tmux ];
 
     powerManagement.cpuFreqGovernor = lib.mkDefault "powersave";
     
