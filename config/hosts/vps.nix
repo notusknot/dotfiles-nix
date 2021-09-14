@@ -25,23 +25,22 @@
     users.users.root.openssh.authorizedKeys.keys = [ "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDGT2HfLDD+Hp4GjoIIoQ2S6zxQ1m8psYijVfwpLhUoFXEq6X6tsMqn5lGkHmQET2s9BIEHjud4ySLsFn35yqC18WBIGLFkbE0wl9OcMXA06rkZwy6eeLczG0YoOuT0TbQkB2344j5F09e4b04g79jNq6FGJtS8CMyE0NiKu7hHy9+hrbz7aJFd1qzd8zdI9P22fBa9GbGsgVXO8ug9Sk9qk/YZwA+Zg4dNtj3ag6LSUZaSezwU4sb0P4P1wKw0b2u4flq7ZuDHrQlYqCltmv7CpmvtLc85L2raMEbfC0gaPYkO82GSEuOj6B4SuDNyr+3mCVCgFM+Fb2APKsgiUfGkMNE8mfqrUa4pPnqZrwjzM9qYjfl8yOF5NZNEfeJpYybk4FG8Uz47M3U7PXsC9cy4EslESdUvVZZghem1b0ecfIW5T2PlJxde6Rua7sYkkerdsPxo2wqRPzfQz/jR9dFNqKtlx/CxkSQE7x8YBCgoHBjCfQlfvRtGxYo0xzFDFdM= notus@notuslap" ];
 
     # Set up networking and secure it
-    /* networking = {
-        networkmanager.enable = true;
+     networking = {
         firewall = {
             enable = true;
-            allowedTCPPorts = [ 443 80 8183 53 ];
-            allowedUDPPorts = [ 443 80 8183 53 51820 ];
+            allowedTCPPorts = [ 443 80 8183 ];
+            allowedUDPPorts = [ 443 80 8183 44857];
             allowPing = true;
         };
     };
 
     # Openssh settings for security
-    services.openssh = {
+    /* services.openssh = {
         enable = true;
         ports = [ 8183 ];
         permitRootLogin = "no";
         passwordAuthentication = false;
-    };
+    }; */
     # enable NAT
     networking.nat.enable = true;
     networking.nat.externalInterface = "eth0";
@@ -49,9 +48,9 @@
 
     networking.wireguard.interfaces = {
         wg0 = {
-            ips = [ "150.230.34.68/24" ];
+            ips = [ "152.70.112.48/24" ];
 
-            listenPort = 51820;
+            listenPort = 44857;
 
             postSetup = ''
                 ${pkgs.iptables}/bin/iptables -t nat -A POSTROUTING -s 150.230.34.68/24 -o eth0 -j MASQUERADE
@@ -66,36 +65,7 @@
                 }
             ];
         };
-    }; */
-
-    security.acme = {
-        acceptTerms = true;
-        email = "notusknot@pm.me";
-    };
-
-    services.nginx = {
-        enable = true;
-
-        recommendedGzipSettings = true;
-        recommendedOptimisation = true;
-        recommendedProxySettings = true;
-        recommendedTlsSettings = true;
-
-        sslCiphers = "AES256+EECDH:AES256+EDH:!aNULL";
-
-        virtualHosts = {
-            "notusknot.com" = {
-                forceSSL = true;
-                enableACME = true;
-                root = "/home/notus/blog";
-
-                locations."/" = {};
-                locations."/".extraConfig = ''
-                    autoindex on;
-                '';
-            };
-        };
-    };
+    }; 
 
     imports = [ (modulesPath + "/profiles/qemu-guest.nix") ];
 

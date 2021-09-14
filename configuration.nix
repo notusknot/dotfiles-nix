@@ -83,9 +83,20 @@
         networkmanager.enable = true;
         firewall = {
             enable = true;
-            allowedTCPPorts = [ 443 80 8183 53 ];
-            allowedUDPPorts = [ 443 80 8183 53 51820 ];
+            allowedTCPPorts = [ 443 80 8183 ];
+            allowedUDPPorts = [ 443 80 8183 44857 ];
             allowPing = false;
+
+            # Allow wireguard
+            logReversePathDrops = true;
+            extraCommands = ''
+                ip46tables -t raw -I nixos-fw-rpfilter -p udp -m udp --sport 44857 -j RETURN
+                ip46tables -t raw -I nixos-fw-rpfilter -p udp -m udp --dport 44857 -j RETURN
+            '';
+            extraStopCommands = ''
+                ip46tables -t raw -D nixos-fw-rpfilter -p udp -m udp --sport 44857 -j RETURN || true
+                ip46tables -t raw -D nixos-fw-rpfilter -p udp -m udp --dport 44857 -j RETURN || true
+            '';
         };
     };
 
