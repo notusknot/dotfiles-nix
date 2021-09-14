@@ -14,6 +14,8 @@
 
     boot.cleanTmpDir = true;
 
+    environment.systemPackages = with pkgs; [ git neovim tmux ];
+
     # Set up user and enable sudo
     users.users.notus = {
         isNormalUser = true;
