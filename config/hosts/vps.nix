@@ -67,7 +67,36 @@
             ];
         };
     }; */
-    
+
+    security.acme = {
+        acceptTerms = true;
+        email = "notusknot@pm.me";
+    };
+
+    services.nginx = {
+        enable = true;
+
+        recommendedGzipSettings = true;
+        recommendedOptimisation = true;
+        recommendedProxySettings = true;
+        recommendedTlsSettings = true;
+
+        sslCiphers = "AES256+EECDH:AES256+EDH:!aNULL";
+
+        virtualHosts = {
+            "notusknot.com" = {
+                forceSSL = true;
+                enableACME = true;
+                root = "/home/notus/blog";
+
+                locations."/" = {};
+                locations."/".extraConfig = ''
+                    autoindex on;
+                '';
+            };
+        };
+    };
+
     imports = [ (modulesPath + "/profiles/qemu-guest.nix") ];
 
     boot.loader.grub = {
