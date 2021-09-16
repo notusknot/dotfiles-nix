@@ -31,6 +31,7 @@
         cleanTmpDir = true;
         loader = {
             systemd-boot.enable = true;
+            systemd-boot.editor = false;
             efi.canTouchEfiVariables = true;
         }; 
     };
@@ -83,8 +84,8 @@
         networkmanager.enable = true;
         firewall = {
             enable = true;
-            allowedTCPPorts = [ 443 80 8183 ];
-            allowedUDPPorts = [ 443 80 8183 44857 ];
+            allowedTCPPorts = [ 443 80 ];
+            allowedUDPPorts = [ 443 80 44857 ];
             allowPing = false;
 
             # Allow wireguard
@@ -103,10 +104,11 @@
     # Openssh settings for security
     services.openssh = {
         enable = true;
-        ports = [ 8183 ];
         permitRootLogin = "no";
         passwordAuthentication = false;
     };
+
+    security.protectKernelImage = true;
 
     services.tlp.enable = true;
     powerManagement.powertop.enable = true;

@@ -60,6 +60,6 @@
     services.tlp.enable = true;
     powerManagement.powertop.enable = true;
 
-
+    security.protectKernelImage = true;
 
 }

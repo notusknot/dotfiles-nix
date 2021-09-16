@@ -14,7 +14,7 @@
 
     boot.cleanTmpDir = true;
 
-    environment.systemPackages = with pkgs; [ git neovim tmux ];
+    environment.systemPackages = with pkgs; [ htop git neovim tmux ];
 
     # Set up user and enable sudo
     users.users.notus = {
@@ -23,26 +23,23 @@
         openssh.authorizedKeys.keys = [ "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDGT2HfLDD+Hp4GjoIIoQ2S6zxQ1m8psYijVfwpLhUoFXEq6X6tsMqn5lGkHmQET2s9BIEHjud4ySLsFn35yqC18WBIGLFkbE0wl9OcMXA06rkZwy6eeLczG0YoOuT0TbQkB2344j5F09e4b04g79jNq6FGJtS8CMyE0NiKu7hHy9+hrbz7aJFd1qzd8zdI9P22fBa9GbGsgVXO8ug9Sk9qk/YZwA+Zg4dNtj3ag6LSUZaSezwU4sb0P4P1wKw0b2u4flq7ZuDHrQlYqCltmv7CpmvtLc85L2raMEbfC0gaPYkO82GSEuOj6B4SuDNyr+3mCVCgFM+Fb2APKsgiUfGkMNE8mfqrUa4pPnqZrwjzM9qYjfl8yOF5NZNEfeJpYybk4FG8Uz47M3U7PXsC9cy4EslESdUvVZZghem1b0ecfIW5T2PlJxde6Rua7sYkkerdsPxo2wqRPzfQz/jR9dFNqKtlx/CxkSQE7x8YBCgoHBjCfQlfvRtGxYo0xzFDFdM= notus@notuslap" ];
     };
 
-    services.openssh.enable = true;
-    users.users.root.openssh.authorizedKeys.keys = [ "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDGT2HfLDD+Hp4GjoIIoQ2S6zxQ1m8psYijVfwpLhUoFXEq6X6tsMqn5lGkHmQET2s9BIEHjud4ySLsFn35yqC18WBIGLFkbE0wl9OcMXA06rkZwy6eeLczG0YoOuT0TbQkB2344j5F09e4b04g79jNq6FGJtS8CMyE0NiKu7hHy9+hrbz7aJFd1qzd8zdI9P22fBa9GbGsgVXO8ug9Sk9qk/YZwA+Zg4dNtj3ag6LSUZaSezwU4sb0P4P1wKw0b2u4flq7ZuDHrQlYqCltmv7CpmvtLc85L2raMEbfC0gaPYkO82GSEuOj6B4SuDNyr+3mCVCgFM+Fb2APKsgiUfGkMNE8mfqrUa4pPnqZrwjzM9qYjfl8yOF5NZNEfeJpYybk4FG8Uz47M3U7PXsC9cy4EslESdUvVZZghem1b0ecfIW5T2PlJxde6Rua7sYkkerdsPxo2wqRPzfQz/jR9dFNqKtlx/CxkSQE7x8YBCgoHBjCfQlfvRtGxYo0xzFDFdM= notus@notuslap" ];
-
     # Set up networking and secure it
      networking = {
         firewall = {
             enable = true;
-            allowedTCPPorts = [ 443 80 8183 ];
-            allowedUDPPorts = [ 443 80 8183 44857];
+            allowedTCPPorts = [ 443 80 ];
+            allowedUDPPorts = [ 443 80 44857];
             allowPing = true;
         };
     };
 
     # Openssh settings for security
-    /* services.openssh = {
+    services.openssh = {
         enable = true;
-        ports = [ 8183 ];
         permitRootLogin = "no";
         passwordAuthentication = false;
-    }; */
+    };
+
     # enable NAT
     networking.nat.enable = true;
     networking.nat.externalInterface = "eth0";
@@ -82,5 +79,6 @@
     fileSystems."/" = { device = "/dev/sda3"; fsType = "xfs"; };
 
     powerManagement.cpuFreqGovernor = lib.mkDefault "performance";
+    security.protectKernelImage = true;
 
 }
