@@ -1,6 +1,7 @@
 { pkgs, config, ... }:
 
 {
+    nixpkgs.config.allowUnfree = true;
     # Install all the packages
     environment.systemPackages = with pkgs; [
 
@@ -13,7 +14,7 @@
         libnotify sct update-nix-fetchgit 
        
         # GUI applications
-        firefox mpv anki
+        firefox mpv anki brave exodus
 
         # Development
         git gcc gnumake python3 

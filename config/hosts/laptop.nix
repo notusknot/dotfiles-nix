@@ -10,6 +10,11 @@
         powertop acpi upower tlp
     ];
 
+    networking.extraHosts = let
+    hostsPath = https://raw.githubusercontent.com/StevenBlack/hosts/master/alternates/fakenews-gambling-porn-social/hosts;
+    hostsFile = builtins.fetchurl { url=hostsPath; sha256="sha256:0abbzbiiyhfpf7ycpjkjjd6sdlh9q06x2rv6b57rkr7wkm69i4vp"; };
+  in builtins.readFile "${hostsFile}";
+
     imports = [ (modulesPath + "/installer/scan/not-detected.nix") ];
 
     boot.initrd.availableKernelModules = [ "xhci_pci" "ehci_pci" "ahci" "sd_mod" "rtsx_pci_sdmmc" ];
