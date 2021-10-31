@@ -25,7 +25,6 @@ require'compe'.setup {
         buffer = true;
         nvim_lsp = true;
         treesitter = true;
-        neorg = true;
     };
 }
 

@@ -5,7 +5,6 @@ local g = vim.g
 dofile("/home/notus/.config/nixos/config/nvim/lua/galaxyline.lua")
 dofile("/home/notus/.config/nixos/config/nvim/lua/lsp.lua")
 dofile("/home/notus/.config/nixos/config/nvim/lua/nvim-tree.lua")
-dofile("/home/notus/.config/nixos/config/nvim/lua/plugins.lua")
 
 vim.cmd [[
     set nowrap
@@ -26,6 +25,19 @@ vim.cmd [[
     highlight IndentBlanklineChar guifg = #393b4d
 
 ]]
+
+-- Enable plugins
+require('bufferline').setup{}
+require('pears').setup()
+require('colorizer').setup()
+
+-- Treesitter settings
+require'nvim-treesitter.configs'.setup {
+    ensure_installed = "all", -- one of "all", "maintained" (parsers with maintainers), or a list of languages
+    highlight = {
+        enable = true
+    },
+}
 
 local map = vim.api.nvim_set_keymap
 options = { noremap = true }

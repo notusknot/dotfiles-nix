@@ -18,84 +18,37 @@ let
 
 in
 {
-    
-environment.systemPackages = with pkgs; [
-    (neovim.override {
-        configure = {
-            packages.myPlugins = with pkgs.vimPlugins; {
-                start = [ popup-nvim plenary-nvim nvim-compe neorg ];
-                opt = [
-                # File tree
-                nvim-web-devicons 
-                nvim-tree-lua
+    enable = true;
+    plugins = with pkgs.vimPlugins; [
+        # File tree
+        nvim-web-devicons 
+        nvim-tree-lua
 
-                # LSP
-                nvim-lspconfig
+        # LSP
+        nvim-lspconfig
 
-                # Languages
-                vim-nix
+        # Languages
+        vim-nix
 
-                # Eyecandy 
-                nvim-treesitter
-                bufferline-nvim
-                galaxyline-nvim
-                nvim-colorizer-lua
+        # Eyecandy 
+        nvim-treesitter
+        bufferline-nvim
+        galaxyline-nvim
+        nvim-colorizer-lua
+        dusk-vim
+        pears-nvim
 
-                dusk-vim
-                pears-nvim
+        # Lsp and completion
+        nvim-lspconfig
+        nvim-compe
 
-                # Telescope
-                telescope-nvim
+        # Telescope
+        telescope-nvim
 
-                # Indent lines
-                indent-blankline-nvim
-
-            ];
-        };
-        customRC = ''
-            lua << EOF
-
-            vim.cmd [[
-                syntax off
-                filetype off
-                filetype plugin indent off
-            ]]
-
-            vim.defer_fn(function()
-
-                vim.cmd [[
-                    syntax on
-                    filetype on
-                    filetype plugin indent on
-                    packadd nvim-treesitter
-                    packadd dusk-vim
-                    colorscheme dusk
-                    
-                    packadd plenary-nvim
-                    packadd nvim-web-devicons
-                    packadd nvim-tree-lua
-                    packadd nvim-lspconfig
-                    packadd nvim-compe
-                    packadd vim-nix
-                    packadd nvim-treesitter
-                    packadd bufferline-nvim	
-                    packadd galaxyline-nvim
-                    packadd nvim-colorizer-lua
-                    packadd telescope-nvim
-                    packadd indent-blankline-nvim
-                    packadd pears-nvim
-                    packadd neorg
-
-                    doautocmd BufRead
-                ]]
-
-                vim.defer_fn(function()
-                    dofile("/home/notus/.config/nixos/config/nvim/lua/settings.lua")
-                end, 15)
-            end, 0)
-            EOF
-        '';
-        };
-    }
-)];
+        # Indent lines
+        indent-blankline-nvim
+    ];
+    extraConfig = ''
+        luafile /home/notus/.config/nixos/config/nvim/lua/settings.lua
+    '';
 }

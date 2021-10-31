@@ -1,9 +1,6 @@
 { config, pkgs, ... }:
 
 {
-    # Neovim configuration
-    imports = [ ./config/nvim/nvim.nix ];
-
     # Set environment variables
     environment.variables = {
         NIXOS_CONFIG="$HOME/.config/nixos/configuration.nix";

@@ -3,7 +3,7 @@
 let 
     # Import zsh config file
     zshsettings = import ./zsh/zsh.nix;
-    firefoxsettings = import ./firefox/firefox.nix;
+    nvimsettings = import ./nvim/nvim.nix;
 in 
 { 
     # Enable home-manager
@@ -11,7 +11,7 @@ in
 
     # Source extra files that are too big for this one 
     programs.zsh = zshsettings pkgs;
-    programs.firefox = firefoxsettings pkgs;
+    programs.neovim = nvimsettings pkgs;
 
     # Settings for XDG user directory, to declutter home directory
     xdg.userDirs = {
