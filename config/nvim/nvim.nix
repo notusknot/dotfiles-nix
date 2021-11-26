@@ -49,6 +49,6 @@ in
         indent-blankline-nvim
     ];
     extraConfig = ''
-        luafile /home/notus/.config/nixos/config/nvim/lua/settings.lua
+        luafile /home/notus/.config/nixos/config/nvim/lua/loadSettings.lua
     '';
 }
