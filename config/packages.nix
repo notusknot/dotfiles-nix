@@ -6,11 +6,11 @@
     environment.systemPackages = with pkgs; [
 
         # Rice/desktop
-        dwm dmenu feh zsh dunst st
+        dwm dmenu feh zsh dunst st i3lock xidlehook
 
         # Command-line tools
         fzf ripgrep newsboat ffmpeg tealdeer exa 
-        pass gnupg slop bat tmux
+        pass gnupg slop bat tmux wireguard
         libnotify sct update-nix-fetchgit 
        
         # GUI applications

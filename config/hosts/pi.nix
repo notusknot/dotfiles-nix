@@ -70,11 +70,6 @@
         };
     };
 
-        # enable NAT
-    networking.nat.enable = true;
-    networking.nat.externalInterface = "eth0";
-    networking.nat.internalInterfaces = [ "wg0" ];
-
     networking.wireguard.interfaces = {
         wg0 = {
             ips = [ "73.170.139.156/32" ];

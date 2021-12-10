@@ -37,6 +37,7 @@ in
             feh --no-fehbg --bg-fill $NIXOS_CONFIG_DIR/config/pics/wallpaper.png
             rm $HOME/.xsession-errors $HOME/.xsession-errors.old .bash_history
             xrandr --rate 144
+            xidlehook --not-when-audio --not-when-fullscreen --timer 300 'i3lock -c 000000' '' &
             while true; do
                 xsetroot -name \"$(status)\"
                 sleep 30
