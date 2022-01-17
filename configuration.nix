@@ -3,10 +3,7 @@
 {
     # Set environment variables
     environment.variables = {
-        NIXOS_CONFIG="$HOME/.config/nixos/configuration.nix";
-        NIXOS_CONFIG_DIR="$HOME/.config/nixos/";
-    };
-
+        NIXOS_CONFIG="$HOME/.config/nixos/configuration.nix"; NIXOS_CONFIG_DIR="$HOME/.config/nixos/"; };
     # Nix settings, auto cleanup and enable flakes
     nix = {
         autoOptimiseStore = true;
@@ -21,6 +18,7 @@
         '';
     };
 
+    nixpkgs.config.allowUnfree = true;
     nixpkgs.config.allowBroken = true;
 
     # Boot settings: clean /tmp/, latest kernel and enable bootloader
@@ -106,9 +104,6 @@
     };
 
     security.protectKernelImage = true;
-
-    services.tlp.enable = true;
-    powerManagement.powertop.enable = true;
 
     # Do not touch
     system.stateVersion = "20.09";

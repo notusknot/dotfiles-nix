@@ -14,7 +14,7 @@
         libnotify sct update-nix-fetchgit 
        
         # GUI applications
-        firefox mpv anki brave exodus
+        lutris mpv anki brave exodus
 
         # Development
         git gcc gnumake python3 
