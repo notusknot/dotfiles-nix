@@ -1,18 +1,11 @@
 local opt = vim.opt
 local g = vim.g
 
--- Lazy load everything!
 dofile("/home/notus/.config/nixos/config/nvim/lua/galaxyline.lua")
 dofile("/home/notus/.config/nixos/config/nvim/lua/lsp.lua")
 dofile("/home/notus/.config/nixos/config/nvim/lua/nvim-tree.lua")
 
 vim.cmd [[
-    set nowrap
-    set nobackup
-    set nowritebackup
-    set noerrorbells
-    set noswapfile
-    
     colorscheme dusk
     function! Preserve(command)
       let w = winsaveview()
@@ -23,7 +16,13 @@ vim.cmd [[
     autocmd BufWinEnter NvimTree setlocal nonumber
     map ; :
     highlight IndentBlanklineChar guifg = #393b4d
-
+    au FileType markdown setlocal wrap linebreak
+    nnoremap j gj
+    nnoremap k gk
+    augroup cmdline
+        autocmd!
+        autocmd CmdlineLeave : echo ''
+    augroup end
 ]]
 
 -- Enable plugins
@@ -44,6 +43,8 @@ options = { noremap = true }
 map('n', '<C-p>', ':NvimTreeToggle <CR>', options)
 map('n', '<C-f>', ':Telescope find_files <CR>', options)
 map('n', '<C-n>', ':Telescope live_grep <CR>', options)
+map('n', '<C-o>', ':TZAtaraxis <CR>', options)
+map('n', '<C-m>', ':TZMinimalist <CR>', options)
 map('n', '<C-l>', ':noh <CR>', options)
 map('n', '<C-s>', ':!xclip -sel c -o | pygmentize -f html | xclip -sel c <CR> <CR>', options)
 vim.api.nvim_set_keymap('n', '0', "getline('.')[0 : col('.') - 2] =~# '^\\s\\+$' ? '0' : '^'", {silent = true, noremap = true, expr = true})
@@ -92,3 +93,9 @@ opt.ttimeoutlen = 5
 opt.compatible = false
 opt.hidden = true
 opt.shortmess = "atI"
+opt.wrap = false
+opt.backup = false
+opt.writebackup = false
+opt.errorbells = false
+opt.swapfile = false
+opt.showmode = false

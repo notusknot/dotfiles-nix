@@ -37,6 +37,8 @@ in
         nvim-colorizer-lua
         dusk-vim
         pears-nvim
+        TrueZen-nvim
+        goyo-vim
 
         # Lsp and completion
         nvim-lspconfig

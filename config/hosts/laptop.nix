@@ -12,7 +12,7 @@
 
     networking.extraHosts = let
     hostsPath = https://raw.githubusercontent.com/StevenBlack/hosts/master/alternates/fakenews-gambling-porn-social/hosts;
-    hostsFile = builtins.fetchurl { url=hostsPath; sha256="sha256:0k2530ws62pnwf2gfxsc2yca1b1wiz4696051aajkjcd4m5z7hi0"; };
+    hostsFile = builtins.fetchurl { url=hostsPath; sha256="sha256:0zxnvf9mh5x3s31r8zvzfa2aag0j4n24bp2iyx1yvidaqyc39rpz"; };
     in builtins.readFile "${hostsFile}";
 
     hardware.cpu.intel.updateMicrocode = true;

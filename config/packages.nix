@@ -10,11 +10,11 @@
 
         # Command-line tools
         fzf ripgrep newsboat ffmpeg tealdeer exa 
-        pass gnupg slop bat tmux wireguard
-        libnotify sct update-nix-fetchgit 
+        pass gnupg slop bat tmux wireguard unzip xclip
+        libnotify sct update-nix-fetchgit lowdown
        
         # GUI applications
-        lutris mpv anki brave exodus
+        mpv anki brave exodus
 
         # Development
         git gcc gnumake python3 
