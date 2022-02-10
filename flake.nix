@@ -31,10 +31,15 @@
             url = "github:nix-community/neovim-nightly-overlay";
             inputs.nixpkgs.follows = "nixpkgs";
         };
+
+        picom-ibhagwan= {
+            url = "github:ibhagwan/picom";
+            flake = false;
+        };
     };
 
     # All outputs for the system (configs)
-    outputs = { home-manager, nixpkgs, nur, neovim-nightly-overlay, st, dwm, ... }: {
+    outputs = { home-manager, nixpkgs, nur, picom-ibhagwan, neovim-nightly-overlay, st, dwm, ... }: {
         nixosConfigurations = {
 
             # Laptop config
@@ -57,7 +62,12 @@
                                     src = dwm;
                                 });
                             })
-                            nur.overlay neovim-nightly-overlay.overlay 
+                            (final: prev: {
+                                picom = prev.picom.overrideAttrs (o: {
+                                    src = picom-ibhagwan;
+                                });
+                            })
+                            nur.overlay neovim-nightly-overlay.overlay
                         ];
                     }
                 ];

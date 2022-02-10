@@ -6,6 +6,9 @@ dofile("/home/notus/.config/nixos/config/nvim/lua/lsp.lua")
 dofile("/home/notus/.config/nixos/config/nvim/lua/nvim-tree.lua")
 
 vim.cmd [[
+    command! CompeEnable  call compe#setup(g:compe, 0)
+    command! CompeDisable call compe#setup({'enabled': v:false}, 0)
+
     colorscheme dusk
     function! Preserve(command)
       let w = winsaveview()
@@ -17,12 +20,17 @@ vim.cmd [[
     map ; :
     highlight IndentBlanklineChar guifg = #393b4d
     au FileType markdown setlocal wrap linebreak
+    au FileType markdown CompeDisable
     nnoremap j gj
     nnoremap k gk
     augroup cmdline
         autocmd!
         autocmd CmdlineLeave : echo ''
     augroup end
+    imap <C-i> <Esc>[s1z=`]a
+
+    " or if you want to disable/enable for the current buffer only
+
 ]]
 
 -- Enable plugins
@@ -99,3 +107,4 @@ opt.writebackup = false
 opt.errorbells = false
 opt.swapfile = false
 opt.showmode = false
+opt.spell = false

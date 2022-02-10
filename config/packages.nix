@@ -6,7 +6,7 @@
     environment.systemPackages = with pkgs; [
 
         # Rice/desktop
-        dwm dmenu feh zsh dunst st i3lock xidlehook
+        dwm dmenu feh zsh dunst st i3lock xidlehook picom
 
         # Command-line tools
         fzf ripgrep newsboat ffmpeg tealdeer exa 
