@@ -29,6 +29,8 @@ vim.cmd [[
     augroup end
     imap <C-i> <Esc>[s1z=`]a
 
+    set shiftwidth=4
+
     " or if you want to disable/enable for the current buffer only
 
 ]]

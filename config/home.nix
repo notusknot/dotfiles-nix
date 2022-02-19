@@ -70,14 +70,23 @@ in
     services.picom = {
         enable = true;
         shadow = true;
-        shadowOpacity = "0.3";
         extraOptions = ''
-            shadow-radius = 10;
+            shadow-radius = 16;
             corner-radius = 9;
             round-borders = 1;
+            shadow-spread        = 10;
+            shadow-offset-x      = -20;
+            shadow-offset-y      = -20;
+            shadow-opacity       = 0.25;
+
+            fading = true;
+            fade-delta = 5;
+            fade-in-step = 0.056;
+            fade-out-step = 0.06;
+
+            vsync                  = true;
+            dbe                    = true;
         '';
-        fade = true;
-        fadeDelta = 2;
         backend = "glx";
     };
 

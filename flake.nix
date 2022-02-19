@@ -67,6 +67,7 @@
                                     src = picom-ibhagwan;
                                 });
                             })
+
                             nur.overlay neovim-nightly-overlay.overlay
                         ];
                     }
