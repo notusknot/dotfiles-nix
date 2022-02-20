@@ -1,0 +1,77 @@
+// Variable Color's
+$background: #393b4d;
+$foreground: #e3e6ee;
+
+$black: #44465c;
+$gray: #393b4d;
+$red: #ec6a88;
+$green: #3fdaa4;
+$yellow: #efb993;
+$blue: #3fc6de;
+$magenta: #b771dc;
+$cyan: #6be6e6;
+$white: $foreground;
+
+* {
+  all: unset; //Unsets everything so you can style everything from scratch
+  border-radius: 8px;
+}
+
+.bar{
+    background-color: $background;
+    padding: 0 0.6rem;
+}
+
+scale trough highlight {
+    all: unset;
+    background-color: $black;
+    min-height: 12px;
+    min-width: 16px;
+    border-radius: 8px;
+}
+
+scale trough {
+    all: unset;
+    background-color: $black;
+    border-radius: 8px;
+    min-height: 12px;
+    min-width: 100px;
+    margin: 0.6rem;
+}
+
+.button-off { color: $red}
+
+.button-reb { 
+    color: $magenta;
+    margin: 0 0.6rem
+}
+
+.brightnessBar trough highlight {
+    background-color: $yellow;
+}
+
+.brightnessLabel {
+    color: $yellow;
+}
+
+.volumeBar trough highlight {
+    background-color: $green;
+}
+
+.volumeLabel {
+    color: $green;
+}
+
+.batteryBar trough highlight {
+    background-color: $cyan;
+}
+
+.batteryLabel {
+    color: $cyan;
+}
+
+
+.label {
+    font-size: 2rem;
+    margin: 0rem 0rem 0rem 0.6rem;
+}

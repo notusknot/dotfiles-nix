@@ -6,8 +6,7 @@ dofile("/home/notus/.config/nixos/config/nvim/lua/lsp.lua")
 dofile("/home/notus/.config/nixos/config/nvim/lua/nvim-tree.lua")
 
 vim.cmd [[
-    command! CompeEnable  call compe#setup(g:compe, 0)
-    command! CompeDisable call compe#setup({'enabled': v:false}, 0)
+    filetype plugin indent off 
 
     colorscheme dusk
     function! Preserve(command)
@@ -19,7 +18,7 @@ vim.cmd [[
     autocmd BufWinEnter NvimTree setlocal nonumber
     map ; :
     highlight IndentBlanklineChar guifg = #393b4d
-    au FileType markdown setlocal wrap linebreak
+    au FileType markdown setlocal wrap linebreak spell
     au FileType markdown CompeDisable
     nnoremap j gj
     nnoremap k gk
@@ -27,11 +26,11 @@ vim.cmd [[
         autocmd!
         autocmd CmdlineLeave : echo ''
     augroup end
-    imap <C-i> <Esc>[s1z=`]a
+
 
     set shiftwidth=4
 
-    " or if you want to disable/enable for the current buffer only
+
 
 ]]
 
@@ -109,4 +108,3 @@ opt.writebackup = false
 opt.errorbells = false
 opt.swapfile = false
 opt.showmode = false
-opt.spell = false

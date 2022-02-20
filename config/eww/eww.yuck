@@ -1,0 +1,126 @@
+(defwidget bar []
+    (box :orientation "h" :space-evenly false 
+        (bat0 :label ""
+                :value bat0Level
+                :onchange "")
+        (bat0 :label ""
+                :value bat1Level
+                :onchange "")
+        (volume :label "墳"
+                :value currentVolume
+                :onchange "pactl -- set-sink-volume 0 $(echo {} | sed 's/[.].*$//')%")
+        (brightness
+                :label ""
+                :value currentBrightness
+                :onchange "xrandr --output eDP-1 --brightness {}")
+        (power :label ""
+                :value bat1Level
+                :onchange "")
+    ))
+(defwidget volume [label value onchange]
+  (eventbox :onhover "eww update volum=true"   
+  	 :onhoverlost "eww update volum=false"
+    (box :orientation "h"
+        :space-evenly false :tooltip "Volume: ${currentVolume}"
+        (box :class "volumeLabel label" label)
+	(revealer :transition "slideleft" 
+			  :reveal volum 
+			  :duration "500ms"
+        (scale :class "volumeBar"
+            :min 0
+            :max 101
+            :active {onchange != ""}
+            :value value 
+            :onchange onchange)))))
+
+(defpoll currentVolume :interval "50s" "scripts/volume")
+(defvar volum false)
+
+(defwidget brightness [label value onchange]
+  (eventbox :onhover "eww update bright=true"   
+  	 :onhoverlost "eww update bright=false"
+    (box :orientation "h"
+        :space-evenly false 
+        (box :class "brightnessLabel label" label)
+	(revealer :transition "slideleft" 
+			  :reveal bright        
+			  :duration "500ms"
+        (scale :class "brightnessBar"
+            :min 0
+            :max 2
+            :active {onchange != ""}
+            :value value 
+            :onchange onchange)))))
+
+(defpoll currentBrightness :interval "50s" "scripts/brightness")
+(defvar bright false)
+
+(defwidget bat0 [label value onchange]
+  (box :orientation "h"
+       :space-evenly false
+    (box :class "batteryLabel label" label)
+    (scale :class "batteryBar"
+           :min 0
+           :max 101
+           :active "false"
+           :value value 
+           :onchange onchange)))
+
+(defpoll bat0Level :interval "1s" "scripts/bat0")
+(defpoll bat1Level :interval "1s" "scripts/bat1")
+
+(defwidget power [label]
+  (box :orientation "h"
+       :space-evenly false
+    (box :class "powerLabel label" label)
+    (scale :class "batteryBar"
+           :min 0
+           :max 101
+           :active "false"
+           :value value 
+           :onchange onchange)))
+
+
+(defwidget brightness [label value onchange]
+  (eventbox :onhover "eww update bright=true"   
+  	 :onhoverlost "eww update bright=false"
+    (box :orientation "h"
+        :space-evenly false
+        (box :class "brightnessLabel label" label)
+	(revealer :transition "slideleft" 
+			  :reveal bright        
+			  :duration "500ms"
+        (scale :class "brightnessBar"
+            :min 0
+            :max 2
+            :active {onchange != ""}
+            :value value 
+            :onchange onchange)))))
+
+
+(defwidget power []
+	(eventbox	:onhover "eww update power=true"	
+				:onhoverlost "eww update power=false" 
+	(box		:orientation "h"					
+				:space-evenly "false" 	 
+                :class "powerLabel label"
+
+	(button		:class "button-off"					
+				:tooltip "Shutdown"		 
+				:onclick "shutdown now"	"襤")
+	(revealer	:transition "slideright"				
+				:reveal power			 
+				:duration "250ms"
+  	(button		:class "button-reb"					
+	  			:tooltip "Reboot"
+				:onclick "reboot" "勒")))))
+
+(defvar power false)
+
+(defwindow bar 
+    :geometry (geometry :x "8px"
+        :y "-8px"
+        :width "300px"
+        :height "30px"
+        :anchor "bottom left")
+    (bar))

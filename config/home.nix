@@ -1,9 +1,10 @@
 { config, pkgs, ... }:
 
 let 
-    # Import zsh config file
+    # Import config files
     zshsettings = import ./zsh/zsh.nix;
     nvimsettings = import ./nvim/nvim.nix;
+    ffsettings = import ./firefox/firefox.nix;
 in 
 { 
     # Enable home-manager
@@ -12,6 +13,7 @@ in
     # Source extra files that are too big for this one 
     programs.zsh = zshsettings pkgs;
     programs.neovim = nvimsettings pkgs;
+    programs.firefox = ffsettings pkgs;
 
     # Settings for XDG user directory, to declutter home directory
     xdg.userDirs = {
@@ -43,6 +45,12 @@ in
                 sleep 30
             done";
         };
+    };
+
+    # Widgets
+    programs.eww = {
+        enable = true;
+        configDir = ./eww;
     };
 
     # Settings for git

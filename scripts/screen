@@ -15,14 +15,19 @@ if [ "$choice" = "Screenshot" ]; then
     slop=$(slop -f "%x %y %w %h %g %i") || exit 1
     read -r X Y W H G ID < <(echo $slop)
     rm -rf $HOME/stuff/screen.png
-    ffmpeg -f x11grab -s "$W"x"$H" -i :0.0+$X,$Y -vframes 1 $HOME/stuff/screen.png
+    notify-send "Screenshot in 3 seconds..."
+    sleep 3
+    ffmpeg -f x11grab -s "$W"x"$H" -i :0.0+$X,$Y -vframes 1 $HOME/stuff/screen.png &> /dev/null
     notify-send "Screenshot taken!"
 elif [ "$choice" = "Record desktop" ]; then
     slop=$(slop -f "%x %y %w %h %g %i") || exit 1
     read -r X Y W H G ID < <(echo $slop)
     rm -rf $HOME/stuff/screen.mp4
-    ffmpeg -f x11grab -s "$W"x"$H" -i :0.0+$X,$Y $HOME/stuff/screen.mp4
+    notify-send "Screen recording in 3 seconds..."
+    sleep 3
     notify-send "Screen recording started"
+    ffmpeg -f x11grab -s "$W"x"$H" -i :0.0+$X,$Y $HOME/stuff/screen.mp4 &> /dev/null
+    notify-send "Screen recording finished"
 elif [ "$choice" = "Stop screen recording" ]; then
     pkill ffmpeg
     notify-send "Screen recording finished"

@@ -6,8 +6,8 @@
         NIXOS_CONFIG="$HOME/.config/nixos/configuration.nix"; NIXOS_CONFIG_DIR="$HOME/.config/nixos/"; };
     # Nix settings, auto cleanup and enable flakes
     nix = {
-        autoOptimiseStore = true;
-        allowedUsers = [ "notus" ];
+        settings.auto-optimise-store = true;
+        settings.allowed-users = [ "notus" ];
         gc = {
             automatic = true;
             dates = "daily";
@@ -17,9 +17,6 @@
             experimental-features = nix-command flakes
         '';
     };
-
-    nixpkgs.config.allowUnfree = true;
-    nixpkgs.config.allowBroken = true;
 
     # Boot settings: clean /tmp/, latest kernel and enable bootloader
     boot = {
