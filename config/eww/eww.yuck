@@ -1,11 +1,5 @@
 (defwidget bar []
     (box :orientation "h" :space-evenly false 
-        (bat0 :label ""
-                :value bat0Level
-                :onchange "")
-        (bat0 :label ""
-                :value bat1Level
-                :onchange "")
         (volume :label "墳"
                 :value currentVolume
                 :onchange "pactl -- set-sink-volume 0 $(echo {} | sed 's/[.].*$//')%")
@@ -13,17 +7,24 @@
                 :label ""
                 :value currentBrightness
                 :onchange "xrandr --output eDP-1 --brightness {}")
-        (power :label ""
-                :value bat1Level
-                :onchange "")
+        (power :label "")
+        (box :halign "end" :hexpand true :orientation "h" :space-evenly false
+            (bat0 :label ""
+                    :value bat0Level
+                    :onchange "")
+            (bat0 :label ""
+                    :value bat1Level
+                    :onchange "")
+            (time)
+        )
     ))
+
 (defwidget volume [label value onchange]
-  (eventbox :onhover "eww update volum=true"   
-  	 :onhoverlost "eww update volum=false"
-    (box :orientation "h"
-        :space-evenly false :tooltip "Volume: ${currentVolume}"
+  (eventbox :tooltip "Volume: ${currentVolume}%" :onhover "eww update volum=true"   
+    :onhoverlost "eww update volum=false"
+    (box :orientation "h" :space-evenly false 
         (box :class "volumeLabel label" label)
-	(revealer :transition "slideleft" 
+        (revealer :transition "slideleft" 
 			  :reveal volum 
 			  :duration "500ms"
         (scale :class "volumeBar"
@@ -37,20 +38,19 @@
 (defvar volum false)
 
 (defwidget brightness [label value onchange]
-  (eventbox :onhover "eww update bright=true"   
-  	 :onhoverlost "eww update bright=false"
-    (box :orientation "h"
-        :space-evenly false 
+  (eventbox :tooltip "Brightness: ${currentBrightness}" :onhover "eww update bright=true"   
+  	:onhoverlost "eww update bright=false"
+    (box :orientation "h" :space-evenly false 
         (box :class "brightnessLabel label" label)
-	(revealer :transition "slideleft" 
-			  :reveal bright        
-			  :duration "500ms"
-        (scale :class "brightnessBar"
-            :min 0
-            :max 2
-            :active {onchange != ""}
-            :value value 
-            :onchange onchange)))))
+	        (revealer :transition "slideleft" 
+			    :reveal bright        
+			    :duration "500ms"
+            (scale :class "brightnessBar"
+                :min 0
+                :max 2
+                :active {onchange != ""}
+                :value value 
+                :onchange onchange)))))
 
 (defpoll currentBrightness :interval "50s" "scripts/brightness")
 (defvar bright false)
@@ -58,6 +58,7 @@
 (defwidget bat0 [label value onchange]
   (box :orientation "h"
        :space-evenly false
+       :halign "end" :hexpand "true" 
     (box :class "batteryLabel label" label)
     (scale :class "batteryBar"
            :min 0
@@ -66,20 +67,8 @@
            :value value 
            :onchange onchange)))
 
-(defpoll bat0Level :interval "1s" "scripts/bat0")
-(defpoll bat1Level :interval "1s" "scripts/bat1")
-
-(defwidget power [label]
-  (box :orientation "h"
-       :space-evenly false
-    (box :class "powerLabel label" label)
-    (scale :class "batteryBar"
-           :min 0
-           :max 101
-           :active "false"
-           :value value 
-           :onchange onchange)))
-
+(defpoll bat0Level :interval "10s" "scripts/bat0")
+(defpoll bat1Level :interval "10s" "scripts/bat1")
 
 (defwidget brightness [label value onchange]
   (eventbox :onhover "eww update bright=true"   
@@ -87,7 +76,7 @@
     (box :orientation "h"
         :space-evenly false
         (box :class "brightnessLabel label" label)
-	(revealer :transition "slideleft" 
+	    (revealer :transition "slideleft" 
 			  :reveal bright        
 			  :duration "500ms"
         (scale :class "brightnessBar"
@@ -117,10 +106,30 @@
 
 (defvar power false)
 
+(defpoll timeVar :interval "10s" "date '+%H:%M'")
+(defpoll dateVar :interval "600s" "date '+%b %d, %Y'")
+
+(defwidget time []
+    (box :halign "end" :hexpand "true" 
+            (button :onclick "eww open --toggle calendar" timeVar)
+    )
+)
+
+(defvar cal false)
+
+(defwindow calendar
+	:geometry (geometry :x "183px" 
+		:y "-54px" 
+		:width "300px" 
+		:height "80px"
+        :anchor "bottom left")
+    (calendar :class "cal")
+)
+
 (defwindow bar 
     :geometry (geometry :x "8px"
         :y "-8px"
-        :width "300px"
+        :width "475px"
         :height "30px"
         :anchor "bottom left")
     (bar))

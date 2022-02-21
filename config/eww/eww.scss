@@ -15,6 +15,7 @@ $white: $foreground;
 * {
   all: unset; //Unsets everything so you can style everything from scratch
   border-radius: 8px;
+  font-family: "JetBrainsMono"
 }
 
 .bar{
@@ -25,7 +26,7 @@ $white: $foreground;
 scale trough highlight {
     all: unset;
     background-color: $black;
-    min-height: 12px;
+    min-height: 10px;
     min-width: 16px;
     border-radius: 8px;
 }
@@ -34,8 +35,8 @@ scale trough {
     all: unset;
     background-color: $black;
     border-radius: 8px;
-    min-height: 12px;
-    min-width: 100px;
+    min-height: 10px;
+    min-width: 80px;
     margin: 0.6rem;
 }
 
@@ -47,7 +48,12 @@ scale trough {
 }
 
 .brightnessBar trough highlight {
-    background-color: $yellow;
+    background-image: linear-gradient(
+        90deg,
+        hsl(24deg 75% 72%) 0%,
+        hsl(30deg 75% 72%) 54%,
+        hsl(36deg 76% 73%) 100%
+    );
 }
 
 .brightnessLabel {
@@ -55,7 +61,12 @@ scale trough {
 }
 
 .volumeBar trough highlight {
-    background-color: $green;
+    background-image: linear-gradient(
+        90deg,
+        hsl(159deg 68% 55%) 0%,
+        hsl(174deg 60% 54%) 56%,
+        hsl(189deg 71% 56%) 100%
+    );
 }
 
 .volumeLabel {
@@ -63,15 +74,21 @@ scale trough {
 }
 
 .batteryBar trough highlight {
-    background-color: $cyan;
+    background-image: linear-gradient(
+        90deg,
+        hsl(180deg 71% 66%) 0%,
+        hsl(186deg 70% 59%) 56%,
+        hsl(190deg 70% 50%) 100%
+    );
 }
 
 .batteryLabel {
     color: $cyan;
 }
 
-
 .label {
     font-size: 2rem;
     margin: 0rem 0rem 0rem 0.6rem;
 }
+
+.cal { background-color: $background }

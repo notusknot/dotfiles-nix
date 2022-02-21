@@ -38,7 +38,7 @@ in
         dusk-vim
         pears-nvim
         TrueZen-nvim
-        goyo-vim
+        glow-nvim
 
         # Lsp and completion
         nvim-lspconfig
