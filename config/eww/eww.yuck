@@ -96,7 +96,7 @@
 
 	(button		:class "button-off"					
 				:tooltip "Shutdown"		 
-				:onclick "shutdown now"	"襤")
+				:onclick "shutdown now"	"")
 	(revealer	:transition "slideright"				
 				:reveal power			 
 				:duration "250ms"
@@ -127,8 +127,8 @@
 )
 
 (defwindow bar 
-    :geometry (geometry :x "8px"
-        :y "-8px"
+    :geometry (geometry :x "11px"
+        :y "-11px"
         :width "475px"
         :height "30px"
         :anchor "bottom left")

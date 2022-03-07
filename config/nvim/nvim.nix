@@ -6,13 +6,13 @@
 { pkgs, config, ... }:
 
 let
-    dusk-vim = pkgs.vimUtils.buildVimPlugin {
-        name = "dusk-vim";
+    jabuti-nvim = pkgs.vimUtils.buildVimPlugin {
+        name = "jabuti-nvim";
         src = pkgs.fetchFromGitHub {
-            owner = "notusknot";
-            repo = "dusk-vim";
-            rev = "8eb71f092ebfa173a6568befbe522a56e8382756";
-            sha256 = "09l4hda5jnyigc2hhlirv1rc8hsnsc4zgcv4sa4br8fryi73nf4g";
+            owner = "jabuti-theme";
+            repo = "jabuti-nvim";
+            rev = "cd29976adfc6d210b06f86d8762c2e1c4d7c2f46";
+	    sha256 = "sha256-VyixL0B0xVBUKePPPkIoCMACN3IZopkSqP1p9hD1Vyo=";
         };
     };
 
@@ -35,7 +35,7 @@ in
         bufferline-nvim
         galaxyline-nvim
         nvim-colorizer-lua
-        dusk-vim
+        jabuti-nvim
         pears-nvim
         TrueZen-nvim
         glow-nvim

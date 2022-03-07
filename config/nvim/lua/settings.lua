@@ -8,7 +8,7 @@ dofile("/home/notus/.config/nixos/config/nvim/lua/nvim-tree.lua")
 vim.cmd [[
     filetype plugin indent off 
 
-    colorscheme dusk
+    colorscheme jabuti 
     function! Preserve(command)
       let w = winsaveview()
       execute a:command
@@ -19,7 +19,6 @@ vim.cmd [[
     map ; :
     highlight IndentBlanklineChar guifg = #393b4d
     au FileType markdown setlocal wrap linebreak spell
-    au FileType markdown CompeDisable
     nnoremap j gj
     nnoremap k gk
     augroup cmdline

@@ -8,7 +8,7 @@ pkgs:
 
     # Variables
     export EDITOR="nvim"
-    export TERMINAL="urxvt"
+    export TERMINAL="st"
     export BROWSER="firefox"
 
     export PATH=$NIXOS_CONFIG_DIR/scripts/:$PATH
