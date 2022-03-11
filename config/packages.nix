@@ -6,15 +6,15 @@
     environment.systemPackages = with pkgs; [
 
         # Rice/desktop
-        dwm dmenu eww feh zsh dunst st i3lock xidlehook picom
+        dmenu eww zsh dunst wl-clipboard swaybg
 
         # Command-line tools
-        fzf ripgrep ffmpeg tealdeer exa htop
+        ripgrep ffmpeg tealdeer exa htop
         pass gnupg slop bat unzip xclip afetch
-        libnotify update-nix-fetchgit lowdown
+        libnotify lowdown
        
         # GUI applications
-        mpv anki brave 
+        mpv brave 
 
         # Development
         git zig

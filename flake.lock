@@ -1,21 +1,5 @@
 {
   "nodes": {
-    "dwm": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1646634867,
-        "narHash": "sha256-K0HDPGyTJlmagnAmVbFUhylJfEXFhilg4k5F3m+SnUs=",
-        "owner": "notusknot",
-        "repo": "dwm",
-        "rev": "625bd2ac42ad3de409403c7dbf2682bd06e9892f",
-        "type": "github"
-      },
-      "original": {
-        "owner": "notusknot",
-        "repo": "dwm",
-        "type": "github"
-      }
-    },
     "flake-compat": {
       "flake": false,
       "locked": {
@@ -144,47 +128,12 @@
         "type": "github"
       }
     },
-    "picom-ibhagwan": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1635984309,
-        "narHash": "sha256-1hVFBGo4Ieke2T9PqMur1w4D0bz/L3FAvfujY9Zergw=",
-        "owner": "ibhagwan",
-        "repo": "picom",
-        "rev": "c4107bb6cc17773fdc6c48bb2e475ef957513c7a",
-        "type": "github"
-      },
-      "original": {
-        "owner": "ibhagwan",
-        "repo": "picom",
-        "type": "github"
-      }
-    },
     "root": {
       "inputs": {
-        "dwm": "dwm",
         "home-manager": "home-manager",
         "neovim-nightly-overlay": "neovim-nightly-overlay",
         "nixpkgs": "nixpkgs",
-        "nur": "nur",
-        "picom-ibhagwan": "picom-ibhagwan",
-        "st": "st"
-      }
-    },
-    "st": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1646376242,
-        "narHash": "sha256-aHSoj62MyABxrWcv9oHBfg8ARo3KD5p+3PSO2cSqcHs=",
-        "owner": "notusknot",
-        "repo": "st",
-        "rev": "9282d8e58b1d711e288a4afe75a48ec355ae0893",
-        "type": "github"
-      },
-      "original": {
-        "owner": "notusknot",
-        "repo": "st",
-        "type": "github"
+        "nur": "nur"
       }
     }
   },

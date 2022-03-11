@@ -127,6 +127,7 @@
 )
 
 (defwindow bar 
+    :monitor 0
     :geometry (geometry :x "11px"
         :y "-11px"
         :width "475px"

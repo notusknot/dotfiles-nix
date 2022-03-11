@@ -15,31 +15,14 @@
             inputs.nixpkgs.follows = "nixpkgs";
         };
 
-        dwm = {
-            url = "github:notusknot/dwm";
-            inputs.nixpkgs.follows = "nixpkgs";
-            flake = false;
-        };
-
-        st = {
-            url = "github:notusknot/st";
-            inputs.nixpkgs.follows = "nixpkgs";
-            flake = false;
-        };
-
         neovim-nightly-overlay = {
             url = "github:nix-community/neovim-nightly-overlay";
             inputs.nixpkgs.follows = "nixpkgs";
         };
-
-        picom-ibhagwan= {
-            url = "github:ibhagwan/picom";
-            flake = false;
-        };
     };
 
     # All outputs for the system (configs)
-    outputs = { home-manager, nixpkgs, nur, picom-ibhagwan, neovim-nightly-overlay, st, dwm, ... }: {
+    outputs = { home-manager, nixpkgs, nur, neovim-nightly-overlay, ... }: {
         nixosConfigurations = {
 
             # Laptop config
@@ -52,22 +35,6 @@
                         home-manager.useUserPackages = true;
                         home-manager.users.notus = import ./config/home.nix;
                         nixpkgs.overlays = [ 
-                            (final: prev: {
-                                st = prev.st.overrideAttrs (o: {
-                                    src = st;
-                                });
-                            })
-                            (final: prev: {
-                                dwm = prev.dwm.overrideAttrs (o: {
-                                    src = dwm;
-                                });
-                            })
-                            (final: prev: {
-                                picom = prev.picom.overrideAttrs (o: {
-                                    src = picom-ibhagwan;
-                                });
-                            })
-
                             nur.overlay neovim-nightly-overlay.overlay
                         ];
                     }
@@ -84,34 +51,9 @@
                         home-manager.useUserPackages = true;
                         home-manager.users.notus = import ./config/home.nix;
                         nixpkgs.overlays = [ 
-                            (final: prev: {
-                                st = prev.st.overrideAttrs (o: {
-                                    src = st;
-                                });
-                            })
-                            (final: prev: {
-                                dwm = prev.dwm.overrideAttrs (o: {
-                                    src = dwm;
-                                });
-                            })
                             nur.overlay neovim-nightly-overlay.overlay 
                         ];
                     }
-                ];
-            };
-
-            # Oracle VPS config
-            vps = nixpkgs.lib.nixosSystem {
-                system = "x86_64-linux";
-                modules = [
-                    ./config/hosts/vps.nix
-                ];
-            };
-            
-            # Raspberry Pi config
-            pi = nixpkgs.lib.nixosSystem {
-                modules = [
-                    ./config/hosts/pi.nix
                 ];
             };
         };

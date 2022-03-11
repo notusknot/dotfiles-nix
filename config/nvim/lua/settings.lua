@@ -10,9 +10,9 @@ vim.cmd [[
 
     colorscheme jabuti 
     function! Preserve(command)
-      let w = winsaveview()
-      execute a:command
-      call winrestview(w)
+        let w = winsaveview()
+        execute a:command
+        call winrestview(w)
     endfunction
     autocmd FileType nix map <nowait> <leader>u :call Preserve("%!update-nix-fetchgit --location=" . line(".") . ":" . col("."))<CR>
     autocmd BufWinEnter NvimTree setlocal nonumber
@@ -26,11 +26,7 @@ vim.cmd [[
         autocmd CmdlineLeave : echo ''
     augroup end
 
-
     set shiftwidth=4
-
-
-
 ]]
 
 -- Enable plugins
@@ -54,7 +50,7 @@ map('n', '<C-n>', ':Telescope live_grep <CR>', options)
 map('n', '<C-o>', ':TZAtaraxis <CR>', options)
 map('n', '<C-m>', ':TZMinimalist <CR>', options)
 map('n', '<C-l>', ':noh <CR>', options)
-map('n', '<C-s>', ':!xclip -sel c -o | pygmentize -f html | xclip -sel c <CR> <CR>', options)
+map('i', '<C-Space>', '<Esc> [s1z=`]i <CR>', options)
 vim.api.nvim_set_keymap('n', '0', "getline('.')[0 : col('.') - 2] =~# '^\\s\\+$' ? '0' : '^'", {silent = true, noremap = true, expr = true})
 g.mapleader = ' '
 
