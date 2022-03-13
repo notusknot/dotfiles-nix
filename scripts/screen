@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 # This scripts helps me to take screenshots and record my desktop.
-# Dependencies: dmenu, slop, ffmpeg
+# Dependencies: bemenu, slop, ffmpeg
 
 declare -a options=(
 "Record desktop"
@@ -9,7 +9,7 @@ declare -a options=(
 "Stop screen recording"
 )
 
-choice=$(printf '%s\n' "${options[@]}" | dmenu -i -p 'Choose script:')
+choice=$(printf '%s\n' "${options[@]}" | bemenu -i -p 'Choose script:')
 
 if [ "$choice" = "Screenshot" ]; then 
     slop=$(slop -f "%x %y %w %h %g %i") || exit 1

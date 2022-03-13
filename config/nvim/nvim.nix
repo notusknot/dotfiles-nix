@@ -31,9 +31,9 @@ in
         vim-nix
 
         # Eyecandy 
+        lualine-nvim
         nvim-treesitter
         bufferline-nvim
-        galaxyline-nvim
         nvim-colorizer-lua
         jabuti-nvim
         pears-nvim

@@ -2,8 +2,7 @@
 
 {
     # Set environment variables
-    environment.variables = {
-        NIXOS_CONFIG="$HOME/.config/nixos/configuration.nix"; NIXOS_CONFIG_DIR="$HOME/.config/nixos/"; };
+
 
     environment.defaultPackages = [ ];
 
@@ -79,6 +78,34 @@
     };
 
     security.protectKernelImage = true;
+
+    environment.variables = {
+        NIXOS_CONFIG="$HOME/.config/nixos/configuration.nix"; 
+        NIXOS_CONFIG_DIR="$HOME/.config/nixos/"; 
+        XDG_DATA_HOME="$HOME/.local/share";
+        XAUTHORITY="$HOME/.Xauthority";
+        CARGO_HOME="$XDG_DATA_HOME/cargo";
+        GEM_HOME="$HOME/.local/share/gem";
+        PASSWORD_STORE_DIR="$XDG_DATA_HOME/password-store";
+        USERXSESSION="$XDG_CACHE_HOME/X11/xsession";
+        USERXSESSIONRC="$XDG_CACHE_HOME/X11/xsessionrc";
+        ALTUSERXSESSION="$XDG_CACHE_HOME/X11/Xsession";
+        ERRFILE="$XDG_CACHE_HOME/X11/xsession-errors";
+        GTK_RC_FILES="$XDG_CONFIG_HOME/gtk-1.0/gtkrc";
+        GTK2_RC_FILES="$XDG_CONFIG_HOME/gtk-2.0/gtkrc";
+        MOZ_ENABLE_WAYLAND = "1";
+    };
+
+    xdg = {
+        portal = {
+            enable = true;
+            extraPortals = with pkgs; [
+            xdg-desktop-portal-wlr
+            xdg-desktop-portal-gtk
+            ];
+            gtkUsePortal = true;
+        };
+    };
 
     # Do not touch
     system.stateVersion = "20.09";

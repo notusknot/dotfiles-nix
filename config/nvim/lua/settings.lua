@@ -1,7 +1,7 @@
 local opt = vim.opt
 local g = vim.g
 
-dofile("/home/notus/.config/nixos/config/nvim/lua/galaxyline.lua")
+dofile("/home/notus/.config/nixos/config/nvim/lua/statusline.lua")
 dofile("/home/notus/.config/nixos/config/nvim/lua/lsp.lua")
 dofile("/home/notus/.config/nixos/config/nvim/lua/nvim-tree.lua")
 
@@ -25,7 +25,8 @@ vim.cmd [[
         autocmd!
         autocmd CmdlineLeave : echo ''
     augroup end
-
+    highlight NvimTreeNormal guibg=#252632
+    highlight NvimTreeEndOfBuffer guibg=#252632 guifg=#252632
     set shiftwidth=4
 ]]
 
