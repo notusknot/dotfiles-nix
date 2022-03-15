@@ -7,7 +7,7 @@
     networking.hostName = "laptop";
 
     environment.systemPackages = with pkgs; [
-        powertop acpi upower tlp
+        acpi tlp
     ];
 
     networking.extraHosts = let
@@ -34,4 +34,5 @@
     swapDevices = [ { device = "/dev/disk/by-uuid/ccec80c0-6886-4534-899c-04a3a00e88b5"; } ];
 
     powerManagement.cpuFreqGovernor = lib.mkDefault "powersave";
+    services.tlp.enable = true;
 }

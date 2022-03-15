@@ -23,7 +23,7 @@
 **IMPORTANT: do NOT use my laptop.nix and/or desktop.nix! These files include settings that are specific to MY drives and they will mess up for you if you try to use them on your system. **
 
 Since I use flakes now, using my configs should be a breeze. Simply clone this repo and drop it wherever you want (I use .config/nixos). 
-To build my config for your system, run the following: ```sudo nixos-rebuild switch --flakes .#laptop```
+To build my config for your system, run the following: ```sudo nixos-rebuild switch --flake .#laptop```
 Replace `laptop` with desktop, vps, depending on what kind of computer you are using, or leave it as laptop if you want. 
 Remember to change the drives UIDs in their respective files!
 Please be warned that it may not work perfectly out of the box.
@@ -41,6 +41,25 @@ For best security, read over all the files to confirm there are no conflictions 
 | packages.nix     | Installs packages             |
 | laptop.nix       | Laptop-specific settings      |
 | desktop.nix      | Desktop-specific settings     |
+
+## Info
+- RAM usage on startup: ~175mb
+- Package count: :package: 626
+- Uses the [jabuti](https://github.com/jabuti-theme) theme
+- Terminal emulator: :foot: foot
+- Window manager: :herb: sway
+- Shell: :shell: zsh
+- Editor: :pencil: neovim
+- Browser: :fox_face: Firefox
+- Other: dunst, swaybg, brillo, bemenu
+
+## Pro tips
+- Mod4 + n spawns a terminal with neovim ready to take notes
+- Mod4 + brightness keys adjusts brightness accordingly
+- Mod4 + volume keys adjusts volume accordingly
+- Firefox preconfigured to be less annoying and have better privacy
+- Uses [Steven Black's host file](https://github.com/stevenblack/hosts) to block junk
+- Uses Xwayland for compadibility with Xorg programs
 
 ## ⚙️ configuration.nix
 *It is likely you need to change a few things in this file to tailor the experience to what you use; I've included instructions in a comment at the top of the file.*

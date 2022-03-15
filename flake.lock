@@ -1,5 +1,22 @@
 {
   "nodes": {
+    "cmp-nvim-dev": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1646660812,
+        "narHash": "sha256-z0Uj5A7iCoHd6LV6y3vehojB5Lzm8Fp0+RnAmN+aqSw=",
+        "owner": "hrsh7th",
+        "repo": "nvim-cmp",
+        "rev": "5238ca2498e91e884c391241646e9e87ade2490d",
+        "type": "github"
+      },
+      "original": {
+        "owner": "hrsh7th",
+        "ref": "dev",
+        "repo": "nvim-cmp",
+        "type": "github"
+      }
+    },
     "flake-compat": {
       "flake": false,
       "locked": {
@@ -130,61 +147,11 @@
     },
     "root": {
       "inputs": {
+        "cmp-nvim-dev": "cmp-nvim-dev",
         "home-manager": "home-manager",
         "neovim-nightly-overlay": "neovim-nightly-overlay",
         "nixpkgs": "nixpkgs",
-        "nur": "nur",
-        "st-src": "st-src",
-        "sway": "sway",
-        "wlroots-src": "wlroots-src"
-      }
-    },
-    "st-src": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1646376242,
-        "narHash": "sha256-aHSoj62MyABxrWcv9oHBfg8ARo3KD5p+3PSO2cSqcHs=",
-        "owner": "notusknot",
-        "repo": "st",
-        "rev": "9282d8e58b1d711e288a4afe75a48ec355ae0893",
-        "type": "github"
-      },
-      "original": {
-        "owner": "notusknot",
-        "repo": "st",
-        "type": "github"
-      }
-    },
-    "sway": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1643921366,
-        "narHash": "sha256-ZS8QXoQ1NDpQd6MyXWgJzPZruhJUvKB+xD4otuWoD6M=",
-        "owner": "fluix-dev",
-        "repo": "sway-borders",
-        "rev": "a137ee487f246568f6e67d5799b27abdaa5dca4e",
-        "type": "github"
-      },
-      "original": {
-        "owner": "fluix-dev",
-        "repo": "sway-borders",
-        "type": "github"
-      }
-    },
-    "wlroots-src": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1635782940,
-        "narHash": "sha256-wKSJHYFIy6wEI90kmBx/YcgDk2OKmeAyWGSfFtfOqjk=",
-        "owner": "swaywm",
-        "repo": "wlroots",
-        "rev": "0855cdacb2eeeff35849e2e9c4db0aa996d78d10",
-        "type": "github"
-      },
-      "original": {
-        "owner": "swaywm",
-        "repo": "wlroots",
-        "type": "github"
+        "nur": "nur"
       }
     }
   },

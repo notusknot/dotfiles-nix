@@ -20,27 +20,15 @@
             inputs.nixpkgs.follows = "nixpkgs";
         };
 
-        st-src = {
-            url = "github:notusknot/st";
+        cmp-nvim-dev = {
+            url = "github:hrsh7th/nvim-cmp/dev";
             inputs.nixpkgs.follows = "nixpkgs";
             flake = false;
-        };
-
-        sway = {
-            url = "github:fluix-dev/sway-borders";
-            inputs.nixpkgs.follows = "nixpkgs";
-            flake = false;
-        };
-
-        wlroots-src = { 
-            url = "github:swaywm/wlroots"; 
-            flake = false; 
-            inputs.nixpkgs.follows = "nixpkgs";
         };
     };
 
     # All outputs for the system (configs)
-    outputs = { home-manager, nixpkgs, nur, neovim-nightly-overlay, st-src, sway, ... }: {
+    outputs = { home-manager, nixpkgs, nur, neovim-nightly-overlay, cmp-nvim-dev, ... }: {
         nixosConfigurations = {
 
             # Laptop config
@@ -54,14 +42,12 @@
                         home-manager.users.notus = import ./config/home.nix;
                         nixpkgs.overlays = [ 
                             nur.overlay neovim-nightly-overlay.overlay
-                            (final: prev: {
-                                st = prev.st.overrideAttrs (o: {
-                                    src = st-src;
-                                });
-                                sway-borders = prev.sway-unwrapped.overrideAttrs (o: {
-                                    src = sway;
-                                });
-                            })
+                            (prev: final: rec {
+                                nvim-cmp = prev.vimUtils.buildVimPluginFrom2Nix {
+                                    pname = "nvim-cmp";
+                                    version = "dev";
+                                    src = cmp-nvim-dev;
+                            };})
                         ];
                     }
                 ];

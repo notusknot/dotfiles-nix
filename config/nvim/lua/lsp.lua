@@ -1,48 +1,82 @@
--- This file sets up autocompletion for neovim's native lsp
-
 -- This enables all the language servers I want on my system
 -- Change these to whatever languages you use
 require'lspconfig'.rnix.setup{}
 require'lspconfig'.sumneko_lua.setup{}
 vim.o.completeopt = "menuone,noselect"
 
--- Autocompletion setup
-require'compe'.setup {
-    enabled = true;
-    autocomplete = true;
-    debug = false;
-    min_length = 1;
-    preselect = 'enable';
-    throttle_time = 80;
-    source_timeout = 200;
-    incomplete_delay = 400;
-    max_abbr_width = 100;
-    max_kind_width = 100;
-    max_menu_width = 100;
-    documentation = false;
-    source = {
-        path = true;
-        buffer = true;
-        nvim_lsp = true;
-        treesitter = true;
-    };
+local cmp = require'cmp'
+
+local kind_icons = {
+    Text = "",
+    Method = "",
+    Function = "",
+    Constructor = "",
+    Field = "",
+    Variable = "",
+    Class = "ﴯ",
+    Interface = "",
+    Module = "",
+    Property = "ﰠ",
+    Unit = "",
+    Value = "",
+    Enum = "",
+    Keyword = "",
+    Snippet = "",
+    Color = "",
+    File = "",
+    Reference = "",
+    Folder = "",
+    EnumMember = "",
+    Constant = "",
+    Struct = "",
+    Event = "",
+    Operator = "",
+    TypeParameter = ""
 }
 
--- Set tab to accept the autocompletion
-local t = function(str)
-    return vim.api.nvim_replace_termcodes(str, true, true, true)
-end
-_G.tab_complete = function()
-    if vim.fn.pumvisible() == 1 then
-        return t "<C-n>"
-    else
-        return t "<S-Tab>"
-    end
-end
+cmp.setup({
+    window = {                                                                                                                                                   
+        documentation = {                                                                                                                                          
+            border = 'rounded',                                                                                                                                      
+            scrollbar = '║',                                                                                                                                         
+        },                                                                                                                                                         
+        completion = {                                                                                                                                             
+            border = 'rounded',                                                                                                                                      
+            scrollbar = '║',                                                                                                                                         
+        },                                                                                                                                                         
+    }, 
+    mapping = {
+        ['<C-j>'] = cmp.mapping(cmp.mapping.scroll_docs(-4), { 'i', 'c' }),
+        ['<C-k>'] = cmp.mapping(cmp.mapping.scroll_docs(4), { 'i', 'c' }),
+        ['<C-Space>'] = cmp.mapping(cmp.mapping.complete(), { 'i', 'c' }),
+        ['<Tab>'] = cmp.mapping(cmp.mapping.select_next_item(), { 'i', 'c' }),
+        ['<C-y>'] = cmp.config.disable, -- Specify `cmp.config.disable` if you want to remove the default `<C-y>` mapping.
+        ['<C-e>'] = cmp.mapping({
+            i = cmp.mapping.abort(),
+            c = cmp.mapping.close(),
+        }),
+        ['<CR>'] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
+    },
+    sources = cmp.config.sources(
+        {{ name = 'nvim_lsp' }, { name = 'buffer' }, { name = 'path' },
+    }),
+    formatting = {
+        format = function(entry, vim_item)
+        -- Kind icons
+	    with_text = false
 
-vim.api.nvim_set_keymap("i", "<Tab>", "v:lua.tab_complete()", {expr = true})
-vim.api.nvim_set_keymap("s", "<Tab>", "v:lua.tab_complete()", {expr = true})
-
+        
+        vim_item.kind = string.format('%s %s', kind_icons[vim_item.kind], vim_item.kind) -- This concatonates the icons with the name of the item kind
+        -- Source
+        vim_item.menu = ({
+            buffer = " ",
+            nvim_lsp = " ",
+            path = " ",
+        })[entry.source.name]
+        return vim_item
+        end
+    },
+})
 
 -- set the path to the sumneko installation; if you previously installed via the now deprecated :LspInstall, use
 local sumneko_root_path = vim.fn.stdpath('cache')..'/lspconfig/sumneko_lua/lua-language-server'

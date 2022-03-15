@@ -28,6 +28,17 @@ vim.cmd [[
     highlight NvimTreeNormal guibg=#252632
     highlight NvimTreeEndOfBuffer guibg=#252632 guifg=#252632
     set shiftwidth=4
+
+    highlight! CmpItemMenu guibg=NONE guifg=#9699b7
+    highlight! CmpItemAbbr guibg=NONE guifg=#9699b7
+    highlight! CmpItemAbbrMatch guibg=NONE guifg=#d9e0ee
+    highlight! PmenuSel guibg=#2e303e guifg=#d9e0ee
+    highlight! CmpItemAbbrMatchFuzzy guibg=NONE guifg=#d9e0ee
+    highlight! CmpItemKind guibg=NONE guifg=#3fc6de
+    highlight! Pmenu guibg=#252632
+    highlight! PmenuThumb guibg=#252632
+    highlight! PmenuSbar guibg=#252632
+
 ]]
 
 -- Enable plugins

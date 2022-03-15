@@ -33,7 +33,7 @@ in
         enable = true;
         wrapperFeatures.gtk = true; # so that gtk works properly
         config = {
-            terminal = "st";
+            terminal = "footclient";
             menu = "bemenu-run";
             modifier = "Mod4";
 
@@ -45,6 +45,8 @@ in
 
             startup = [ 
                 { command = "swaybg --image .config/nixos/config/pics/wallpaper.png"; } 
+                { command = "$HOME/stuff/start.sh"; } 
+                { command = "foot --server"; } 
             ];
         };
 
@@ -54,20 +56,87 @@ in
             #border_images.focused_inactive ${./pics/rounded.png}
             #border_images.unfocused ${./pics/rounded.png}
             #border_images.urgent ${./pics/rounded.png}
-            bindsym --locked XF86MonBrightnessUp exec light -S "$(light -G | awk '{ print int(($1 + .72) * 1.4) }')" 
-            bindsym --locked XF86MonBrightnessDown exec light -S "$(light -G | awk '{ print int($1 / 1.4) }')"
+            bindsym Mod4+n exec cd ~/stuff/notes && footclient -a foot-notes sh -c "nvim ~/stuff/notes/$(date '+%Y-%m-%d').md"
+            bindsym --locked XF86MonBrightnessUp exec sudo brillo -u 150000 -A 10 && dunstify "Brightness: $(brillo)"
+            bindsym --locked XF86MonBrightnessDown exec sudo brillo -u 150000 -U 10 && dunstify "Brightness: $(brillo)"
+            bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume 0 +5% && dunstify "Volume: $(pactl list sinks | grep '^[[:space:]]Volume:' | head -n $(( $SINK + 1 )) | tail -n 1 | sed -e 's,.* \([0-9][0-9]*\)%.*,\1,')"
+            bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume 0 -5% && dunstify "Volume: $(pactl list sinks | grep '^[[:space:]]Volume:' | head -n $(( $SINK + 1 )) | tail -n 1 | sed -e 's,.* \([0-9][0-9]*\)%.*,\1,')"
+            bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute 0 toggle # mute sound
 
             # Property Name         Border  BG      Text    Indicator Child Border
             client.focused          #44465c #44465c #d9e0ee #d9e0ee #44465c
             client.focused_inactive #292a37 #292a37 #d9e0ee #d9e0ee #44465c
             client.unfocused        #292a37 #292a37 #d9e0ee #d9e0ee #292a37
             client.urgent           #292a37 #292a37 #ec6a88 #d9e0ee #ec6a88
+
+            for_window [app_id="foot-notes"] floating enable
         '';
+    };
+
+    services.dunst = {
+        enable = true;
+        settings = {
+            global = {
+                origin = "top-left";
+                offset = "12x12";
+                separator_height = 2;
+                padding = 12;
+                horizontal_padding = 12;
+                text_icon_padding = 12;
+                frame_width = 4;
+                separator_color = "frame";
+                idle_threshold = 120;
+                font = "JetBrainsMono 12";
+                line_height = 0;
+                format = "<b>%s</b>\n%b";
+                alignment = "center";
+                icon_position = "off";
+                startup_notification = "false";
+                corner_radius = 12;
+
+                frame_color = "#44465c";
+                background = "#303241";
+                foreground = "#d9e0ee";
+                timeout = 2;
+            };
+        };
+    };
+
+    programs.foot = {
+        enable = true;
+        settings = {
+            main = {
+                font = "JetBrainsMono NerdFont:size=6";
+                pad = "12x12";
+            };
+            colors = {
+                foreground = "d9e0ee";
+                background = "292a37";
+                ## Normal/regular colors (color palette 0-7)
+                regular0="303241";  # black
+                regular1="ec6a88";
+                regular2="3fdaa4";
+                regular3="efb993";
+                regular4="3fc6de";
+                regular5="b771dc";
+                regular6="6be6e6";
+                regular7="d9e0ee";
+
+                bright0="393a4d"; # bright black
+                bright1="e95678"; # bright red
+                bright2="29d398";# bright green
+                bright3="efb993";# bright yellow
+                bright4="26bbd9";
+                bright5="b072d1";# bright magenta
+                bright6="59e3e3";# bright cyan
+                bright7="d9e0ee";# bright white
+            };
+        };
     };
 
     # Widgets
     programs.eww = {
-        enable = true;
+        enable = false;
         configDir = ./eww;
     };
 

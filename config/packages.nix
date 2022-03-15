@@ -6,18 +6,18 @@
     environment.systemPackages = with pkgs; [
 
         # Rice/desktop
-        bemenu eww zsh dunst wl-clipboard swaybg st sway
+        bemenu zsh dunst wl-clipboard swaybg sway brillo wlsunset
 
         # Command-line tools
         ripgrep ffmpeg tealdeer exa htop
-        pass gnupg slop bat unzip xclip afetch
-        libnotify lowdown
+        pass gnupg slop bat unzip afetch
+        lowdown 
        
         # GUI applications
-        mpv brave firefox-wayland
+        mpv brave firefox imv
 
         # Development
-        git zig cmake wlroots
+        git zig
 
         # Language servers for neovim; change these to whatever languages you code in
         # Please note: if you remove any of these, make sure to also remove them from nvim/config/nvim/lua/lsp.lua!!

@@ -42,7 +42,11 @@ in
 
         # Lsp and completion
         nvim-lspconfig
-        nvim-compe
+        nvim-cmp
+        cmp-path
+        cmp-nvim-lsp
+        cmp-buffer
+        cmp-cmdline
 
         # Telescope
         telescope-nvim
@@ -53,4 +57,8 @@ in
     extraConfig = ''
         luafile /home/notus/.config/nixos/config/nvim/lua/settings.lua
     '';
+
+    extraPackages = with pkgs; [
+          python39Packages.virtualenv
+    ];
 }
