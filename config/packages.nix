@@ -23,5 +23,6 @@
         # Please note: if you remove any of these, make sure to also remove them from nvim/config/nvim/lua/lsp.lua!!
         rnix-lsp
         sumneko-lua-language-server
+        rust-analyzer
     ];
 }

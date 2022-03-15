@@ -6,6 +6,7 @@
 { pkgs, config, ... }:
 
 let
+    # Source my theme
     jabuti-nvim = pkgs.vimUtils.buildVimPlugin {
         name = "jabuti-nvim";
         src = pkgs.fetchFromGitHub {
@@ -19,13 +20,12 @@ let
 in
 {
     enable = true;
+    
+    # Install plugins the nix way
     plugins = with pkgs.vimPlugins; [
         # File tree
         nvim-web-devicons 
         nvim-tree-lua
-
-        # LSP
-        nvim-lspconfig
 
         # Languages
         vim-nix
@@ -46,7 +46,6 @@ in
         cmp-path
         cmp-nvim-lsp
         cmp-buffer
-        cmp-cmdline
 
         # Telescope
         telescope-nvim
@@ -54,11 +53,9 @@ in
         # Indent lines
         indent-blankline-nvim
     ];
+
+    # Source config
     extraConfig = ''
         luafile /home/notus/.config/nixos/config/nvim/lua/settings.lua
     '';
-
-    extraPackages = with pkgs; [
-          python39Packages.virtualenv
-    ];
 }

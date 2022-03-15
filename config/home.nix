@@ -28,7 +28,7 @@ in
         templates = "$HOME/stuff/other/";
     };
 
-
+    # SwayWM setup
     wayland.windowManager.sway = {
         enable = true;
         wrapperFeatures.gtk = true; # so that gtk works properly
@@ -44,7 +44,7 @@ in
             window.border = 4;
 
             startup = [ 
-                { command = "swaybg --image .config/nixos/config/pics/wallpaper.png"; } 
+                { command = "swaybg --image .config/nixos/pics/wallpaper.png"; } 
                 { command = "$HOME/stuff/start.sh"; } 
                 { command = "foot --server"; } 
             ];
@@ -73,6 +73,7 @@ in
         '';
     };
 
+    # Dunst (notifications) settings
     services.dunst = {
         enable = true;
         settings = {
@@ -102,6 +103,7 @@ in
         };
     };
 
+    # Foot (terminal emulator) settings
     programs.foot = {
         enable = true;
         settings = {

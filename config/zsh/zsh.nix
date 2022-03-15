@@ -1,14 +1,17 @@
 pkgs:
 {
-  enable = true;
-  dotDir = ".config/zsh";
-  initExtra = ''
+    enable = true;
+    
+    # Set dotDir
+    dotDir = ".config/zsh";
 
-    PROMPT="%F{blue}%m %~%b "$'\n'"%(?.%F{green}%Bλ%b.%F{red}?) %f"
+    # .zshrc
+    initExtra = ''
+        PROMPT="%F{blue}%m %~%b "$'\n'"%(?.%F{green}%Bλ%b.%F{red}?) %f"
 
-    export PATH=$NIXOS_CONFIG_DIR/scripts/:$PATH
-    export PASSWORD_STORE_DIR="$XDG_DATA_HOME/password-store";
-    bindkey '^ ' autosuggest-accept
+        export PATH=$NIXOS_CONFIG_DIR/scripts/:$PATH
+        export PASSWORD_STORE_DIR="$XDG_DATA_HOME/password-store";
+        bindkey '^ ' autosuggest-accept
     '';
 
     # Tweak settings for history

@@ -1,6 +1,8 @@
 pkgs:
 {
     enable = true;
+
+    # Install extensions from NUR
     extensions = with pkgs.nur.repos.rycee.firefox-addons; [
         decentraleyes
         ublock-origin
@@ -10,6 +12,8 @@ pkgs:
         h264ify
         df-youtube
     ];
+
+    # Privacy about:config settings
     profiles.notus = {
         settings = {
             "browser.send_pings" = false;
@@ -73,6 +77,8 @@ pkgs:
             "privacy.firstparty.isolate" = true;
             "network.http.sendRefererHeader" = 0;
         };
+
+        # userChome.css to make it look better
         userChrome = "
             * { 
                 box-shadow: none !important;

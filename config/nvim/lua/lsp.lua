@@ -2,6 +2,7 @@
 -- Change these to whatever languages you use
 require'lspconfig'.rnix.setup{}
 require'lspconfig'.sumneko_lua.setup{}
+require'lspconfig'.rust_analyzer.setup{}
 vim.o.completeopt = "menuone,noselect"
 
 local cmp = require'cmp'

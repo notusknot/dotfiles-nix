@@ -1,8 +1,9 @@
 { config, pkgs, ... }:
 
 {
-    # Set environment variables
+    # Remove unecessary preinstalled packages
     environment.defaultPackages = [ ];
+    services.xserver.desktopManager.xterm.enable = false;
 
     # Nix settings, auto cleanup and enable flakes
     nix = {
@@ -17,8 +18,6 @@
             experimental-features = nix-command flakes
         '';
     };
-
-    services.xserver.desktopManager.xterm.enable = false;
 
     # Boot settings: clean /tmp/, latest kernel and enable bootloader
     boot = {
@@ -42,6 +41,7 @@
     # Enable audio
     sound.enable = true;
 
+    # Disable bluetooth, enable pulseaudio, enable opengl (for Wayland)
     hardware = {
         bluetooth.enable = false;
         pulseaudio.enable = true;
@@ -62,12 +62,13 @@
     fonts.fonts = with pkgs; [
         jetbrains-mono
         roboto
-        (nerdfonts.override { fonts = [ "JetBrainsMono" ]; })
+        (nerdfonts.override { fonts = [ "JetBrainsMono" "FiraCode" "Hack" "Meslo" "RobotoMono" ]; })
     ];
 
     # Set up networking and secure it
     networking = {
         wireless.iwd.enable = true;
+        interfaces.enp0s25.useDHCP = false;
         firewall = {
             enable = true;
             allowedTCPPorts = [ 443 80 ];
@@ -76,11 +77,7 @@
         };
     };
 
-    security.protectKernelImage = true;
-    security.sudo.extraConfig = ''
-        notus ALL = (root) NOPASSWD: /run/current-system/sw/bin/brillo
-    '';
-
+    # Set environment variables
     environment.variables = {
         NIXOS_CONFIG="$HOME/.config/nixos/configuration.nix"; 
         NIXOS_CONFIG_DIR="$HOME/.config/nixos/"; 
@@ -92,6 +89,7 @@
         MOZ_ENABLE_WAYLAND = "1";
     };
 
+    # Wayland stuff: enable XDG integration, allow sway to use brillo
     xdg = {
         portal = {
             enable = true;
@@ -102,6 +100,13 @@
             gtkUsePortal = true;
         };
     };
+
+    security.sudo.extraConfig = ''
+        notus ALL = (root) NOPASSWD: /run/current-system/sw/bin/brillo
+    '';
+
+    # Extra security
+    security.protectKernelImage = true;
 
     # Do not touch
     system.stateVersion = "20.09";
