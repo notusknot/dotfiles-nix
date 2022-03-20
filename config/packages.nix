@@ -11,10 +11,10 @@
         # Command-line tools
         ripgrep ffmpeg tealdeer exa htop
         pass gnupg slop bat unzip afetch
-        lowdown 
+        lowdown zk grim slurp imagemagick
        
         # GUI applications
-        mpv brave firefox imv
+        mpv brave firefox pqiv 
 
         # Development
         git zig

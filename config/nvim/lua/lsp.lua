@@ -3,6 +3,24 @@
 require'lspconfig'.rnix.setup{}
 require'lspconfig'.sumneko_lua.setup{}
 require'lspconfig'.rust_analyzer.setup{}
+
+local lspconfig = require('lspconfig')
+local configs = require('lspconfig/configs')
+
+configs.zk = {
+  default_config = {
+    cmd = {'zk', 'lsp'},
+    filetypes = {'markdown'},
+    root_dir = function()
+      return vim.loop.cwd()
+    end,
+    settings = {}
+  };
+}
+
+lspconfig.zk.setup({ on_attach = function(client, buffer) end })
+
+
 vim.o.completeopt = "menuone,noselect"
 
 local cmp = require'cmp'

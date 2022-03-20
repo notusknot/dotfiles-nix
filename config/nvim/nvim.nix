@@ -12,50 +12,46 @@ let
         src = pkgs.fetchFromGitHub {
             owner = "jabuti-theme";
             repo = "jabuti-nvim";
-            rev = "cd29976adfc6d210b06f86d8762c2e1c4d7c2f46";
-	    sha256 = "sha256-VyixL0B0xVBUKePPPkIoCMACN3IZopkSqP1p9hD1Vyo=";
+            rev = "1b8412369cb23a45f68e201628201bce61c40088";
+            sha256 = "sha256-CbqdlIBRd0+WiMCO2d89j9wJqrxTL4mv+8wCPLDoc0s=";
         };
     };
 
 in
 {
-    enable = true;
-    
-    # Install plugins the nix way
-    plugins = with pkgs.vimPlugins; [
-        # File tree
-        nvim-web-devicons 
-        nvim-tree-lua
+environment.systemPackages = with pkgs; [
+    (neovim.override {
+        configure = {
+            packages.myPlugins = with pkgs.vimPlugins; {
+                start = [ jabuti-nvim nvim-lspconfig nvim-treesitter nvim-cmp cmp-path cmp-nvim-lsp cmp-buffer];
 
-        # Languages
-        vim-nix
+                opt = [
+                # File tree
+                nvim-web-devicons 
+                nvim-tree-lua
 
-        # Eyecandy 
-        lualine-nvim
-        nvim-treesitter
-        bufferline-nvim
-        nvim-colorizer-lua
-        jabuti-nvim
-        pears-nvim
-        TrueZen-nvim
-        glow-nvim
+                # Languages
+                vim-nix
 
-        # Lsp and completion
-        nvim-lspconfig
-        nvim-cmp
-        cmp-path
-        cmp-nvim-lsp
-        cmp-buffer
+                # Eyecandy 
+                lualine-nvim
+                bufferline-nvim
+                nvim-colorizer-lua
+                pears-nvim
+                TrueZen-nvim
+                toggleterm-nvim
+                # Telescope
+                telescope-nvim
 
-        # Telescope
-        telescope-nvim
+                # Indent lines
+                indent-blankline-nvim
 
-        # Indent lines
-        indent-blankline-nvim
-    ];
-
-    # Source config
-    extraConfig = ''
-        luafile /home/notus/.config/nixos/config/nvim/lua/settings.lua
-    '';
+            ];
+        };
+        customRC = ''
+            lua dofile("/home/notus/.config/nixos/config/nvim/lua/settings.lua")
+        '';
+        };
+    }
+)];
 }

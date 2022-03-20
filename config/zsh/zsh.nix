@@ -11,6 +11,8 @@ pkgs:
 
         export PATH=$NIXOS_CONFIG_DIR/scripts/:$PATH
         export PASSWORD_STORE_DIR="$XDG_DATA_HOME/password-store";
+        export ZK_NOTEBOOK_DIR="$HOME/stuff/notes";
+        export EDITOR="nvim";
         bindkey '^ ' autosuggest-accept
     '';
 

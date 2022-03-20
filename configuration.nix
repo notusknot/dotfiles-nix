@@ -1,6 +1,8 @@
-{ config, pkgs, ... }:
+{ config, pkgs, inputs, ... }:
 
 {
+    imports = [ ./config/nvim/nvim.nix ];
+
     # Remove unecessary preinstalled packages
     environment.defaultPackages = [ ];
     services.xserver.desktopManager.xterm.enable = false;
@@ -17,6 +19,7 @@
         extraOptions = ''
             experimental-features = nix-command flakes
         '';
+        registry.nixpkgs.flake = inputs.nixpkgs;
     };
 
     # Boot settings: clean /tmp/, latest kernel and enable bootloader
@@ -87,6 +90,8 @@
         GTK_RC_FILES="$HOME/.local/share/gtk-1.0/gtkrc";
         GTK2_RC_FILES="$HOME/.local/share/gtk-2.0/gtkrc";
         MOZ_ENABLE_WAYLAND = "1";
+        ZK_NOTEBOOK_DIR = "$HOME/stuff/notes/";
+        EDITOR = "nvim";
     };
 
     # Wayland stuff: enable XDG integration, allow sway to use brillo
@@ -101,9 +106,16 @@
         };
     };
 
-    security.sudo.extraConfig = ''
-        notus ALL = (root) NOPASSWD: /run/current-system/sw/bin/brillo
-    '';
+    security.sudo.enable = false;
+    security.doas = {
+        enable = true;
+        extraRules = [{
+            users = [ "notus" ];
+            keepEnv = true;
+            persist = true;  
+        }];
+        extraConfig = "permit nopass notus cmd brillo";
+    };
 
     # Extra security
     security.protectKernelImage = true;

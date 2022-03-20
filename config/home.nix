@@ -12,7 +12,7 @@ in
 
     # Source extra files that are too big for this one 
     programs.zsh = zshsettings pkgs;
-    programs.neovim = nvimsettings pkgs;
+    #programs.neovim = nvimsettings pkgs;
     programs.firefox = ffsettings pkgs;
 
     # Settings for XDG user directory, to declutter home directory
@@ -52,13 +52,13 @@ in
 
         extraConfig = ''
             # Border Images: needs sway-borders which is finicky at the moment
-            #border_images.focused ${./pics/rounded.png}
-            #border_images.focused_inactive ${./pics/rounded.png}
-            #border_images.unfocused ${./pics/rounded.png}
-            #border_images.urgent ${./pics/rounded.png}
+            #border_images.focused ${../pics/rounded.png}
+            #border_images.focused_inactive ${../pics/rounded.png}
+            #border_images.unfocused ${../pics/rounded.png}
+            #border_images.urgent ${../pics/rounded.png}
             bindsym Mod4+n exec cd ~/stuff/notes && footclient -a foot-notes sh -c "nvim ~/stuff/notes/$(date '+%Y-%m-%d').md"
-            bindsym --locked XF86MonBrightnessUp exec sudo brillo -u 150000 -A 10 && dunstify "Brightness: $(brillo)"
-            bindsym --locked XF86MonBrightnessDown exec sudo brillo -u 150000 -U 10 && dunstify "Brightness: $(brillo)"
+            bindsym --locked XF86MonBrightnessUp exec doas brillo -u 150000 -A 10 && dunstify "Brightness: $(brillo)"
+            bindsym --locked XF86MonBrightnessDown exec doas brillo -u 150000 -U 10 && dunstify "Brightness: $(brillo)"
             bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume 0 +5% && dunstify "Volume: $(pactl list sinks | grep '^[[:space:]]Volume:' | head -n $(( $SINK + 1 )) | tail -n 1 | sed -e 's,.* \([0-9][0-9]*\)%.*,\1,')"
             bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume 0 -5% && dunstify "Volume: $(pactl list sinks | grep '^[[:space:]]Volume:' | head -n $(( $SINK + 1 )) | tail -n 1 | sed -e 's,.* \([0-9][0-9]*\)%.*,\1,')"
             bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute 0 toggle # mute sound
@@ -70,6 +70,9 @@ in
             client.urgent           #292a37 #292a37 #ec6a88 #d9e0ee #ec6a88
 
             for_window [app_id="foot-notes"] floating enable
+            for_window [app_id="pqiv"] floating enable
+            for_window [app_id="pqiv"] sticky enable
+            for_window [app_id=pqiv] move position 0 0
         '';
     };
 

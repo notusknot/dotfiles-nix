@@ -20,17 +20,15 @@
             inputs.nixpkgs.follows = "nixpkgs";
         };
 
-        cmp-nvim-dev = {
-            url = "github:hrsh7th/nvim-cmp/dev";
-            inputs.nixpkgs.follows = "nixpkgs";
+        zk-nvim = {
+            url = "github:mickael-menu/zk-nvim";
             flake = false;
         };
     };
 
     # All outputs for the system (configs)
-    outputs = { home-manager, nixpkgs, nur, neovim-nightly-overlay, cmp-nvim-dev, ... }: {
+    outputs = { home-manager, nixpkgs, nur, neovim-nightly-overlay, zk-nvim, ... }: {
         nixosConfigurations = {
-
             # Laptop config
             laptop = nixpkgs.lib.nixosSystem {
                 system = "x86_64-linux";
@@ -42,12 +40,6 @@
                         home-manager.users.notus = import ./config/home.nix;
                         nixpkgs.overlays = [ 
                             nur.overlay neovim-nightly-overlay.overlay
-                            (prev: final: rec {
-                                nvim-cmp = prev.vimUtils.buildVimPluginFrom2Nix {
-                                    pname = "nvim-cmp";
-                                    version = "dev";
-                                    src = cmp-nvim-dev;
-                            };})
                         ];
                     }
                 ];
