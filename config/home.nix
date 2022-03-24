@@ -15,6 +15,13 @@ in
     #programs.neovim = nvimsettings pkgs;
     programs.firefox = ffsettings pkgs;
 
+    # Direnv
+    programs.direnv = {
+        enable = true;
+        nix-direnv.enable = true;
+        enableZshIntegration = true;
+    };
+
     # Settings for XDG user directory, to declutter home directory
     xdg.userDirs = {
         enable = true;
@@ -56,11 +63,11 @@ in
             #border_images.focused_inactive ${../pics/rounded.png}
             #border_images.unfocused ${../pics/rounded.png}
             #border_images.urgent ${../pics/rounded.png}
-            bindsym Mod4+n exec cd ~/stuff/notes && footclient -a foot-notes sh -c "nvim ~/stuff/notes/$(date '+%Y-%m-%d').md"
-            bindsym --locked XF86MonBrightnessUp exec doas brillo -u 150000 -A 10 && dunstify "Brightness: $(brillo)"
-            bindsym --locked XF86MonBrightnessDown exec doas brillo -u 150000 -U 10 && dunstify "Brightness: $(brillo)"
-            bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume 0 +5% && dunstify "Volume: $(pactl list sinks | grep '^[[:space:]]Volume:' | head -n $(( $SINK + 1 )) | tail -n 1 | sed -e 's,.* \([0-9][0-9]*\)%.*,\1,')"
-            bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume 0 -5% && dunstify "Volume: $(pactl list sinks | grep '^[[:space:]]Volume:' | head -n $(( $SINK + 1 )) | tail -n 1 | sed -e 's,.* \([0-9][0-9]*\)%.*,\1,')"
+            bindsym Mod4+n exec cd ~/stuff/notes && footclient -a foot-notes sh -c "nvim ~/stuff/notes/journal/$(date '+%Y-%m-%d').md"
+            bindsym --locked XF86MonBrightnessUp exec doas brillo -u 150000 -A 10 && notify-send --hint=string:x-dunst-stack-tag:vol "Brightness: $(brillo)"
+            bindsym --locked XF86MonBrightnessDown exec doas brillo -u 150000 -U 10 && notify-send --hint=string:x-dunst-stack-tag:vol "Brightness: $(brillo)"
+            bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume 0 +5% && notify-send --hint=string:x-dunst-stack-tag:vol "Volume: $(pactl list sinks | grep '^[[:space:]]Volume:' | head -n $(( $SINK + 1 )) | tail -n 1 | sed -e 's,.* \([0-9][0-9]*\)%.*,\1,')"
+            bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume 0 -5% && notify-send --hint=string:x-dunst-stack-tag:vol "Volume: $(pactl list sinks | grep '^[[:space:]]Volume:' | head -n $(( $SINK + 1 )) | tail -n 1 | sed -e 's,.* \([0-9][0-9]*\)%.*,\1,')"
             bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute 0 toggle # mute sound
 
             # Property Name         Border  BG      Text    Indicator Child Border
@@ -97,6 +104,8 @@ in
                 icon_position = "off";
                 startup_notification = "false";
                 corner_radius = 12;
+                set_stack_tag = "vol";
+                stack_tag = "vol";
 
                 frame_color = "#44465c";
                 background = "#303241";
@@ -152,6 +161,9 @@ in
         userEmail = "notusknot@gmail.com";
         extraConfig = {
             init = { defaultBranch = "main"; };
+            core = {
+                excludesfile = "$NIXOS_CONFIG_DIR/scripts/gitignore";
+            };
         };
     };
 

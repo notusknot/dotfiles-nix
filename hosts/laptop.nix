@@ -12,7 +12,7 @@
 
     networking.extraHosts = let
     hostsPath = https://raw.githubusercontent.com/StevenBlack/hosts/master/alternates/fakenews-gambling-porn-social/hosts;
-    hostsFile = builtins.fetchurl { url=hostsPath; sha256="sha256:0w41w3s84jvfv0897bgygwd4masmcya7b6rgys4830xaln2w39ny"; };
+    hostsFile = builtins.fetchurl { url=hostsPath; sha256="sha256:1my39j23ynh0n82ygyyyx1w6i6sydgjmpljw2cmsrb0jp1qg5fkz"; };
     in builtins.readFile "${hostsFile}";
 
     hardware.cpu.intel.updateMicrocode = true;
@@ -34,5 +34,10 @@
     swapDevices = [ { device = "/dev/disk/by-uuid/ccec80c0-6886-4534-899c-04a3a00e88b5"; } ];
 
     powerManagement.cpuFreqGovernor = lib.mkDefault "powersave";
+
     services.tlp.enable = true;
+
+    services.cron.systemCronJobs = [
+        "@daily @reboot cd ~/stuff/notes && footclient -a foot-notes sh -c nvim ~/stuff/notes/journal/$(date '+%Y-%m-%d').md"
+    ];
 }

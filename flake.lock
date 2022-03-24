@@ -61,11 +61,11 @@
       },
       "locked": {
         "dir": "contrib",
-        "lastModified": 1646955912,
-        "narHash": "sha256-+AFQqKznO/Q31gLysnXXXrOTJFg5J+EfY/W+QY4BTrA=",
+        "lastModified": 1647750671,
+        "narHash": "sha256-GlpPms8UMPDLYGQI/XymFK+zqKUd33w0sZnLTPDC9dw=",
         "owner": "neovim",
         "repo": "neovim",
-        "rev": "abbc9148db413c4a90a33a562da94c37743a8684",
+        "rev": "54f15a9e47ea69e81ab9053b3ba9514415f592e4",
         "type": "github"
       },
       "original": {
@@ -84,11 +84,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1646986489,
-        "narHash": "sha256-HtjbldOxjf9K3BaUWJZHMZSL6INjNzOdeJPn7bUeAyE=",
+        "lastModified": 1647764035,
+        "narHash": "sha256-FFoYsKta5NQBNqGsZlDRxxc+B9sdOle8hbuJL/v6tYQ=",
         "owner": "nix-community",
         "repo": "neovim-nightly-overlay",
-        "rev": "4a32b1c7c48ad753b78231f8d44e1454c685d5bc",
+        "rev": "e277da9332268da97e7e40995318b457d680ce1d",
         "type": "github"
       },
       "original": {
@@ -133,24 +133,7 @@
         "home-manager": "home-manager",
         "neovim-nightly-overlay": "neovim-nightly-overlay",
         "nixpkgs": "nixpkgs",
-        "nur": "nur",
-        "zk-nvim": "zk-nvim"
-      }
-    },
-    "zk-nvim": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1644774268,
-        "narHash": "sha256-/2uR8DMtI01nVlyydUoVUBj/yB/FOWmNSz6vgpRK800=",
-        "owner": "mickael-menu",
-        "repo": "zk-nvim",
-        "rev": "d705faa82da042e7a75f7d244afd27c2d8f20830",
-        "type": "github"
-      },
-      "original": {
-        "owner": "mickael-menu",
-        "repo": "zk-nvim",
-        "type": "github"
+        "nur": "nur"
       }
     }
   },

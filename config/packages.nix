@@ -10,8 +10,8 @@
 
         # Command-line tools
         ripgrep ffmpeg tealdeer exa htop
-        pass gnupg slop bat unzip afetch
-        lowdown zk grim slurp imagemagick
+        pass gnupg slop bat unzip libnotify
+        lowdown zk grim slurp imagemagick age
        
         # GUI applications
         mpv brave firefox pqiv 
@@ -23,6 +23,5 @@
         # Please note: if you remove any of these, make sure to also remove them from nvim/config/nvim/lua/lsp.lua!!
         rnix-lsp
         sumneko-lua-language-server
-        rust-analyzer
     ];
 }

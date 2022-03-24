@@ -1,205 +1,104 @@
-local opt = vim.opt
+local o = vim.opt
 local g = vim.g
 
+-- Lazy load
 vim.defer_fn(function()
+    vim.cmd [[
+        packadd jabuti-nvim
+        colorscheme jabuti
+    ]]
 
-vim.cmd [[
-    syntax on
-    filetype on
-    colorscheme jabuti 
-    
-    packadd bufferline.nvim	
-    packadd lualine.nvim
-    packadd indent-blankline.nvim
-]]
+    vim.defer_fn(function()
 
-vim.defer_fn(function()
+        -- Enable and config plugins
+        dofile("/home/notus/.config/nixos/config/nvim/lua/plugins.lua")
 
--- Enable plugins
-vim.cmd [[ 
-    packadd bufferline.nvim
-    packadd pears.nvim
-    packadd nvim-tree.lua
-    packadd nvim-web-devicons
-    packadd TrueZen.nvim
-    packadd telescope.nvim
-    packadd nvim-colorizer.lua
-    packadd vim-nix
-    packadd toggleterm.nvim
-    packadd cmp-buffer
-    packadd cmp-nvim-lsp
-    packadd cmp-path
-]]
+        vim.cmd [[
+            let g:loaded_python3_provider = 0
+            let g:loaded_ruby_provider = 0
+            let g:loaded_nodejs_provider = 0
+            let g:loaded_perl_provider = 0
 
-dofile("/home/notus/.config/nixos/config/nvim/lua/statusline.lua")
-dofile("/home/notus/.config/nixos/config/nvim/lua/lsp.lua")
-dofile("/home/notus/.config/nixos/config/nvim/lua/nvim-tree.lua")
-dofile("/home/notus/.config/nixos/config/nvim/lua/telescope.lua")
+            filetype plugin indent off 
 
-vim.cmd [[
-    filetype plugin indent off 
+            au FileType markdown setlocal wrap linebreak spell
+            au FileType markdown :lua require('cmp').setup.buffer { enabled = false }
+            au BufWinEnter NvimTree setlocal nonumber
 
-    au FileType markdown setlocal wrap linebreak spell
-    au BufWinEnter NvimTree setlocal nonumber
+            augroup cmdline
+                autocmd!
+                autocmd CmdlineLeave : echo ''
+            augroup end
+        ]]
 
-    nnoremap j gj
-    nnoremap k gk
-    map ; :
+        -- Keybinds
+        local map = vim.api.nvim_set_keymap
+        local opts = { silent = true, noremap = true }
 
-    augroup cmdline
-        autocmd!
-        autocmd CmdlineLeave : echo ''
-    augroup end
-]]
+        map('n', '<C-p>', ':NvimTreeToggle <CR>', opts)
+        map('n', '<C-n>', ':Telescope live_grep <CR>', opts)
+        map('n', '<C-f>', ':Telescope find_files <CR>', opts)
+        map('n', '<C-o>', ':TZAtaraxis <CR>', opts)
+        map('n', '<C-m>', ':TZMinimalist <CR>', opts)
+        map('n', '<C-l>', ':noh <CR>', opts)
+        map('n', 'j', 'gj', opts)
+        map('n', 'k', 'gk', opts)
+        map('n', ';', ':', { noremap = true } )
 
--- Disable statusline for NvimTrew
-vim.api.nvim_exec(
-    [[ au BufEnter,BufWinEnter,WinEnter,CmdwinEnter * if bufname('%') == "NvimTree" | set laststatus=0 | else | set laststatus=2 | endif ]], false
-)
---[[
-require("toggleterm").setup ({
-    hide_numbers = true, -- hide the number column in toggleterm buffers
-    shade_terminals = true,
-    shading_factor = '<number>', -- the degree by which to darken to terminal colour, default: 1 for dark backgrounds, 3 for light
-    start_in_insert = true,
-    insert_mappings = true, -- whether or not the open mapping applies in insert mode
-    terminal_mappings = true, -- whether or not the open mapping applies in the opened terminals
-    persist_size = true,
-    direction =  'horizontal',
-    close_on_exit = true, -- close the terminal window when the process exits
-    shell = vim.o.shell, -- change the default shell
-})
---]]
-require("toggleterm").setup{
-    open_mapping = [[<c-\>]],
-    shade_terminals = false,
-    direction = 'horizontal',
-    close_on_exit = true,
-    shell = vim.o.shell,
-}
-require('bufferline').setup({
-	options = {
-		offsets = { { filetype = "NvimTree", text = "", padding = 1 } },
-        separator_style = "thin",
-		custom_filter = function(buf_number)
-			local present_type, type = pcall(function()
-				return vim.api.nvim_buf_get_var(buf_number, "term_type")
-			end)
+        g.mapleader = ' '
 
-			if present_type then
-				if type == "vert" then
-					return false
-				elseif type == "hori" then
-					return false
-				end
-				return true
-			end
+        -- Indent line
+        g.indent_blankline_char = '▏'
 
-			return true
-		end,
-	},
-    highlights = {
-     	background = {					-- inactive tab color
-     		guibg = "#252632",
-     		guifg = "#9699b7",
-     	},
-     	buffer_selected = {				-- active tab color
-     		guibg = "#292A37",
-     		guifg = "#d9e0ee",
-     		gui = "bold"
-     	},
-     	fill = {						-- bufferline's background color
-     		guibg = "#252632",
-     		guifg = "#9699b7",
-     	},
-     	close_button = {
-            guifg = "#9699b7",
-     		guibg = "#252632"
-     	},
-        close_button_selected = {
-            guifg = "#9699b7",
-     		guibg = "#292A37"
-        },
-     	separator = {						-- separator color. first one is the thin line; second one is the thick one
-     		guifg = "#252632",
-     		guibg = "#252632"
-     	},
-     	indicator_selected = {				-- separator when tab is active color
-     		guifg = "#b072d1",
-     		guibg = "#292A37"
-     	},
-     }
-})
+        -- Performance
+        o.lazyredraw = true;
+        o.shell = "zsh"
+        o.shadafile = "NONE"
 
-require('pears').setup()
-require('colorizer').setup()
+        -- Colors
+        o.termguicolors = true
 
--- Treesitter settings
-require'nvim-treesitter.configs'.setup {
-    ensure_installed = "nix", "rust", "c", "python", "lua", "html", "css", "js", -- one of "all", "maintained" (parsers with maintainers), or a list of languages
-    highlight = {
-        enable = true
-    },
-}
+        -- Undo files
+        o.undofile = true
 
-local map = vim.api.nvim_set_keymap
-options = { noremap = true }
-map('n', '<C-p>', ':NvimTreeToggle <CR>', options)
-map('n', '<C-n>', ':Telescope live_grep <CR>', options)
-map('n', '<C-o>', ':TZAtaraxis <CR>', options)
-map('n', '<C-m>', ':TZMinimalist <CR>', options)
-map('n', '<C-l>', ':noh <CR>', options)
+        -- Indentation
+        o.smartindent = true
+        o.tabstop = 4
+        o.shiftwidth = 4
+        o.shiftround = true
+        o.expandtab = true
+        o.scrolloff = 3
 
-g.mapleader = ' '
+        -- Set clipboard to use system clipboard
+        o.clipboard = "unnamedplus"
 
--- Indent line
-g.indent_blankline_char = '▏'
+        -- Use mouse
+        o.mouse = "a"
 
--- Performance
-opt.lazyredraw = true;
-opt.shell = "zsh"
-opt.shadafile = "NONE"
+        -- Nicer UI settings
+        o.cursorline = true
+        o.relativenumber = true
+        o.number = true
 
--- Colors
-opt.termguicolors = true
+        -- Get rid of annoying viminfo file
+        o.viminfo = ""
+        o.viminfofile = "NONE"
 
--- Undo files
-opt.undofile = true
-
--- Indentation
-opt.smartindent = true
-opt.tabstop = 4
-opt.shiftwidth = 4
-opt.shiftround = true
-opt.expandtab = true
-opt.scrolloff = 3
-
--- Set clipboard to use system clipboard
-opt.clipboard = "unnamedplus"
-
--- Use mouse
-opt.mouse = "a"
-
--- Nicer UI settings
-opt.cursorline = true
-opt.relativenumber = true
-opt.number = true
-
--- Get rid of annoying viminfo file
-opt.viminfo = ""
-opt.viminfofile = "NONE"
-
--- Miscellaneous quality of life
-opt.ignorecase = true
-opt.ttimeoutlen = 5
-opt.hidden = true
-opt.shortmess = "atI"
-opt.wrap = false
-opt.backup = false
-opt.writebackup = false
-opt.errorbells = false
-opt.swapfile = false
-opt.showmode = false
-
-end, 15)
+        -- Miscellaneous quality of life
+        o.ignorecase = true
+        o.ttimeoutlen = 5
+        o.hidden = true
+        o.shortmess = "atI"
+        o.wrap = false
+        o.backup = false
+        o.writebackup = false
+        o.errorbells = false
+        o.swapfile = false
+        o.showmode = false
+        o.laststatus = 3
+        o.pumheight = 6
+        o.splitright = true
+        o.splitbelow = true
+        o.completeopt = "menuone,noselect"
+    end, 15)
 end, 0)

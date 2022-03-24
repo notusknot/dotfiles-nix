@@ -13,7 +13,11 @@ pkgs:
         export PASSWORD_STORE_DIR="$XDG_DATA_HOME/password-store";
         export ZK_NOTEBOOK_DIR="$HOME/stuff/notes";
         export EDITOR="nvim";
+        export DIRENV_LOG_FORMAT="";
         bindkey '^ ' autosuggest-accept
+
+        edir() { tar -cz $1 | age -p > $1.tar.gz.age && rm -rf $1 &>/dev/null && echo "$1 encrypted" }
+        ddir() { age -d $1 | tar -xz && rm -rf $1 &>/dev/null && echo "$1 decrypted" }
     '';
 
     # Tweak settings for history

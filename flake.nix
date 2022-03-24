@@ -19,21 +19,17 @@
             url = "github:nix-community/neovim-nightly-overlay";
             inputs.nixpkgs.follows = "nixpkgs";
         };
-
-        zk-nvim = {
-            url = "github:mickael-menu/zk-nvim";
-            flake = false;
-        };
     };
 
     # All outputs for the system (configs)
-    outputs = { home-manager, nixpkgs, nur, neovim-nightly-overlay, zk-nvim, ... }: {
+    outputs = { home-manager, nixpkgs, nur, neovim-nightly-overlay, ... }: {
         nixosConfigurations = {
             # Laptop config
             laptop = nixpkgs.lib.nixosSystem {
                 system = "x86_64-linux";
                 modules = [
                     ./configuration.nix ./hosts/laptop.nix ./config/packages.nix 
+                    { nix.registry.nixpkgs.flake = nixpkgs; }
                     home-manager.nixosModules.home-manager {
                         home-manager.useGlobalPkgs = true;
                         home-manager.useUserPackages = true;

@@ -12,8 +12,8 @@ let
         src = pkgs.fetchFromGitHub {
             owner = "jabuti-theme";
             repo = "jabuti-nvim";
-            rev = "1b8412369cb23a45f68e201628201bce61c40088";
-            sha256 = "sha256-CbqdlIBRd0+WiMCO2d89j9wJqrxTL4mv+8wCPLDoc0s=";
+            rev = "666a41589d46075dc5b0164796783854ee0210e3";
+            sha256 = "sha256-yqeQ4GiHLIeE2nZF+fhl0INvC3mAfngM9+IvBvBsiKg=";
         };
     };
 
@@ -23,12 +23,14 @@ environment.systemPackages = with pkgs; [
     (neovim.override {
         configure = {
             packages.myPlugins = with pkgs.vimPlugins; {
-                start = [ jabuti-nvim nvim-lspconfig nvim-treesitter nvim-cmp cmp-path cmp-nvim-lsp cmp-buffer];
+                start = [ jabuti-nvim nvim-cmp cmp-path cmp-nvim-lsp cmp-buffer ];
 
                 opt = [
                 # File tree
                 nvim-web-devicons 
                 nvim-tree-lua
+
+                nvim-lspconfig nvim-treesitter
 
                 # Languages
                 vim-nix
@@ -37,7 +39,7 @@ environment.systemPackages = with pkgs; [
                 lualine-nvim
                 bufferline-nvim
                 nvim-colorizer-lua
-                pears-nvim
+                nvim-autopairs
                 TrueZen-nvim
                 toggleterm-nvim
                 # Telescope
@@ -49,6 +51,21 @@ environment.systemPackages = with pkgs; [
             ];
         };
         customRC = ''
+            let g:loaded_matchit           = 1
+            let g:loaded_logiPat           = 1
+            let g:loaded_rrhelper          = 1
+            let g:loaded_tarPlugin         = 1
+            " let g:loaded_man               = 1
+            let g:loaded_gzip              = 1
+            let g:loaded_zipPlugin         = 1
+            let g:loaded_2html_plugin      = 1
+            let g:loaded_shada_plugin      = 1
+            let g:loaded_spellfile_plugin  = 1
+            let g:loaded_netrw             = 1
+            let g:loaded_netrwPlugin       = 1
+            let g:loaded_tutor_mode_plugin = 1
+            let g:loaded_remote_plugins    = 1
+
             lua dofile("/home/notus/.config/nixos/config/nvim/lua/settings.lua")
         '';
         };
