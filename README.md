@@ -7,13 +7,12 @@
 - [NixOS Manual](https://nixos.org/manual/nixos/stable/)
 - [Epsyle's NixOS Dotfiles](https://github.com/epsyle/snowflake/)
 
-![Screenshot of my desktop](pics/desktop.png)
+![Screenshot of my desktop](https://github.com/notusknot/dotfiles-nix/blob/main/pics/screenshot.png)
 
 <details> <summary> <b> Neovim showcase </b> </summary>
-![General Neovim setup](pics/nvim.png)
-![Telescope](pics/telescope.png)
+![General Neovim setup](https://github.com/notusknot/dotfiles-nix/blob/main/pics/nvim.png)
+![Telescope](https://github.com/notusknot/dotfiles-nix/blob/main/pics/telescope.png)
 </details>
-*My configuration files for NixOS. Feel free to look around and copy!* 
 
 ## Table of contents
 
