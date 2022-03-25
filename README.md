@@ -10,8 +10,10 @@
 ![Screenshot of my desktop](https://github.com/notusknot/dotfiles-nix/blob/main/pics/screenshot.png)
 
 <details> <summary> <b> Neovim showcase </b> </summary>
+
 ![General Neovim setup](https://github.com/notusknot/dotfiles-nix/blob/main/pics/nvim.png)
 ![Telescope](https://github.com/notusknot/dotfiles-nix/blob/main/pics/telescope.png)
+
 </details>
 
 ## Table of contents
