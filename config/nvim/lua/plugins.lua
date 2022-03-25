@@ -30,6 +30,7 @@ require("toggleterm").setup {
     shade_terminals = false,
     direction = 'horizontal',
     close_on_exit = true,
+    size = 25,
     shell = vim.o.shell
 }
 

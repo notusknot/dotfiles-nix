@@ -7,8 +7,12 @@
 - [NixOS Manual](https://nixos.org/manual/nixos/stable/)
 - [Epsyle's NixOS Dotfiles](https://github.com/epsyle/snowflake/)
 
-![Screenshot of my desktop](config/pics/screenshot.png)
+![Screenshot of my desktop](pics/desktop.png)
 
+<details> <summary> <b> Neovim showcase </b> </summary>
+![General Neovim setup](pics/nvim.png)
+![Telescope](pics/telescope.png)
+</details>
 *My configuration files for NixOS. Feel free to look around and copy!* 
 
 ## Table of contents
@@ -20,14 +24,66 @@
 
 ## Installation
 
-**IMPORTANT: do NOT use my laptop.nix and/or desktop.nix! These files include settings that are specific to MY drives and they will mess up for you if you try to use them on your system. **
+** IMPORTANT: do NOT use my laptop.nix and/or desktop.nix! These files include settings that are specific to MY drives and they will mess up for you if you try to use them on your system. **
 
-Since I use flakes now, using my configs should be a breeze. Simply clone this repo and drop it wherever you want (I use .config/nixos). 
-To build my config for your system, run the following: ```sudo nixos-rebuild switch --flake .#laptop```
-Replace `laptop` with desktop, vps, depending on what kind of computer you are using, or leave it as laptop if you want. 
-Remember to change the drives UIDs in their respective files!
 Please be warned that it may not work perfectly out of the box.
 For best security, read over all the files to confirm there are no conflictions with your current system. 
+
+Prerequisites:
+- [NixOS installed and running](https://nixos.org/manual/nixos/stable/index.html#ch-installation)
+- [Flakes enabled](https://nixos.wiki/wiki/flakes)
+- Root access
+
+Clone the repo and cd into it:
+
+```bash
+git clone https://github.com/notusknot/dotfiles-nix ~/.config/nixos && cd ~/.config/nixos
+```
+
+First, create a hardware configuration for your system:
+
+```bash
+sudo nixos-generate-config
+```
+
+You can then copy this to a the `hosts/` directory:
+
+```bash
+cp /etc/nixos/hardware-configuration.nix ~/.config/nixos/
+```
+
+You can either add or create your own output in `flakes.nix`, by following this template:
+```nix
+# Rename this to your computer
+yourComputer = nixpkgs.lib.nixosSystem {
+    system = "x86_64-linux";
+    modules = [
+        # Import whatever modules you want. Remember to import your hardware config!!
+        ./configuration.nix ./hosts/yourComputer.nix ./config/packages.nix 
+        { nix.registry.nixpkgs.flake = nixpkgs; }
+        home-manager.nixosModules.home-manager {
+            home-manager.useGlobalPkgs = true;
+            home-manager.useUserPackages = true;
+
+            # If you change your username, remember to change 'notus' here as well!
+            home-manager.users.notus = import ./config/home.nix;
+
+            # Select whatever overlays you want
+            nixpkgs.overlays = [ 
+                nur.overlay neovim-nightly-overlay.overlay
+            ];
+        }
+    ];
+};
+```
+
+Lastly, build the configuration with 
+
+```bash
+sudo nixos-rebuild switch --flake .#yourComputer
+```
+
+And that should be it! If there are any issues please don't hesistate to [submit an issue](https://github.com/notusknot/dotfiles-nix/issues) or contact me.
 
 ## What each file does
 | File name        | Description                   |
@@ -58,8 +114,10 @@ For best security, read over all the files to confirm there are no conflictions 
 - Mod4 + brightness keys adjusts brightness accordingly
 - Mod4 + volume keys adjusts volume accordingly
 - Firefox preconfigured to be less annoying and have better privacy
+- [screen](scripts/screen) script provides a popup of the recently taken screenshot
 - Uses [Steven Black's host file](https://github.com/stevenblack/hosts) to block junk
 - Uses Xwayland for compadibility with Xorg programs
+- Uses doas instead of sudo for better security
 
 ## ⚙️ configuration.nix
 *It is likely you need to change a few things in this file to tailor the experience to what you use; I've included instructions in a comment at the top of the file.*
@@ -79,7 +137,7 @@ Home-manager is used by setting options. These options define what program you w
 - Since some of the config files are moved, your home directory will generally be a little bit less cluttered
 
 Sometimes home-manager has native support for configuration options, and sometimes you can just copy-paste your current config into a field (usually `extraConfig` or `extraOptions`). For example, for picom, you can use some of built-in configuration options: 
-```  
+```nix
 services.picom = {
     enable = true;
     shadow = true;
@@ -88,12 +146,13 @@ services.picom = {
         shadow-radius = 20;
     '';
   };
-  ```
-  You can see that some of the settings you would see in a picom.conf file are here, but with a different syntax. `shadow = true;` uses the Nix language syntax to enable picom shadows, because it is a native setting with home-manager. 
-  
-  There are also some settings that are not supported by home-manager, in which case you can usually use the `extraOptions` setting (note: this is not a guarantee; check the man page for home-manager to config all the settings for your program). You can see that I have `shadow-radius = 20;` in `extraOptions`, which is what you would put in picom.conf.
-  
-  This general idea is how you configure home-manager, you can look at my `zsh.nix` file for a more in-depth config. 
+```
+
+You can see that some of the settings you would see in a picom.conf file are here, but with a different syntax. `shadow = true;` uses the Nix language syntax to enable picom shadows, because it is a native setting with home-manager. 
+
+There are also some settings that are not supported by home-manager, in which case you can usually use the `extraOptions` setting (note: this is not a guarantee; check the man page for home-manager to config all the settings for your program). You can see that I have `shadow-radius = 20;` in `extraOptions`, which is what you would put in picom.conf.
+
+This general idea is how you configure home-manager, you can look at my `zsh.nix` file for a more in-depth config. 
 
 ## 📦 config/packages.nix
 

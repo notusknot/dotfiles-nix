@@ -1,6 +1,7 @@
 { config, pkgs, inputs, ... }:
 
 {
+    # Configure neovim
     imports = [ ./config/nvim/nvim.nix ];
 
     # Remove unecessary preinstalled packages
@@ -41,19 +42,6 @@
         font = "Lat2-Terminus16";
         keyMap = "us";
     };
-    
-    # Enable audio
-    sound.enable = true;
-
-    # Disable bluetooth, enable pulseaudio, enable opengl (for Wayland)
-    hardware = {
-        bluetooth.enable = false;
-        pulseaudio.enable = true;
-        opengl = {
-            enable = true;
-            driSupport = true;
-        };
-    };
 
     # Set up user and enable sudo
     users.users.notus = {
@@ -61,13 +49,6 @@
         extraGroups = [ "wheel" ]; 
         shell = pkgs.zsh;
     };
-
-    # Install fonts
-    fonts.fonts = with pkgs; [
-        jetbrains-mono
-        roboto
-        (nerdfonts.override { fonts = [ "JetBrainsMono" "FiraCode" "Hack" "Meslo" "RobotoMono" ]; })
-    ];
 
     # Set up networking and secure it
     networking = {
@@ -95,31 +76,22 @@
         DIRENV_LOG_FORMAT = "";
     };
 
-    # Wayland stuff: enable XDG integration, allow sway to use brillo
-    xdg = {
-        portal = {
+    # Security 
+    security = {
+        sudo.enable = false;
+        doas = {
             enable = true;
-            extraPortals = with pkgs; [
-            xdg-desktop-portal-wlr
-            xdg-desktop-portal-gtk
-            ];
-            gtkUsePortal = true;
+            extraRules = [{
+                users = [ "notus" ];
+                keepEnv = true;
+                persist = true;  
+            }];
+            extraConfig = "permit nopass notus cmd brillo";
         };
-    };
 
-    security.sudo.enable = false;
-    security.doas = {
-        enable = true;
-        extraRules = [{
-            users = [ "notus" ];
-            keepEnv = true;
-            persist = true;  
-        }];
-        extraConfig = "permit nopass notus cmd brillo";
+        # Extra security
+        protectKernelImage = true;
     };
-
-    # Extra security
-    security.protectKernelImage = true;
 
     # Do not touch
     system.stateVersion = "20.09";

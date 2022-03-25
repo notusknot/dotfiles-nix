@@ -6,15 +6,50 @@
 {
     networking.hostName = "laptop";
 
+    # Laptop-specific packages (the other ones are installed in `packages.nix`)
     environment.systemPackages = with pkgs; [
         acpi tlp
     ];
 
+    # Sound
+    sound.enable = true;
+
+    # Disable bluetooth, enable pulseaudio, enable opengl (for Wayland)
+    hardware = {
+        bluetooth.enable = false;
+        pulseaudio.enable = true;
+        opengl = {
+            enable = true;
+            driSupport = true;
+        };
+    };
+
+    # Install fonts
+    fonts.fonts = with pkgs; [
+        jetbrains-mono
+        roboto
+        (nerdfonts.override { fonts = [ "JetBrainsMono" "FiraCode" "Hack" "Meslo" "RobotoMono" ]; })
+    ];
+
+    # Wayland stuff: enable XDG integration, allow sway to use brillo
+    xdg = {
+        portal = {
+            enable = true;
+            extraPortals = with pkgs; [
+            xdg-desktop-portal-wlr
+            xdg-desktop-portal-gtk
+            ];
+            gtkUsePortal = true;
+        };
+    };
+
+    # StevenBlack hosts file to block junk
     networking.extraHosts = let
     hostsPath = https://raw.githubusercontent.com/StevenBlack/hosts/master/alternates/fakenews-gambling-porn-social/hosts;
-    hostsFile = builtins.fetchurl { url=hostsPath; sha256="sha256:1my39j23ynh0n82ygyyyx1w6i6sydgjmpljw2cmsrb0jp1qg5fkz"; };
+    hostsFile = builtins.fetchurl { url=hostsPath; sha256="sha256:0rz69q5xdppqjc849pgmq47dcib2s2ycpm9ym8mgh1prhkgnanxh"; };
     in builtins.readFile "${hostsFile}";
 
+    # Hardware config
     hardware.cpu.intel.updateMicrocode = true;
 
     imports = [ (modulesPath + "/installer/scan/not-detected.nix") ];
@@ -36,8 +71,4 @@
     powerManagement.cpuFreqGovernor = lib.mkDefault "powersave";
 
     services.tlp.enable = true;
-
-    services.cron.systemCronJobs = [
-        "@daily @reboot cd ~/stuff/notes && footclient -a foot-notes sh -c nvim ~/stuff/notes/journal/$(date '+%Y-%m-%d').md"
-    ];
 }

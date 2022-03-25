@@ -6,41 +6,47 @@ vim.defer_fn(function()
     vim.cmd [[
         packadd jabuti-nvim
         colorscheme jabuti
+        filetype plugin indent off
     ]]
 
     vim.defer_fn(function()
-
         -- Enable and config plugins
         dofile("/home/notus/.config/nixos/config/nvim/lua/plugins.lua")
 
+        -- Autocmds
+        local agrp = vim.api.nvim_create_augroup
+        local acmd = vim.api.nvim_create_autocmd
+
+        acmd({ "FileType" }, { pattern = "markdown", command = "setlocal wrap linebreak spell" })
+        acmd({ "FileType" }, { pattern = "markdown", command = ":lua require('cmp').setup.buffer { enabled = false }" })
+        acmd({ "BufWinEnter" }, { pattern = "NvimTree", command = "setlocal nonumber" })
+        acmd({ "BufEnter" }, { pattern = "*", command = "set cursorline" })
+        acmd({ "BufLeave" }, { pattern = "*", command = "set nocursorline" })
+
         vim.cmd [[
-            let g:loaded_python3_provider = 0
-            let g:loaded_ruby_provider = 0
-            let g:loaded_nodejs_provider = 0
-            let g:loaded_perl_provider = 0
-
-            filetype plugin indent off 
-
-            au FileType markdown setlocal wrap linebreak spell
-            au FileType markdown :lua require('cmp').setup.buffer { enabled = false }
-            au BufWinEnter NvimTree setlocal nonumber
-
-            augroup cmdline
-                autocmd!
-                autocmd CmdlineLeave : echo ''
-            augroup end
+        augroup CursorLine
+            au!
+            au VimEnter * setlocal cursorline
+            au WinEnter * setlocal cursorline
+            au BufWinEnter * setlocal cursorline
+            au WinLeave * setlocal nocursorline
+        augroup END
         ]]
 
         -- Keybinds
         local map = vim.api.nvim_set_keymap
         local opts = { silent = true, noremap = true }
 
+        map("n", "<C-h>", "<C-w>h", opts)
+        map("n", "<C-j>", "<C-w>j", opts)
+        map("n", "<C-k>", "<C-w>k", opts)
+        map("n", "<C-l>", "<C-w>l", opts)
         map('n', '<C-p>', ':NvimTreeToggle <CR>', opts)
         map('n', '<C-n>', ':Telescope live_grep <CR>', opts)
         map('n', '<C-f>', ':Telescope find_files <CR>', opts)
         map('n', '<C-o>', ':TZAtaraxis <CR>', opts)
         map('n', '<C-m>', ':TZMinimalist <CR>', opts)
-        map('n', '<C-l>', ':noh <CR>', opts)
+        map('n', '<C-Space>', ':noh <CR>', opts)
         map('n', 'j', 'gj', opts)
         map('n', 'k', 'gk', opts)
         map('n', ';', ':', { noremap = true } )
@@ -54,6 +60,10 @@ vim.defer_fn(function()
         o.lazyredraw = true;
         o.shell = "zsh"
         o.shadafile = "NONE"
+        g.loaded_python3_provider = 0
+        g.loaded_ruby_provider = 0
+        g.loaded_nodejs_provider = 0
+        g.loaded_perl_provider = 0
 
         -- Colors
         o.termguicolors = true

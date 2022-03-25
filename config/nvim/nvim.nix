@@ -12,8 +12,8 @@ let
         src = pkgs.fetchFromGitHub {
             owner = "jabuti-theme";
             repo = "jabuti-nvim";
-            rev = "666a41589d46075dc5b0164796783854ee0210e3";
-            sha256 = "sha256-yqeQ4GiHLIeE2nZF+fhl0INvC3mAfngM9+IvBvBsiKg=";
+            rev = "17f1b94cbf1871a89cdc264e4a8a2b3b4f7c76d2";
+            sha256 = "sha256-iPjwx/rTd98LUPK1MUfqKXZhQ5NmKx/rN8RX1PIuDFA=";
         };
     };
 
