@@ -39,7 +39,27 @@
     };
 
     # All outputs for the system (configs)
-    outputs = { home-manager, nixpkgs, nur, picom-ibhagwan, neovim-nightly-overlay, st, dwm, ... }: {
+    outputs = { home-manager, nixpkgs, nur, picom-ibhagwan, neovim-nightly-overlay, st, dwm, ... }: 
+          let 
+            overlays = [
+              (final: prev: {
+                st = prev.st.overrideAttrs (o: {
+                  src = st;
+                });
+              })
+              (final: prev: {
+                dwm = prev.dwm.overrideAttrs (o: {
+                  src = dwm;
+                });
+              })
+              (final: prev: {
+                picom = prev.picom.overrideAttrs (o: {
+                  src = picom-ibhagwan;
+                });
+              })
+              nur.overlay neovim-nightly-overlay.overlay
+            ];
+          in {
         nixosConfigurations = {
 
             # Laptop config
@@ -51,25 +71,7 @@
                         home-manager.useGlobalPkgs = true;
                         home-manager.useUserPackages = true;
                         home-manager.users.notus = import ./config/home.nix;
-                        nixpkgs.overlays = [ 
-                            (final: prev: {
-                                st = prev.st.overrideAttrs (o: {
-                                    src = st;
-                                });
-                            })
-                            (final: prev: {
-                                dwm = prev.dwm.overrideAttrs (o: {
-                                    src = dwm;
-                                });
-                            })
-                            (final: prev: {
-                                picom = prev.picom.overrideAttrs (o: {
-                                    src = picom-ibhagwan;
-                                });
-                            })
-
-                            nur.overlay neovim-nightly-overlay.overlay
-                        ];
+                        nixpkgs.overlays = overlays;
                     }
                 ];
             };
@@ -83,20 +85,8 @@
                         home-manager.useGlobalPkgs = true;
                         home-manager.useUserPackages = true;
                         home-manager.users.notus = import ./config/home.nix;
-                        nixpkgs.overlays = [ 
-                            (final: prev: {
-                                st = prev.st.overrideAttrs (o: {
-                                    src = st;
-                                });
-                            })
-                            (final: prev: {
-                                dwm = prev.dwm.overrideAttrs (o: {
-                                    src = dwm;
-                                });
-                            })
-                            nur.overlay neovim-nightly-overlay.overlay 
-                        ];
-                    }
+                        nixpkgs.overlays = overlays;
+                      }
                 ];
             };
 
@@ -116,4 +106,5 @@
             };
         };
     };
+  
 }
