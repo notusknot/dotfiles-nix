@@ -47,10 +47,10 @@ First, create a hardware configuration for your system:
 sudo nixos-generate-config
 ```
 
-You can then copy this to a the `hosts/` directory:
+You can then copy this to a the `hosts/` directory (note: change `yourComputer` with whatever you want):
 
 ```bash
-cp /etc/nixos/hardware-configuration.nix ~/.config/nixos/
+cp /etc/nixos/hardware-configuration.nix ~/.config/nixos/hosts/yourComputer.nix
 ```
 
 You can either add or create your own output in `flakes.nix`, by following this template:

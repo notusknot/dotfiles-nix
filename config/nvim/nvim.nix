@@ -16,7 +16,6 @@ let
             sha256 = "sha256-iPjwx/rTd98LUPK1MUfqKXZhQ5NmKx/rN8RX1PIuDFA=";
         };
     };
-
 in
 {
 environment.systemPackages = with pkgs; [
@@ -42,6 +41,7 @@ environment.systemPackages = with pkgs; [
                 nvim-autopairs
                 TrueZen-nvim
                 toggleterm-nvim
+                stabilize-nvim
                 # Telescope
                 telescope-nvim
 

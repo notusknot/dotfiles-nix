@@ -17,12 +17,13 @@ vim.cmd [[
     packadd nvim-lspconfig
     packadd nvim-treesitter
     packadd indent-blankline.nvim
-
+    packadd stabilize.nvim
 ]]
 
 -- Colorize hex codes and autocmplete pairs
 require('nvim-autopairs').setup()
 require('colorizer').setup()
+require('stabilize').setup()
 
 -- Toggleable terminal
 require("toggleterm").setup {
@@ -30,7 +31,7 @@ require("toggleterm").setup {
     shade_terminals = false,
     direction = 'horizontal',
     close_on_exit = true,
-    size = 25,
+    size = 12,
     shell = vim.o.shell
 }
 
@@ -182,11 +183,14 @@ require'nvim-tree'.setup {
 local colors = {
     blue = '#26bbd9',
     cyan = '#59e3e3',
-    black = '#292a37',
+    black = '#303241',
+    --black = '#252632',
+    --black = '#292a37',
     white = '#d9e0ee',
     red = '#e95678',
     violet = '#b072d1',
-    grey = '#393a4d'
+    grey = '#393a4d',
+    comment = '#9699bd'
 }
 
 -- Fancy statusline
@@ -194,7 +198,7 @@ local bubbles_theme = {
     normal = {
         a = {fg = colors.black, bg = colors.violet},
         b = {fg = colors.white, bg = colors.grey},
-        c = {fg = colors.black, bg = colors.black}
+        c = {fg = colors.comment, bg = colors.black}
     },
 
     insert = {a = {fg = colors.black, bg = colors.blue}},
@@ -212,17 +216,16 @@ require('lualine').setup {
     options = {
         theme = bubbles_theme,
         component_separators = '|',
-        section_separators = {left = '', right = ''}
+        section_separators = {left = '', right = ''}
     },
     sections = {
-        lualine_a = {{'mode', separator = {left = ''}, right_padding = 2}},
-        lualine_b = {'filename', 'branch'},
-        lualine_c = {'fileformat'},
+--        lualine_a = {{'mode', separator = {left = ''}, right_padding = 2}},
+        lualine_a = {{'filetype', icon_only = true, colored = false, separator = {right = ''} }},
+        lualine_b = {{'filename', colored = true, separator = { right = ''} }},
+        lualine_c = {{'branch', colored = true, separator = { right = ''} }},
         lualine_x = {},
-        lualine_y = {'filetype', 'progress'},
-        lualine_z = {
-            {'location', separator = {right = ''}, left_padding = 2}
-        }
+        lualine_y = {{'progress', separator = { left = ''} }},
+        lualine_z = {{'location', separator = { left = ''}, left_padding = 0 }}
     },
     inactive_sections = {
         lualine_a = {'filename'},

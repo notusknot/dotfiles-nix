@@ -1,12 +1,14 @@
 local o = vim.opt
 local g = vim.g
 
+vim.g.do_filetype_lua = 1
+vim.g.did_load_filetypes = 0
+
 -- Lazy load
 vim.defer_fn(function()
     vim.cmd [[
         packadd jabuti-nvim
         colorscheme jabuti
-        filetype plugin indent off
     ]]
 
     vim.defer_fn(function()
@@ -20,8 +22,6 @@ vim.defer_fn(function()
         acmd({ "FileType" }, { pattern = "markdown", command = "setlocal wrap linebreak spell" })
         acmd({ "FileType" }, { pattern = "markdown", command = ":lua require('cmp').setup.buffer { enabled = false }" })
         acmd({ "BufWinEnter" }, { pattern = "NvimTree", command = "setlocal nonumber" })
-        acmd({ "BufEnter" }, { pattern = "*", command = "set cursorline" })
-        acmd({ "BufLeave" }, { pattern = "*", command = "set nocursorline" })
 
         vim.cmd [[
         augroup CursorLine
@@ -31,6 +31,16 @@ vim.defer_fn(function()
             au BufWinEnter * setlocal cursorline
             au WinLeave * setlocal nocursorline
         augroup END
+
+        function! s:MDGoToSection()
+            let raw_filename = expand('<cfile>')
+            let arg = substitute(raw_filename, '\([^#]*\)\(#\{1,6\}\)\([^#]*\)', '+\/\2\\\\s\3 \1.md', 'g')
+            execute "edit" arg
+        endfunction
+
+        nnoremap <Enter> :call <SID>MDGoToSection()<CR>
+        nnoremap gf :call <SID>MDGoToSection()<CR>
+
         ]]
 
         -- Keybinds
@@ -45,7 +55,7 @@ vim.defer_fn(function()
         map('n', '<C-n>', ':Telescope live_grep <CR>', opts)
         map('n', '<C-f>', ':Telescope find_files <CR>', opts)
         map('n', '<C-o>', ':TZAtaraxis <CR>', opts)
-        map('n', '<C-m>', ':TZMinimalist <CR>', opts)
+        --map('n', '<C-m>', ':TZMinimalist <CR>', opts)
         map('n', '<C-Space>', ':noh <CR>', opts)
         map('n', 'j', 'gj', opts)
         map('n', 'k', 'gk', opts)
@@ -111,4 +121,4 @@ vim.defer_fn(function()
         o.splitbelow = true
         o.completeopt = "menuone,noselect"
     end, 15)
-end, 0)
+end, 100)

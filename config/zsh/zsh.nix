@@ -30,6 +30,7 @@ pkgs:
     # Set some aliases
     shellAliases = {
         v = "nvim";
+        nvim = "nvim -i NONE";
         c = "clear";
         mkdir = "mkdir -vp";
         rm = "rm -rifv";

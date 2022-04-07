@@ -1,7 +1,7 @@
 { config, pkgs, inputs, ... }:
 
 {
-    # Configure neovim
+  # Configure neovim
     imports = [ ./config/nvim/nvim.nix ];
 
     # Remove unecessary preinstalled packages
@@ -14,7 +14,8 @@
         settings.allowed-users = [ "notus" ];
         gc = {
             automatic = true;
-            dates = "daily";
+            dates = "weekly";
+            options = "--delete-older-than 30d";
         };
         package = pkgs.nixUnstable;
         extraOptions = ''
@@ -28,11 +29,11 @@
     boot = {
         cleanTmpDir = true;
         loader = {
-            systemd-boot.enable = true;
-            systemd-boot.editor = false;
-            efi.canTouchEfiVariables = true;
-            timeout = 0;
-        }; 
+        systemd-boot.enable = true;
+        systemd-boot.editor = false;
+        efi.canTouchEfiVariables = true;
+        timeout = 0;
+        };
     };
 
     # Set up locales (timezone and keyboard layout)
@@ -46,7 +47,7 @@
     # Set up user and enable sudo
     users.users.notus = {
         isNormalUser = true;
-        extraGroups = [ "wheel" ]; 
+        extraGroups = [ "wheel" ];
         shell = pkgs.zsh;
     };
 
@@ -55,21 +56,21 @@
         wireless.iwd.enable = true;
         interfaces.enp0s25.useDHCP = false;
         firewall = {
-            enable = true;
-            allowedTCPPorts = [ 443 80 ];
-            allowedUDPPorts = [ 443 80 44857 ];
-            allowPing = false;
+        enable = true;
+        allowedTCPPorts = [ 443 80 ];
+        allowedUDPPorts = [ 443 80 44857 ];
+        allowPing = false;
         };
     };
 
     # Set environment variables
     environment.variables = {
-        NIXOS_CONFIG="$HOME/.config/nixos/configuration.nix"; 
-        NIXOS_CONFIG_DIR="$HOME/.config/nixos/"; 
-        XDG_DATA_HOME="$HOME/.local/share";
-        PASSWORD_STORE_DIR="$HOME/.local/share/password-store";
-        GTK_RC_FILES="$HOME/.local/share/gtk-1.0/gtkrc";
-        GTK2_RC_FILES="$HOME/.local/share/gtk-2.0/gtkrc";
+        NIXOS_CONFIG = "$HOME/.config/nixos/configuration.nix";
+        NIXOS_CONFIG_DIR = "$HOME/.config/nixos/";
+        XDG_DATA_HOME = "$HOME/.local/share";
+        PASSWORD_STORE_DIR = "$HOME/.local/share/password-store";
+        GTK_RC_FILES = "$HOME/.local/share/gtk-1.0/gtkrc";
+        GTK2_RC_FILES = "$HOME/.local/share/gtk-2.0/gtkrc";
         MOZ_ENABLE_WAYLAND = "1";
         ZK_NOTEBOOK_DIR = "$HOME/stuff/notes/";
         EDITOR = "nvim";
@@ -80,13 +81,13 @@
     security = {
         sudo.enable = false;
         doas = {
-            enable = true;
-            extraRules = [{
-                users = [ "notus" ];
-                keepEnv = true;
-                persist = true;  
-            }];
-            extraConfig = "permit nopass notus cmd brillo";
+        enable = true;
+        extraRules = [{
+            users = [ "notus" ];
+            keepEnv = true;
+            persist = true;
+        }];
+        extraConfig = "permit nopass notus cmd brillo";
         };
 
         # Extra security

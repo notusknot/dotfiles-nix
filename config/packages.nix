@@ -2,19 +2,22 @@
 
 {
     nixpkgs.config.allowUnfree = true;
+    nixpkgs.config.permittedInsecurePackages = [
+        "electron-13.6.9"
+    ];
     # Install all the packages
     environment.systemPackages = with pkgs; [
 
         # Rice/desktop
-        bemenu zsh dunst wl-clipboard swaybg sway brillo wlsunset
+        bemenu zsh dunst wl-clipboard swaybg sway brillo wlsunset 
 
         # Command-line tools
-        ripgrep ffmpeg tealdeer exa htop
+        ripgrep ffmpeg tealdeer exa htop fzf
         pass gnupg slop bat unzip libnotify
         lowdown zk grim slurp imagemagick age
        
         # GUI applications
-        mpv brave firefox pqiv 
+        mpv brave firefox pqiv obsidian
 
         # Development
         git zig

@@ -10,6 +10,8 @@ in
     # Enable home-manager
     programs.home-manager.enable = true;
 
+    #home.packages = [ pkgs.sf-mono ];
+
     # Source extra files that are too big for this one 
     programs.zsh = zshsettings pkgs;
     #programs.neovim = nvimsettings pkgs;
@@ -38,6 +40,7 @@ in
     # SwayWM setup
     wayland.windowManager.sway = {
         enable = true;
+        #package = pkgs.sway-borders;
         wrapperFeatures.gtk = true; # so that gtk works properly
         config = {
             terminal = "footclient";
@@ -59,10 +62,10 @@ in
 
         extraConfig = ''
             # Border Images: needs sway-borders which is finicky at the moment
-            #border_images.focused ${../pics/rounded.png}
-            #border_images.focused_inactive ${../pics/rounded.png}
-            #border_images.unfocused ${../pics/rounded.png}
-            #border_images.urgent ${../pics/rounded.png}
+            border_images.focused ${../pics/rounded.png}
+            border_images.focused_inactive ${../pics/rounded.png}
+            border_images.unfocused ${../pics/rounded.png}
+            border_images.urgent ${../pics/rounded.png}
             bindsym Mod4+n exec cd ~/stuff/notes && footclient -a foot-notes sh -c "nvim ~/stuff/notes/journal/$(date '+%Y-%m-%d').md"
             bindsym --locked XF86MonBrightnessUp exec doas brillo -u 150000 -A 10 && notify-send --hint=string:x-dunst-stack-tag:vol "Brightness: $(brillo)"
             bindsym --locked XF86MonBrightnessDown exec doas brillo -u 150000 -U 10 && notify-send --hint=string:x-dunst-stack-tag:vol "Brightness: $(brillo)"
@@ -71,10 +74,10 @@ in
             bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute 0 toggle # mute sound
 
             # Property Name         Border  BG      Text    Indicator Child Border
-            client.focused          #44465c #44465c #d9e0ee #d9e0ee #44465c
-            client.focused_inactive #292a37 #292a37 #d9e0ee #d9e0ee #44465c
-            client.unfocused        #292a37 #292a37 #d9e0ee #d9e0ee #292a37
-            client.urgent           #292a37 #292a37 #ec6a88 #d9e0ee #ec6a88
+            client.focused          #44465c #44465c #d9e0ee #44465c #44465c
+            client.focused_inactive #292a37 #292a37 #d9e0ee #44465c #44465c
+            client.unfocused        #292a37 #292a37 #d9e0ee #44465c #292a37
+            client.urgent           #292a37 #292a37 #ec6a88 #44465c #ec6a88
 
             for_window [app_id="foot-notes"] floating enable
             for_window [app_id="pqiv"] floating enable
@@ -97,7 +100,7 @@ in
                 frame_width = 4;
                 separator_color = "frame";
                 idle_threshold = 120;
-                font = "JetBrainsMono 12";
+                font = "JetBrainsMono Nerdfont 12";
                 line_height = 0;
                 format = "<b>%s</b>\n%b";
                 alignment = "center";
@@ -120,7 +123,7 @@ in
         enable = true;
         settings = {
             main = {
-                font = "JetBrainsMono NerdFont:size=6";
+                font = "JetBrainsMono Nerdfont:size=6";
                 pad = "12x12";
             };
             colors = {

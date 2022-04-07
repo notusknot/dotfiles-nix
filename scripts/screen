@@ -14,11 +14,11 @@ choice=$(printf '%s\n' "${options[@]}" | bemenu -i -p 'Choose script:')
 
 if [ "$choice" = "Screenshot" ]; then 
     geometry=$(slurp)
-    dunstify "Screenshot in 3 seconds..."
+    notify-send "Screenshot in 3 seconds..."
     rm -rf $HOME/stuff/screen.png
     sleep 3
     grim -g "$geometry" - > $HOME/stuff/screen.png
-    dunstify "Screenshot taken!"
+    notify-send "Screenshot taken!"
     read -r W H <<< $(identify -format "%w %h\n" ~/stuff/screen.png)
     if [ "$W" -gt "300" ] || [ "$H" -gt "300" ]; then
         pqiv ~/stuff/screen.png -z 0.45 &
