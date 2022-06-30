@@ -1,3 +1,0 @@
-#!/usr/bin/env bash
-
-xrandr --verbose | grep 'Brightness' | tr -d 'Brightness:  ' | tr -d '[:blank:]'

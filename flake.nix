@@ -15,59 +15,65 @@
             inputs.nixpkgs.follows = "nixpkgs";
         };
 
-        neovim-nightly-overlay = {
-            url = "github:nix-community/neovim-nightly-overlay";
+        hyprland = {
+            url = "github:vaxerski/Hyprland";
             inputs.nixpkgs.follows = "nixpkgs";
         };
 
-        # Imports fortuneteller2k's custom packages, including sway-borders
-        #nixpkgs-f2k = {
-        #    url = "github:fortuneteller2k/nixpkgs-f2k";
-        #    inputs.nixpkgs.follows = "nixpkgs";
-        #};
+        eww = {
+            url = "github:elkowar/eww";
+            inputs.nixpkgs.follows = "nixpkgs";
+        };
     };
 
     # All outputs for the system (configs)
-    outputs = { home-manager, nixpkgs, nur, neovim-nightly-overlay, ... }: 
+    outputs = { home-manager, nixpkgs, nur, hyprland, eww, ... }@inputs: 
         let
             system = "x86_64-linux"; #current system
+            pkgs = inputs.nixpkgs.legacyPackages.x86_64-linux;
+            lib = nixpkgs.lib;
+
+            # This lets us reuse the code to "create" a system
+            # Credits go to sioodmy on this one!
+            # https://github.com/sioodmy/dotfiles/blob/main/flake.nix
+            mkSystem = pkgs: system: hostname:
+                pkgs.lib.nixosSystem {
+                    system = system;
+                    modules = [
+                        { networking.hostName = hostname; }
+                        # General configuration (users, networking, sound, etc)
+                        ./modules/system/configuration.nix
+                        # Enable programs
+                        (./. + "/hosts/${hostname}/user.nix")
+                        # Hardware config (bootloader, kernel modules, filesystems, etc)
+                        # DO NOT USE MY HARDWARE CONFIG!! USE YOUR OWN!!
+                        (./. + "/hosts/${hostname}/hardware-configuration.nix")
+                        home-manager.nixosModules.home-manager
+                        hyprland.nixosModules.default 
+
+                        {
+                            home-manager = {
+                                useUserPackages = true;
+                                useGlobalPkgs = true;
+                                extraSpecialArgs = { inherit inputs; };
+                                # Home manager config (configures programs like firefox, zsh, eww, etc)
+                                users.notus = (./. + "/hosts/${hostname}/home.nix");
+                            };
+                            nixpkgs.overlays = [
+                                # Add nur overlay for Firefox addons
+                                nur.overlay
+                            ];
+                        }
+                    ];
+                    specialArgs = { inherit inputs; };
+                };
 
         in {
             nixosConfigurations = {
-            # Laptop config
-            laptop = nixpkgs.lib.nixosSystem {
-                inherit system;
-                modules = [
-                    ./configuration.nix ./hosts/laptop.nix ./config/packages.nix 
-                    { nix.registry.nixpkgs.flake = nixpkgs; }
-                    home-manager.nixosModules.home-manager {
-                        home-manager.useGlobalPkgs = true;
-                        home-manager.useUserPackages = true;
-                        home-manager.users.notus = import ./config/home.nix;
-                        nixpkgs.overlays = [ 
-                            nur.overlay neovim-nightly-overlay.overlay  
-                            # ( import ./overlays/sf-mono.nix )
-                        ];
-                    }
-                ];
+                # Now, defining a new system is can be done in one line
+                #                                Architecture   Hostname
+                laptop = mkSystem inputs.nixpkgs "x86_64-linux" "laptop";
+                desktop = mkSystem inputs.nixpkgs "x86_64-linux" "desktop";
             };
-
-            # Desktop config
-            desktop = nixpkgs.lib.nixosSystem {
-                inherit system
-                modules = [
-                    ./configuration.nix ./hosts/desktop.nix ./config/packages.nix 
-                    { nix.registry.nixpkgs.flake = nixpkgs; }
-                    home-manager.nixosModules.home-manager {
-                        home-manager.useGlobalPkgs = true;
-                        home-manager.useUserPackages = true;
-                        home-manager.users.notus = import ./config/home.nix;
-                        nixpkgs.overlays = [ 
-                            nur.overlay neovim-nightly-overlay.overlay 
-                        ];
-                    }
-                ];
-            };
-        };
     };
 }

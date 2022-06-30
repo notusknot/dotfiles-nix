@@ -1,15 +1,11 @@
-{ pkgs, config, ... }:
+{ inputs, pkgs, config, ... }:
 
 {
-    nixpkgs.config.allowUnfree = true;
-    nixpkgs.config.permittedInsecurePackages = [
-        "electron-13.6.9"
-    ];
     # Install all the packages
     environment.systemPackages = with pkgs; [
 
         # Rice/desktop
-        bemenu zsh dunst wl-clipboard swaybg sway brillo wlsunset 
+        wofi zsh dunst wl-clipboard swaybg wlsunset 
 
         # Command-line tools
         ripgrep ffmpeg tealdeer exa htop fzf
@@ -17,14 +13,9 @@
         lowdown zk grim slurp imagemagick age
        
         # GUI applications
-        mpv brave firefox pqiv obsidian
+        mpv brave firefox pqiv 
 
         # Development
-        git zig
-
-        # Language servers for neovim; change these to whatever languages you code in
-        # Please note: if you remove any of these, make sure to also remove them from nvim/config/nvim/lua/lsp.lua!!
-        rnix-lsp
-        sumneko-lua-language-server
+        git zig python3 lua
     ];
 }

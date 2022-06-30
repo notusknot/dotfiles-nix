@@ -7,7 +7,7 @@ pkgs:
 
     # .zshrc
     initExtra = ''
-        PROMPT="%F{blue}%m %~%b "$'\n'"%(?.%F{green}%Bλ%b.%F{red}?) %f"
+        PROMPT="%F{blue}%m %~%b "$'\n'"%(?.%F{green}%Bλ%b |.%F{red}?) %f"
 
         export PATH=$NIXOS_CONFIG_DIR/scripts/:$PATH
         export PASSWORD_STORE_DIR="$XDG_DATA_HOME/password-store";
