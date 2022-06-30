@@ -43,13 +43,13 @@
                         { networking.hostName = hostname; }
                         # General configuration (users, networking, sound, etc)
                         ./modules/system/configuration.nix
-                        # Enable programs
-                        (./. + "/hosts/${hostname}/user.nix")
                         # Hardware config (bootloader, kernel modules, filesystems, etc)
                         # DO NOT USE MY HARDWARE CONFIG!! USE YOUR OWN!!
                         (./. + "/hosts/${hostname}/hardware-configuration.nix")
                         home-manager.nixosModules.home-manager
                         hyprland.nixosModules.default 
+			# one day I'll know how to do this outside of the flake.nix
+			{ programs.hyprland.enable = true; }
 
                         {
                             home-manager = {
@@ -57,7 +57,7 @@
                                 useGlobalPkgs = true;
                                 extraSpecialArgs = { inherit inputs; };
                                 # Home manager config (configures programs like firefox, zsh, eww, etc)
-                                users.notus = (./. + "/hosts/${hostname}/home.nix");
+                                users.notus = (./. + "/hosts/${hostname}/user.nix");
                             };
                             nixpkgs.overlays = [
                                 # Add nur overlay for Firefox addons

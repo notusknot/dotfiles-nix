@@ -1,0 +1,31 @@
+rg ~
+rg zsh_history
+v modules/zsh/default.nix
+cd dots
+cd
+v hosts/laptop/d
+v hosts/laptop/default.nix
+v hosts/laptop/user.nix
+v hosts/desktop/user.nix
+doas nixos-rebuild switch --flake .#laptop --fast
+ls
+v modules/system/configuration.nix
+su
+v modules/system/configuration.nix
+v modules/default.nix
+nix shell nixpkgs#ripgrep
+ls
+\ls
+rg packages
+rg dunst
+git status
+git add .
+\ls modules/packages/
+\cat modules/packages/default.nix
+nvim modules/packages/default.nix
+cd dots
+zSh
+exit
+: 1656578040:0;cd dots
+: 1656578042:0;zsh
+: 1656577582:0;nix shell nixpkgs#ripgrep

@@ -19,5 +19,6 @@
 
         # system
         xdg.enable = true;
+        packages.enable = true;
     };
 }

@@ -1,4 +1,5 @@
-{ inputs, lib, config, pkgs, ... }:
+{  lib, config, pkgs, ... }:
+with lib;
 let
     cfg = config.modules.nvim;
     # Source my theme
@@ -18,6 +19,7 @@ in {
         home.file.".config/nvim/settings.lua".source = ./init.lua;
         
         home.packages = with pkgs; [
+            neovim
             rnix-lsp nixfmt # Nix
             sumneko-lua-language-server stylua # Lua
         ];
@@ -35,9 +37,6 @@ in {
 
         programs.neovim = {
             enable = true;
-            withNodeJs = false;
-            withPython3 = false;
-            withRuby = false;
             plugins = with pkgs.vimPlugins; [ 
                 vim-nix
                 plenary-nvim

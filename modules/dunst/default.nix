@@ -6,6 +6,10 @@ let cfg = config.modules.dunst;
 in {
     options.modules.dunst = { enable = mkEnableOption "dunst"; };
     config = mkIf cfg.enable {
+	home.packages = with pkgs; [
+	    dunst
+	];
+
         services.dunst = {
             enable = true;
             settings = {

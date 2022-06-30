@@ -5,6 +5,9 @@ in {
     options.modules.zsh = { enable = mkEnableOption "zsh"; };
 
     config = mkIf cfg.enable {
+    	home.packages = [
+	    pkgs.zsh
+	];
 
         programs.zsh = {
             enable = true;
@@ -43,7 +46,7 @@ in {
             history = {
                 save = 1000;
                 size = 1000;
-                path = "~/.cache/zsh_history";
+                path = "$HOME/.cache/zsh_history";
             };
 
             # Set some aliases

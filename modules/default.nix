@@ -6,12 +6,12 @@
         # gui
         ./firefox
         ./foot
-        #./eww
+        ./eww
         ./dunst
-        #./hyprland
+        ./hyprland
 
         # cli
-        #./nvim
+        ./nvim
         ./zsh
         ./git
         ./gpg
@@ -19,5 +19,6 @@
 
         # system
         ./xdg
+	./packages
     ];
 }
