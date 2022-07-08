@@ -11,7 +11,11 @@
 - [Epsyle's NixOS Dotfiles](https://github.com/epsyle/snowflake/)
 
 ![Screenshot of my desktop](https://github.com/notusknot/dotfiles-nix/blob/main/pics/screenshot.png)
-<video src="https://github.com/notusknot/dotfiles-nix/blob/main/pics/recording.mp4" width="100%"></video>
+
+
+<video src="https://user-images.githubusercontent.com/69602000/178045242-3b3161e3-63e7-40f9-ae5f-00318ccde25c.mp4" width="100%"></video>
+
+
 
 ## Installation
 
