@@ -15,7 +15,7 @@ in {
             settings = {
                 global = {
                     origin = "top-left";
-                    offset = "12x12";
+                    offset = "60x12";
                     separator_height = 2;
                     padding = 12;
                     horizontal_padding = 12;
@@ -30,8 +30,6 @@ in {
                     icon_position = "off";
                     startup_notification = "false";
                     corner_radius = 12;
-                    set_stack_tag = "vol";
-                    stack_tag = "vol";
 
                     frame_color = "#44465c";
                     background = "#303241";

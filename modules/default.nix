@@ -9,6 +9,7 @@
         ./eww
         ./dunst
         ./hyprland
+        ./wofi
 
         # cli
         ./nvim
@@ -19,6 +20,6 @@
 
         # system
         ./xdg
-	./packages
+	    ./packages
     ];
 }

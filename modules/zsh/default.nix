@@ -23,7 +23,6 @@ in {
             initExtra = ''
                 PROMPT="%F{blue}%m %~%b "$'\n'"%(?.%F{green}%Bλ%b |.%F{red}?) %f"
 
-                export PATH=$NIXOS_CONFIG_DIR/scripts/:$PATH
                 export PASSWORD_STORE_DIR="$XDG_DATA_HOME/password-store";
                 export ZK_NOTEBOOK_DIR="~/stuff/notes";
                 export DIRENV_LOG_FORMAT="";
@@ -34,12 +33,12 @@ in {
             '';
 
             # basically aliases for directories: 
-            # `cd dots` will cd into ~/.config/nixos
+            # `cd ~dots` will cd into ~/.config/nixos
             dirHashes = {
-                dots = "~/.config/nixos";
-                stuff = "~/stuff";
+                dots = "$HOME/.config/nixos";
+                stuff = "$HOME/stuff";
                 media = "/run/media/$USER";
-                junk = "~/stuff/other";
+                junk = "$HOME/stuff/other";
             };
 
             # Tweak settings for history
@@ -60,6 +59,7 @@ in {
                 ls = "exa -a --icons";
                 tree = "exa --tree --icons";
                 nd = "nix develop -c $SHELL";
+                rebuild = "doas nixos-rebuild switch --flake $NIXOS_CONFIG_DIR --fast; notify-send 'Rebuild complete\!'";
             };
 
             # Source all plugins, nix-style

@@ -1,70 +1,110 @@
-;;
 (defwidget bar []
   (centerbox :orientation "v" :hexpand false
-    (box :space-evenly false :valign "start" :halign "center" :vexpand true :hexpand false :orientation "v" :spacing 10
+    (box :valign "start" :hexpand false :vexpand true :orientation "v" :space-evenly false
       (launch)
-      (mem)
-      (cpu)
-      (disk)
-      (wifi)
+      (dashbutton)
+      (powerbutton)
     )
 
     (workspaces :halign "center" :vexpand true :hexpand false :orientation "v")
 
-    (box :valign "end" :hexpand false :vexpand true :orientation "v" :space-evenly false :spacing 10
+    (box :valign "end" :hexpand false :vexpand true :orientation "v" :space-evenly false
       (battery)
-      (powerbutton)
+      (wifi)
+      (mem :thickness 4 :icon "")
+      (cpu :thickness 4 :icon "")
+      (disk :thickness 4 :icon "")
       (time)
     )
   )
 )
 
+(defpoll brightness :interval "999h" :initial 0 `brightnessctl -m | awk -F, '{print substr($4, 0, length($4)-1)}'`)
+(defpoll volume :interval "999h" :initial 0 `pamixer --get-volume`)
+(defpoll micvolume :interval "999h" :initial 0 `pamixer --get-volume --source 1`)
+(defwidget dashboard []
+  (box :orientation "v" 
+    (box :class "info_box" :orientation "v" :space-evenly false
+      (box :class "calendar_box"
+        (calendar :width 200 :class "cal")
+      )
+
+      (box :class "slider_box" :orientation "v" :vexpand false :hexpand false
+        (box :space-evenly false
+            (label :class "slider_icon" :text "")
+            (scale :min 1 :max 101 :width 315 :class "brightness_slider" :value brightness :onchange "brightnessctl set {}%" :height 10)
+        )
+        (box :space-evenly false
+          (label :class "slider_icon" :text "墳")
+          (scale :min 1 :max 101 :width 315 :class "volume_slider" :value volume :onchange "pamixer --set-volume $(echo {} | sed 's/[.].*$//')")
+        )
+        (box :space-evenly false
+          (label :class "slider_icon" :text "")
+          (scale :min 1 :max 101 :width 315 :class "micvolume_slider" :value micvolume :onchange "pamixer --set-volume $(echo {} | sed 's/[.].*$//') --source 1")
+        )
+      )
+      (box :class "sysinfo_box" :orientation "h" :vexpand true :spacing 15 
+        (mem :thickness 12 :icon "")
+        (cpu :thickness 12 :icon "")
+        (disk :thickness 12 :icon "")
+      )
+    )
+    (box :class "notification_box"
+    )     
+  )
+)
+
+
+
 
 ;; Variables
-(defvar search false)
 (defvar time false)
 (defvar cal false)
 
 ;; ━━━ WIDGETS ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ;; ━━━ MEMORY ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-(defwidget mem []
+(defwidget dashbutton[]
+  (button :class "reg-btn dashbutton" :onclick "eww open dashboard --toggle" "舘")
+)
+
+
+
+;; ━━━ MEMORY ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+(defwidget mem [icon thickness]
   (box :vexpand "false" :hexpand "false"
     (circular-progress  :value {EWW_RAM.used_mem_perc}
                         :class "membar"
-                        :thickness 4
-      (button
-        :class "iconmem"
-        :tooltip " ${round(EWW_RAM.used_mem_perc,1)}%"
-        "")
+                        :thickness {thickness}
+                        :start-at 75
+
+        (label :class "iconmem" :text {icon})
     )
   )
 )
 
 ;; ━━━ CPU ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-(defwidget cpu []
+(defwidget cpu [icon thickness]
   (box :vexpand "false" :hexpand "false"
     (circular-progress  :value {EWW_CPU.avg}
                         :class "cpubar"
-                        :thickness 4
-      (button
-        :class "iconmem"
-        :tooltip " ${round(EWW_CPU.avg,1)}%"
-        "")
+                        :thickness {thickness}
+                        :start-at 75
+
+      (label :class "iconcpu" :text {icon})
     )
   )
 )
 
 ;; ━━━ DISK ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-(defwidget disk []
+(defwidget disk [icon thickness]
   (box :vexpand "false" :hexpand "false"
     (circular-progress  :value {EWW_DISK["/"].used_perc}
                         :class "diskbar"
-                        :thickness 4
-      (button
-        :class "iconmem"
-        :tooltip " ${round(EWW_DISK["/"].used_perc,1)}%"
-        "")
+                        :thickness {thickness}
+                        :start-at 75
+      (label :class "icondisk" :text {icon})
+
     )
   )
 )
@@ -72,29 +112,27 @@
 
 ;; ━━━ WIFI ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 (defvar wifi "{}")
-(defpoll wifi :interval "3s" "./scripts/wifi.sh")
+(defpoll wifi :interval "30s" "./scripts/wifi.sh")
 
 (defwidget wifi []
  (box :vexpand false :hexpand false :orientation "v"
    (label :text {wifi.icon}
           :limit-width 10
           :tooltip {wifi.status}
-          :class "label wifi"
+          :class "wifi"
     )
   )
 )
 
 ;; ━━━ BATTERY ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 (defvar battery "{}")
-(defpoll battery :interval "2s" "./scripts/battery.sh")
+(defpoll battery :interval "60s" "./scripts/battery.sh")
 
 (defwidget battery []
- (box :vexpand false :hexpand false :orientation "v" :visible true
    (label :text {battery.icon}
           :limit-width 10
           :tooltip "${battery.status}: ${battery.percent}"
-          :class "label battery"
-    )
+          :class "battery"
   )
 )
 
@@ -145,10 +183,10 @@
                 :tooltip "${dateVar}"
     (box :orientation "v" :hexpand false :vexpand false :space-evenly false :class "clock"
     (button		:class "date"
-                :onclick "eww open --toggle calendar"	"${hour}")
+                :onclick ""	"${hour}")
 
     (button		:class "date"
-                :onclick "eww open --toggle calendar"	"${minute}")
+                :onclick ""	"${minute}")
     )
   )
 )
@@ -183,14 +221,14 @@
              :value bright-level
              :onchange "brightnessctl set {}%"))))
 (defwidget launch []
-  (button		:class "icon nixos"
+  (button		:class "reg-btn launchbutton"
                 :hexpand true
-                :onclick "wofi --show drun --xoffset=44 --yoffset=12 --width=12% --height=984 --style=$HOME/.config/nixos/config/wofi.css --term=footclient --prompt=Run --allow_images=true &"	"")
+                :onclick "wofi --show run --xoffset=1670 --yoffset=12 --width=230px --height=984 --style=$HOME/.config/wofi.css --term=footclient --prompt=Run &" "")
 )
 
 (defwidget powerbutton []
   (eventbox :cursor "hand"
-  (button		:class "icon button-off"
+  (button		:class "reg-btn powerbutton"
                 :onclick "eww open powermenu --toggle &"	"")
   )
 )
@@ -235,20 +273,22 @@
 (defwidget workspaces []
   (literal :content workspaces_listen))
 
-
-(defwindow calendar
+(defwindow dashboard
   :monitor 0
-  :geometry (geometry :x "-20px"
-  :y "7%"
-  :width "270px"
-  :height "60px"
-  :anchor "top right")
-  (calendar :class "cal")
-  )
+  :geometry (geometry 
+  :height "1080px" 
+  :width "350px"
+  :x "48px"
+  :y "0px"
+  :anchor "top left")
+  :stacking "fg"
+  :class "dashboard"
+  (dashboard))
+
 (defwindow bar
   :monitor 0
   :exclusive false 
-  :geometry (geometry :height "1056px" :x "-4px" :y "12px"
+  :geometry (geometry :height "1080px" :x "-4px" :y "0px"
   :width "52px"
   :anchor "top left")
   :stacking "fg"

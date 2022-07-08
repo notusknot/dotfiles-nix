@@ -1,5 +1,3 @@
-
-
 $base: #44465c;
 $blue: #3fc6de;
 $surface0: #44465c;
@@ -13,13 +11,21 @@ $mauve: #b072d1;
 $green: #3fdaa4;
 $mantle: #292a37;
 $crust: #2e303e;
+$light-gray: #9699b7;
+
 * {
-  all: unset; //Unsets everything so you can style everything from scratch
-  font-family: "JetBrainsMono"
+    all: unset; //Unsets everything so you can style everything from scratch
+    font-family: "JetBrainsMono"
 }
+
 .icon {
-  font-family: monospace;
-  font-size: 1.4rem;
+    font-family: monospace;
+    font-size: 1.4rem;
+}
+
+
+button {
+    transition: background-color 200ms, color 200ms;
 }
 
 .active {
@@ -32,11 +38,110 @@ $crust: #2e303e;
     font-size: 1.4rem;
 }
 
+.inactive:hover {
+    color: $light-gray;
+}
+
 .bar {
-  background-color: $mantle;
-  padding: 0.6rem 0;
-  border: 4px solid $base;
-  margin: 4px;
+    background-color: $mantle;
+    border-left: 4px dotted $red;
+}
+
+.dashboard {
+    background-color: $mantle;
+    padding: 1rem;
+    margin-bottom: 1rem;
+}
+
+.cal-box {
+    padding: 1rem 1rem .2rem;
+}
+
+.cal {
+    padding: 0;
+    border-radius: 8px;
+}
+
+.calendar_box {
+    padding: 1rem;
+    calendar:selected {
+        color: $blue;
+    }
+
+    calendar.header {
+        color: $blue;
+        font-weight: bold;
+    }
+
+    calendar.button {
+        color: $blue;
+    }
+
+    calendar.highlight {
+        color: $green;
+        font-weight: bold;
+    }
+
+    calendar:indeterminate {
+        color: rgba(205, 219, 249, 0.3);
+    }
+}
+
+.sysinfo_box {
+    padding: 1rem;
+    .iconmem {
+        font-size: 3rem;
+        color: $yellow;
+    }
+    .iconcpu {
+        font-size: 3rem;
+        color: $blue;
+    }
+    .icondisk {
+        font-size: 3rem;
+        color: $green;
+    }
+    .cpubar, .membar, .diskbar {
+        background-color: $crust;
+    }
+}
+.slider_box {
+    padding: 0 1rem;
+    scale {
+        background-color: $crust;
+        border-radius: 100px;
+        margin: 0.5rem 0;
+    }
+
+    scale trough {
+        border-radius: 100px;
+    }
+
+    scale highlight {
+        padding: 8px;
+        margin: 8px;
+        border-radius: 100px;
+    }
+    
+    .brightness_slider highlight {
+        background-color: $yellow;
+    }
+
+    .volume_slider highlight {
+        background-color: $blue;
+    }
+
+    .micvolume_slider highlight {
+        background-color: $green;
+    }
+    
+    .slider_icon {
+        font-size: 2rem;
+        padding-right: 0.75rem;
+    }
+}
+
+.notification_box {
 }
 
 .wifi {
@@ -50,129 +155,102 @@ $crust: #2e303e;
   color: $text;
   border-radius: 10px;
   padding: 0.2rem;
-  margin: 0.5rem 0.5rem 0.5rem 0.5rem;
+  margin: 0.5rem;
 }
+
 .cpubar {
   color: $blue;
   background-color: $surface1;
-  border-radius: 10px;
+  margin: 4px 0;
 }
 
 .diskbar {
   color: $green;
   background-color: $surface1;
-  border-radius: 10px;
+  margin: 4px 0;
 }
-.membar {
-  color: $yellow;
-  background-color: $surface1;
-  border-radius: 10px;
-}
-.system-status {
-  background-color: $base;
-  padding: 0.5rem;
-  border-radius: 10px;
 
+.membar {
+    color: $yellow;
+    background-color: $surface1;
+  margin: 4px 0;
 }
-.iconmem {
-  color: $base;
-  font-size: 2.5rem;
+
+.iconmem, .iconcpu, .icondisk {
+    color: $base;
+    font-size: 2.5rem;
 }
-.workspace-focused {
-  color: $blue;
-}
-.workspace-empty {
-  color: $overlay0;
-}
-.workspace-occupied {
-  color: $text;
-}
+
 .date {
   font-size: 1.5rem;
 }
-.button-off { color: $red; font-size: 2rem;}
-.nixos {
-  font-size: 2.25rem;
-  color: $base;
-  background-color: $blue;
-  margin: 8px 4px 0 4px;
-  padding: 0px 8px;
-  border-radius: 10px;
+
+.reg-btn { 
+    font-size: 2rem;
+    margin: 2px 8px;
+    border-radius: 10px;
 }
+
+.dashbutton {
+    color: $mauve;
+}
+
+.dashbutton:hover {
+    background-color: $base;
+}
+
+.dashbutton:active {
+    background-color: $mauve;
+    color: $mantle;
+}
+
+.powerbutton { 
+    color: $red; 
+}
+
+.powerbutton:hover {
+    background-color: $base;
+}
+
+.powerbutton:active {
+    background-color: $red;
+    color: $mantle;
+}
+
+.launchbutton { 
+    background-color: $blue; 
+    color: $mantle;
+    margin-top: 6px;
+}
+
+.launchbutton:hover {
+    background-color: $mauve;
+}
+
+.launchbutton:active {
+    color: $mauve;
+    background-color: $mantle;
+}
+
 .battery {
-  font-size: 1.5rem;
-  color: $blue;
+    font-size: 1.5rem;
+    color: $blue;
 }
-
-.volume-spacer, .menu-spacer {
-  transition: all 400ms cubic-bezier(.1,-0.00,.0,1.49);
-}
-
-.volume-widget {
-  background-color: $mantle;
-  border: 4px solid $surface0;
-  border-radius: 2px;
-  padding: 0 2rem;
-}
-
-.volume-icon {
-  font-size: 3rem;
-  margin-right: 1rem;
-}
-
-.volume-icon-muted {
-  color: $red;
-}
-
-.volume-slider {
-  background-color: $surface0;
-  border-radius: 10px;
-  margin: 2rem 0px 2rem;
-  contents {
-    trough {
-      // padding-top: 3px;
-      border-radius:8px;
-      slider {
-        background: transparent;
-        min-height: 12px;
-        border-radius:8px;
-      }
-      highlight {
-        background: $blue;
-        padding: 3px;
-        border-radius:8px;
-      }
-    }
-  }
-}
-
-.volume-slider-muted {
-  background-color: $surface0;
-  contents {
-    trough {
-      highlight {
-        background: $surface1;
-      }
-    }
-  }
-}
-
 
 // Credits AlphaTechnolog
-
 .powermenu-box {
-  padding: 0 2px;
-  margin: 7px 7px 7px 0px;
-  background: inherit;
-  .dispatcher {
-    border-radius: 15px;
-    background: $base;
-    color: $red;
-    font-size: 14px;
-    padding: 0 14px 0 10px;
-    &:hover { background-color: $surface0; }
-    &:active { background-color: $surface1; }
-  }
+    padding: 0 2px;
+    margin: 7px 7px 7px 0px;
+    background: inherit;
+    .dispatcher {
+        border-radius: 15px;
+        background: $base;
+        color: $red;
+        font-size: 14px;
+        padding: 0 14px 0 10px;
+        &:hover { background-color: $surface0; }
+        &:active { background-color: $surface1; }
+    }
 }
 
 // powermenu
@@ -210,3 +288,4 @@ $crust: #2e303e;
     &:active { background-color: $surface1; }
   }
 }
+

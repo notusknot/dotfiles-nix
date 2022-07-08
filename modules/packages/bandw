@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+
+init="$(($(cat /sys/class/net/[ew]*/statistics/rx_bytes | paste -sd '+')))"
+
+printf "Recording bandwidth. Press enter to stop."
+
+read -r lol
+
+fin="$(($(cat /sys/class/net/[ew]*/statistics/rx_bytes | paste -sd '+')))"
+
+notify-send $(numfmt --to=iec $(($fin-$init))) "of bandwidth used." 

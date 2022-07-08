@@ -14,20 +14,10 @@
             url = "github:nix-community/NUR";
             inputs.nixpkgs.follows = "nixpkgs";
         };
-
-        hyprland = {
-            url = "github:vaxerski/Hyprland";
-            inputs.nixpkgs.follows = "nixpkgs";
-        };
-
-        eww = {
-            url = "github:elkowar/eww";
-            inputs.nixpkgs.follows = "nixpkgs";
-        };
     };
 
     # All outputs for the system (configs)
-    outputs = { home-manager, nixpkgs, nur, hyprland, eww, ... }@inputs: 
+    outputs = { home-manager, nixpkgs, nur, ... }@inputs: 
         let
             system = "x86_64-linux"; #current system
             pkgs = inputs.nixpkgs.legacyPackages.x86_64-linux;
@@ -47,10 +37,6 @@
                         # DO NOT USE MY HARDWARE CONFIG!! USE YOUR OWN!!
                         (./. + "/hosts/${hostname}/hardware-configuration.nix")
                         home-manager.nixosModules.home-manager
-                        hyprland.nixosModules.default 
-			# one day I'll know how to do this outside of the flake.nix
-			{ programs.hyprland.enable = true; }
-
                         {
                             home-manager = {
                                 useUserPackages = true;

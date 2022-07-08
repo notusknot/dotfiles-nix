@@ -1,5 +1,7 @@
 # ❄️ NixOS dotfiles
 
+# This README is outdated! I will rewrite it soon!
+
 *My configuration files for NixOS. Feel free to look around and copy!* 
 
 # Special thanks to:

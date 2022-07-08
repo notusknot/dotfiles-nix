@@ -19,7 +19,6 @@ in {
         home.file.".config/nvim/settings.lua".source = ./init.lua;
         
         home.packages = with pkgs; [
-            neovim
             rnix-lsp nixfmt # Nix
             sumneko-lua-language-server stylua # Lua
         ];
@@ -65,12 +64,10 @@ in {
                     config = ''
                     lua << EOF
                     require('nvim-treesitter.configs').setup {
-                        ensure_installed = "nix", "rust", "c", "python", "lua", "html", "css", "javascript",
                         highlight = {
                             enable = true,
-                            disable = { "gdresource", "hack", "gdscript", "fusion", "glimmer", "glsl" }
+                            additional_vim_regex_highlighting = false,
                         },
-                        ignore_install = { "gdresource", "hack", "gdscript", "fusion", "glimmer", "glsl" },
                     }
                     EOF
                     '';

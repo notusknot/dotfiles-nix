@@ -2,8 +2,6 @@
 with lib;
 let
     cfg = config.modules.eww;
-    bright = pkgs.writeShellScriptBin "bright" ''${builtins.readFile ./scripts/brightness.sh}'';
-    volume = pkgs.writeShellScriptBin "volume" ''${builtins.readFile ./scripts/volume.sh}'';
 in {
     options.modules.eww = { enable = mkEnableOption "eww"; };
 
@@ -13,11 +11,10 @@ in {
 
         # eww package
         home.packages = with pkgs; [
-            inputs.eww.packages."x86_64-linux".eww-wayland
+            eww-wayland
             pamixer
             brightnessctl
-            bright
-            volume
+            (nerdfonts.override { fonts = [ "JetBrainsMono" ]; })
         ];
 
         # configuration
@@ -42,6 +39,11 @@ in {
 
         home.file.".config/eww/scripts/workspaces.sh" = {
             source = ./scripts/workspaces.sh;
+            executable = true;
+        };
+
+        home.file.".config/eww/scripts/workspaces.lua" = {
+            source = ./scripts/workspaces.lua;
             executable = true;
         };
     };
