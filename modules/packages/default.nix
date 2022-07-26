@@ -20,7 +20,7 @@ in {
             git python3 lua zig 
             mpv firefox pqiv
             screen bandw maintenance
-            wf-recorder
+            wf-recorder anki-bin 
         ];
     };
 }

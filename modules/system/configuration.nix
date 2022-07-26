@@ -17,10 +17,18 @@
         fonts = with pkgs; [
             jetbrains-mono
             roboto
+            openmoji-color
             (nerdfonts.override { fonts = [ "JetBrainsMono" ]; })
         ];
-        fontconfig.hinting.autohint = true;
+
+        fontconfig = {
+            hinting.autohint = true;
+            defaultFonts = {
+              emoji = [ "OpenMoji Color" ];
+            };
+        };
     };
+
 
     # Wayland stuff: enable XDG integration, allow sway to use brillo
     xdg = {
@@ -99,6 +107,8 @@
         ZK_NOTEBOOK_DIR = "$HOME/stuff/notes/";
         EDITOR = "nvim";
         DIRENV_LOG_FORMAT = "";
+        ANKI_WAYLAND = "1";
+        DISABLE_QT5_COMPAT = "0";
     };
 
     # Security 
@@ -120,17 +130,16 @@
     # Sound
     sound = {
         enable = true;
-        mediaKeys.enable = true;
     };
 
     hardware.pulseaudio.enable = true;
     security.rtkit.enable = true;
 
     services.pipewire = {
-      enable = false;
-      alsa.enable = true;
-      alsa.support32Bit = true;
-      pulse.enable = true;
+        enable = false;
+        alsa.enable = true;
+        alsa.support32Bit = true;
+        pulse.enable = true;
     };
     
     # Disable bluetooth, enable pulseaudio, enable opengl (for Wayland)

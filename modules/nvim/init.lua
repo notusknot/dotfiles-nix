@@ -10,6 +10,8 @@ augroup CursorLine
     au BufWinEnter * setlocal cursorline
     au WinLeave * setlocal nocursorline
 augroup END
+
+autocmd FileType nix setlocal shiftwidth=4
 ]]
 
 -- Keybinds

@@ -40,6 +40,10 @@ in {
                 vim-nix
                 plenary-nvim
                 {
+                    plugin = zk-nvim;
+                    config = "require('zk').setup()";
+                }
+                {
                     plugin = jabuti-nvim;
                     config = "colorscheme jabuti";
                 }
@@ -58,6 +62,17 @@ in {
                 {
                     plugin = indent-blankline-nvim;
                     config = "lua require('indent_blankline').setup()";
+                }
+                {
+                    plugin = nvim-lspconfig;
+                    config = ''
+                        lua << EOF
+                        require('lspconfig').rust_analyzer.setup{}
+                        require('lspconfig').sumneko_lua.setup{}
+                        require('lspconfig').rnix.setup{}
+                        require('lspconfig').zk.setup{}
+                        EOF
+                    '';
                 }
                 {
                     plugin = nvim-treesitter;
